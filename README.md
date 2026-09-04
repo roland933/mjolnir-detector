@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+⚡ Thor lost Mjölnir.
 
-## Getting Started
+He contacted me personally.
 
-First, run the development server:
+Apparently, Asgard has a very strict “don’t lose the magical hammer” policy.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+So I built **Mjölnir Detector** — a fictional application designed to locate the hammer before Thor has to return to Asgard empty-handed.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app includes:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+🗺️ Interactive search map
+⚡ Mjölnir signal detection
+📡 Simulated sensor data
+📊 Real-time detection status
+🚨 Anomaly tracking
+🌩️ Asgardian communication system
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Built with:
 
-## Learn More
+Next.js · TypeScript · Tailwind CSS · shadcn/ui
 
-To learn more about Next.js, take a look at the following resources:
+The goal wasn't just to build another dashboard.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+I wanted to build something technically interesting **and actually fun to look at.**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+And yes...
 
-## Deploy on Vercel
+**Mjölnir was found.**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Earth is safe.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Thor can return to Asgard.
+
+**You're welcome.** ⚡
+
+#NextJS #TypeScript #React #Frontend #WebDevelopment #Portfolio
+
