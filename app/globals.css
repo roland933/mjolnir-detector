@@ -128,3 +128,8 @@
     @apply font-sans;
   }
 }
+
+.leaflet-control-container {
+  z-index: 2000;
+  pointer-events: auto;
+}

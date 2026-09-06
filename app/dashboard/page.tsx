@@ -1,11 +1,19 @@
 "use client";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
-import { DetectorStatus } from "@/components/dashboard/detector-status";
 import { DetectorMap } from "@/components/dashboard/detector-map";
 import { LiveFeed } from "@/components/dashboard/live-feed";
+import { ScanArea } from "@/components/dashboard/map/scan-area";
+import { useState } from "react";
+import { ScanAreaType } from "../types/scan.area";
 
 
 export default function DashboardPage() {
+  const [scanArea, setScanArea] = useState<ScanAreaType>({
+    latitude: 47.4979,
+    longitude: 19.0402,
+    radius: 25,
+  });
+
 
   return (
   
@@ -15,10 +23,18 @@ export default function DashboardPage() {
 
         <div className="grid gap-6 lg:grid-cols-[280px_1fr_320px]">
 
-          <DetectorStatus />
+        <ScanArea
+                scanArea={scanArea}
+                onRadiusChange={(radius) =>
+                  setScanArea((current) => ({
+                    ...current,
+                    radius,
+                  }))
+                }
+              />
 
 
-          <DetectorMap />
+          <DetectorMap scanArea={scanArea}/>
 
 
           <LiveFeed />

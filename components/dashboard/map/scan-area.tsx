@@ -14,7 +14,7 @@ export function ScanArea({scanArea,onRadiusChange}:Props) {
 const [confirmed, setConfirmed] = useState(false);
 
   return (
-    <div className="absolute left-5 top-20 z-20 w-64 rounded-xl border border-slate-800 bg-slate-950/90 p-4 backdrop-blur">
+ <section className="rounded-xl border border-slate-800 bg-slate-950 p-5">
       <div className="flex items-center gap-2">
         <Radius className="h-4 w-4 text-emerald-400" />
 
@@ -67,6 +67,6 @@ const [confirmed, setConfirmed] = useState(false);
       <button  onClick={() => setConfirmed(true)} className="mt-4 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium uppercase tracking-wider transition hover:border-slate-500 hover:bg-slate-900">
         {confirmed ? "Area Confirmed" : "Confirm Area"}
       </button>
-    </div>
+    </section>
   );
 }
