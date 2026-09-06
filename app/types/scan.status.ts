@@ -1,0 +1,1 @@
+export type ScanStatus = "idle" | "scanning" | "analyzing" | "result";
