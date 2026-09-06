@@ -1,86 +1,54 @@
+import { DetectionHistoryItem } from "@/app/types/detection.history";
 import {
   AlertTriangle,
-  CheckCircle2,
+ 
   Hammer,
   Radio,
 } from "lucide-react";
 
-const detections = [
-  {
-    id: 1,
-    type: "UNKNOWN",
-    object: "Unidentified metal object",
-    distance: "8.4 km",
-    time: "09:42:13",
-    status: "possible",
-  },
-  {
-    id: 2,
-    type: "FALSE POSITIVE",
-    object: "Frying pan",
-    distance: "12.7 km",
-    time: "09:41:02",
-    status: "false",
-  },
-  {
-    id: 3,
-    type: "LOW SIGNAL",
-    object: "Heavy metal object",
-    distance: "18.2 km",
-    time: "09:39:47",
-    status: "low",
-  },
-];
+
+type Props = {
+  history: DetectionHistoryItem[];
+};
+
 
 function DetectionItem({
-  type,
-  object,
+ object,
   distance,
-  time,
-  status,
-}: {
-  type: string;
-  object: string;
-  distance: string;
-  time: string;
-  status: "possible" | "false" | "low";
-}) {
-  const config = {
-    possible: {
+  isMjolnir,
+  timestamp,
+}: DetectionHistoryItem) {
+const config = isMjolnir
+  ? {
       icon: Hammer,
       iconClass: "text-amber-400",
       badgeClass: "text-amber-400",
-    },
-    false: {
+      type: "POSSIBLE",
+    }
+  : {
       icon: AlertTriangle,
       iconClass: "text-slate-500",
       badgeClass: "text-slate-500",
-    },
-    low: {
-      icon: CheckCircle2,
-      iconClass: "text-slate-400",
-      badgeClass: "text-slate-400",
-    },
-  };
+      type: "FALSE POSITIVE",
+    };
 
-  const current = config[status];
-  const Icon = current.icon;
+
+const Icon = config.icon;
 
   return (
     <div className="rounded-lg border border-slate-800 bg-slate-950/50 p-3">
       <div className="flex gap-3">
-        <Icon className={`mt-0.5 h-4 w-4 ${current.iconClass}`} />
+      <Icon className={`mt-0.5 h-4 w-4 ${config.iconClass}`} />
 
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-2">
-            <p
-              className={`text-[10px] font-semibold tracking-wider ${current.badgeClass}`}
+          <p
+              className={`text-[10px] font-semibold tracking-wider ${config.badgeClass}`}
             >
-              {type}
+              {config.type}
             </p>
-
             <span className="text-[10px] text-slate-600">
-              {time}
+              {new Date(timestamp).toLocaleTimeString()}
             </span>
           </div>
 
@@ -88,8 +56,8 @@ function DetectionItem({
             {object}
           </p>
 
-          <p className="mt-1 text-xs text-slate-600">
-            Distance: {distance}
+         <p className="mt-1 text-xs text-slate-600">
+            Distance: {distance} km
           </p>
         </div>
       </div>
@@ -97,7 +65,8 @@ function DetectionItem({
   );
 }
 
-export function LiveFeed() {
+export function LiveFeed({history}:Props) {
+   const detections = history.slice(0, 3);
   return (
     <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
       <div className="mb-6 flex items-center justify-between">
