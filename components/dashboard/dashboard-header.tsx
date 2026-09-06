@@ -1,5 +1,5 @@
 import { Activity, Radio } from "lucide-react";
-
+import Link from "next/link";
 export function DashboardHeader() {
   return (
     <header className="mb-6 flex items-center justify-between border-b border-slate-800 pb-5">
@@ -15,19 +15,16 @@ export function DashboardHeader() {
 
       <div className="flex items-center gap-6">
         <nav className="hidden items-center gap-5 text-sm text-slate-400 md:flex">
-          <a
+          <Link
             href="/dashboard"
             className="text-white"
           >
             Dashboard
-          </a>
+          </Link>
 
-          <a
-            href="/history"
-            className="transition-colors hover:text-white"
-          >
+        <Link href="/history">
             History
-          </a>
+          </Link>
 
           <a
             href="/worthiness"

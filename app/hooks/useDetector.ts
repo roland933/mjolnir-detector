@@ -6,6 +6,7 @@ import { ScanAreaType } from "../types/scan.area";
 import { DetectionHistoryItem } from "../types/detection.history";
 
 export const useDetector = () => {
+
   const [scanStatus, setScanStatus] = useState<ScanStatus>("idle");
   const [result, setResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<DetectionHistoryItem[]>([]);

@@ -1,15 +1,11 @@
 import { DetectionHistoryItem } from "@/app/types/detection.history";
+import { useDetectorContext } from "@/app/context/detector-context";
 import {
   AlertTriangle,
  
   Hammer,
   Radio,
 } from "lucide-react";
-
-
-type Props = {
-  history: DetectionHistoryItem[];
-};
 
 
 function DetectionItem({
@@ -65,7 +61,8 @@ const Icon = config.icon;
   );
 }
 
-export function LiveFeed({history}:Props) {
+export function LiveFeed() {
+  const { history } = useDetectorContext();
    const detections = history.slice(0, 3);
   return (
     <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
