@@ -1,47 +1,50 @@
-import { Activity, Radio } from "lucide-react";
-import Link from "next/link";
+import { Radio } from "lucide-react";
+
 export function DashboardHeader() {
   return (
-    <header className="mb-6 flex items-center justify-between border-b border-slate-800 pb-5">
+    <header className="mb-3 flex items-center justify-center">
       <div>
-        <h1 className="text-xl font-bold tracking-wide">
-          ⚡ MJÖLNIR DETECTOR
-        </h1>
+        <div className="flex flex-col items-center justify-center gap-1">
 
-        <p className="mt-1 text-sm text-slate-500">
-          Asgardian Detection System
-        </p>
-      </div>
+          {/* Mjölnir */}
+          <img
+            src="/mjolnir.png"
+            alt="Mjölnir"
+            className="
+              h-15 w-15 object-contain
+              animate-[mjolnir-glow_4s_ease-in-out_infinite]
+              
+            "
+          />
 
-      <div className="flex items-center gap-6">
-        <nav className="hidden items-center gap-5 text-sm text-slate-400 md:flex">
-          <Link
-            href="/dashboard"
-            className="text-white"
-          >
-            Dashboard
-          </Link>
+          {/* Title */}
+          <h1
+              style={{
+                fontFamily: "var(--font-norse)",
+                background:
+                  "linear-gradient(180deg, #dbeafe 0%, #8da9bd 45%, #526b7a 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textShadow: "0 0 14px rgba(80, 160, 220, 0.22)",
+              }}
+              className="mb-2 text-2xl tracking-wider"
+            >
+              MJÖLNIR DETECTOR
+            </h1>
+        </div>
 
-        <Link href="/history">
-            History
-          </Link>
+        {/* Connection */}
+        <div
+          className="flex items-center justify-center gap-2 text-md"
+          style={{ fontFamily: "var(--font-norse)" }}
+        >
+          <Radio className="h-4 w-4 text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.35)]" />
 
-          <a
-            href="/worthiness"
-            className="transition-colors hover:text-white"
-          >
-            Worthiness
-          </a>
-        </nav>
-
-        <div className="flex items-center gap-2 text-sm">
-          <Radio className="h-4 w-4 text-emerald-400" />
-
-          <span className="text-slate-400">
+          <span className="text-slate-500">
             ASGARD CONNECTION
           </span>
 
-          <span className="font-medium text-emerald-400">
+          <span className="font-medium text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.3)]">
             ONLINE
           </span>
         </div>

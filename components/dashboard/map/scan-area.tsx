@@ -1,91 +1,127 @@
 "use client";
 
-import { useState } from "react";
-import { MapPin, Radius, Scan, ScanLine } from "lucide-react";
+import { MapPin, Radius, Scan, Search } from "lucide-react";
 import { ScanAreaType } from "@/app/types/scan.area";
-import { useDetectorContext } from "@/app/context/detector-context";
+import { useState } from "react";
+import { ScanStatus } from "@/app/types/scan.status";
 
 type Props = {
-   scanArea: ScanAreaType;
-  onRadiusChange:(n:number) => void
-}
+  scanArea: ScanAreaType;
+  scanStatus:ScanStatus
+  onRadiusChange: (radius: number) => void;
+  onScan: () => void;
+};
 
-
-export function ScanArea({scanArea,onRadiusChange}:Props) {
-const [confirmed, setConfirmed] = useState(false);
- const { scanStatus, scan } = useDetectorContext();
+export function ScanArea({
+  scanArea,
+  onRadiusChange,
+  onScan,
+  scanStatus
+}: Props) {
+const [location, setLocation] = useState("");
 
   return (
- <section className="rounded-xl border border-slate-800 bg-slate-950 p-5">
-      <div className="flex items-center gap-2">
-        <Radius className="h-4 w-4 text-emerald-400" />
+    <section className="mb-4 rounded-xl border border-slate-800 bg-slate-900/80 px-5 py-4">
+      <div className="flex flex-wrap items-center gap-6">
+        {/* Title */}
+        <div className="flex items-center gap-2">
+          <MapPin className="h-4 w-4 text-emerald-400" />
 
-        <h3 className="text-sm font-semibold">
-          Scan Area
-        </h3>
-      </div>
+          <div>
+            <h3 className="text-sm font-semibold">
+              Scan Area
+            </h3>
 
-      <p className="mt-1 text-xs text-slate-500">
-        Configure detection range
-      </p>
-
-      <div className="mt-4">
-        <div className="flex items-center justify-between">
-          <span className="text-xs uppercase tracking-wider text-slate-500">
-            Detection Radius
-          </span>
-
-          <span className="text-sm font-semibold text-emerald-400">
-            {scanArea.radius} km
-          </span>
+            <p className="text-xs text-slate-500">
+              Configure detection range
+            </p>
+          </div>
         </div>
 
-        <input
-          type="range"
-          min="5"
-          max="50"
-          value={scanArea.radius}
-          onChange={(event) => {
-  onRadiusChange(Number(event.target.value));
-  setConfirmed(false);
-}}
-          className="mt-3 w-full accent-emerald-400"
-        />
-      </div>
+        {/* Coordinates */}
+        <div className="flex items-center gap-6 border-l border-slate-800 pl-6">
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-slate-500">
+              Latitude
+            </p>
 
-      <div className="mt-5 border-t border-slate-800 pt-4">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
-          <MapPin className="h-3.5 w-3.5" />
+            <p className="mt-1 text-sm font-medium">
+              {scanArea.latitude.toFixed(4)}°
+            </p>
+          </div>
 
-          <span>Center coordinates</span>
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-slate-500">
+              Longitude
+            </p>
+
+            <p className="mt-1 text-sm font-medium">
+              {scanArea.longitude.toFixed(4)}°
+            </p>
+          </div>
         </div>
 
-       <p className="mt-2 text-sm font-medium">
-          {scanArea.latitude.toFixed(4)}° N,{" "}
-          {scanArea.longitude.toFixed(4)}° E
-        </p>
+        <div className="min-w-[260px] flex-1">
+  <div className="flex items-center gap-2">
+    <Search className="h-3.5 w-3.5 text-slate-500" />
+
+    <span className="text-[10px] uppercase tracking-wider text-slate-500">
+      Location
+    </span>
+  </div>
+
+  <input
+    type="text"
+    value={location}
+    onChange={(event) => setLocation(event.target.value)}
+    placeholder="Search location..."
+    className="mt-1 w-full border-b border-slate-700 bg-transparent py-1 text-sm text-white outline-none placeholder:text-slate-600 focus:border-emerald-400"
+  />
+</div>
+
+        {/* Radius */}
+        <div className="min-w-[280px] flex-1 border-l border-slate-800 pl-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Radius className="h-3.5 w-3.5 text-slate-500" />
+
+              <span className="text-xs uppercase tracking-wider text-slate-500">
+                Detection Radius
+              </span>
+            </div>
+
+            <span className="text-sm font-semibold text-sky-400">
+              {scanArea.radius} km
+            </span>
+          </div>
+
+          <input
+            type="range"
+            min="5"
+            max="50"
+            value={scanArea.radius}
+            onChange={(event) =>
+              onRadiusChange(Number(event.target.value))
+            }
+            className="mt-2 w-full accent-sky-400"
+          />
+        </div>
+
+        {/* Start Scan */}
+      <button
+              style={{ fontFamily: "var(--font-norse)" }}
+          onClick={onScan}
+          disabled={scanStatus === "scanning" || scanStatus === "analyzing"}
+          className="flex  items-center gap-2 rounded-lg border border-sky-500/40 hover:cursor-pointer bg-sky-500/10 px-4 py-3 text-md font-semibold uppercase tracking-wider text-sky-400 transition hover:border-sky-400 hover:bg-sky-500/20 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <Scan className="h-4 w-4" />
+          {scanStatus === "scanning"
+            ? "Scanning..."
+            : scanStatus === "analyzing"
+              ? "Analyzing..."
+              : "Start Scan"}
+        </button>
       </div>
-
-      <button  onClick={() => setConfirmed(true)} className="mt-4 mb-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium uppercase tracking-wider transition hover:border-slate-500 hover:bg-slate-900">
-        {confirmed ? "Area Confirmed" : "Confirm Area"}
-      </button>
-
-        <button
-                    onClick={() =>scan(scanArea)}
-                   disabled={
-  scanStatus === "scanning" ||
-  scanStatus === "analyzing"
-}
-                    className="w-full flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm transition hover:border-slate-500 hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                    <ScanLine className="h-4 w-4" />
-
-                  {scanStatus === "idle" && "Start Scan"}
-                {scanStatus === "scanning" && "Scanning..."}
-                {scanStatus === "analyzing" && "Analyzing..."}
-                {scanStatus === "result" && "Scan Again"}
-                </button>
-
     </section>
   );
 }

@@ -1,12 +1,13 @@
 "use client";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DetectorMap } from "@/components/dashboard/detector-map";
-import { LiveFeed } from "@/components/dashboard/live-feed";
+import {  RecentDetections } from "@/components/dashboard/recent-detections";
 import { ScanArea } from "@/components/dashboard/map/scan-area";
 import { useState } from "react";
 import { ScanAreaType } from "../types/scan.area";
-
-
+import { useDetectorContext } from "@/app/context/detector-context";
+import { ThorMood } from "@/components/dashboard/thor-mood";
+import { Background } from "@/components/dashboard/background";
 export default function DashboardPage() {
   const [scanArea, setScanArea] = useState<ScanAreaType>({
     latitude: 47.4979,
@@ -14,33 +15,46 @@ export default function DashboardPage() {
     radius: 25,
   });
 
-
+  const { scan,scanStatus } = useDetectorContext();
   return (
-  
-    <main className="min-h-screen bg-slate-950 text-white">
-      <div className="mx-auto max-w-[1800px] p-6">
+
+
+
+    <main className="min-h-screen  bg-[#080b0e] text-white">
+      <Background />
+      <div className="p-6 relative max-w-[1600px] mx-auto ">
         <DashboardHeader />
-
-        <div className="grid gap-6 lg:grid-cols-[280px_1fr_320px]">
-
-
+        <div className="bg-slate-950 h-full w-full p-3 rounded-xl shadow-md  backdrop-blur-3xl  border-4 border-slate-800/50">
         <ScanArea
-                scanArea={scanArea}
-                onRadiusChange={(radius) =>
-                  setScanArea((current) => ({
-                    ...current,
-                    radius,
-                  }))
-                }
-              />
+          scanArea={scanArea}
+          onRadiusChange={(radius) =>
+            setScanArea((current) => ({
+              ...current,
+              radius,
+            }))
+          }
+          scanStatus={scanStatus}
+          onScan={() => scan(scanArea)}
+        />
 
+        <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_360px]">
+          <DetectorMap
+            scanArea={scanArea}
+            setScanArea={setScanArea}
+          />
+          <div className="space-y-4">
+            <ThorMood />
+            <RecentDetections />
+          </div>
 
-          <DetectorMap scanArea={scanArea} setScanArea={setScanArea}/>
-
-
-          <LiveFeed />
         </div>
+
+       
+
+
       </div>
+      </div>
+
     </main>
 
   );
