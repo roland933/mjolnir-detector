@@ -1,7 +1,6 @@
 
 import { Radar } from "./radar";
 import { Result } from "./result";
-import { DetectionPoint } from "./detection-point";
 import { ScanStatus } from "@/app/types/scan.status";
 import { DetectionResult } from "@/app/types/detector.result";
 import { ScanAreaType } from "@/app/types/scan.area";
@@ -19,15 +18,11 @@ export function MapOverlay({scanStatus,scan,result}:Props) {
     return(
          <div className="pointer-events-none absolute inset-0 z-[1000]">
 
-        
-        
               <Radar scanStatus={scanStatus} />
         
-              <DetectionPoint result={result} />
+              
         
               <Result result={result} />
-        
-             
 
               </div>
 

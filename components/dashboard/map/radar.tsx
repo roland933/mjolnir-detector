@@ -7,8 +7,8 @@ type Props  = {
 
 export function Radar({scanStatus}:Props) {
 return(
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center pt-16">
-        <div className="relative h-[420px] w-[420px]">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <div className="relative h-[320px] w-[320px]">
           {/* Outer rings */}
           <div className="absolute inset-0 rounded-full border border-slate-700/60" />
           <div className="absolute inset-[60px] rounded-full border border-slate-700/60" />

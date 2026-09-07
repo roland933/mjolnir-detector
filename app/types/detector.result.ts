@@ -3,4 +3,6 @@ export type DetectionResult = {
   confidence: number;
   distance: number;
   isMjolnir: boolean;
+  latitude: number;
+  longitude: number;
 };

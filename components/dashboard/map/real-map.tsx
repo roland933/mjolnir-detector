@@ -1,25 +1,31 @@
 "use client";
-
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { DetectionResult } from "@/app/types/detector.result";
+import { MapContainer, TileLayer, useMapEvents, Circle } from "react-leaflet";
 
 type Props = {
+  latitude: number;
+  longitude: number;
+  radius: number;
+  detection: DetectionResult | null;
   onLocationSelect: (latitude: number, longitude: number) => void;
 };
 
-function MapClickHandler({ onLocationSelect }: Props) {
-  useMapEvents({
-    click(event) {
-      onLocationSelect(event.latlng.lat, event.latlng.lng);
+function MapCenterHandler({ onLocationSelect }: Props) {
+  const map = useMapEvents({
+    moveend() {
+      const center = map.getCenter();
+
+      onLocationSelect(center.lat, center.lng);
     },
   });
 
   return null;
 }
 
-export function RealMap({ onLocationSelect }: Props) {
+export function RealMap({ onLocationSelect, radius, latitude, longitude,detection }: Props) {
   return (
     <MapContainer
-      center={[47.4979, 19.0402]}
+      center={[latitude, longitude]}
       zoom={8}
       className="h-full w-full"
     >
@@ -28,7 +34,28 @@ export function RealMap({ onLocationSelect }: Props) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      <MapClickHandler onLocationSelect={onLocationSelect} />
+      <Circle
+        center={[latitude, longitude]}
+        radius={radius * 1000}
+      />
+
+  {detection && (
+      <Circle
+        center={[detection.latitude, detection.longitude]}
+        radius={1500}
+       
+        pathOptions={{
+          color: detection.isMjolnir ? "#fbbf24" : "#ef4444",
+          fillColor: detection.isMjolnir ? "#fbbf24" : "#ef4444",
+          fillOpacity: 0.8,
+        }}
+      />
+    )}
+
+
+
+
+      <MapCenterHandler onLocationSelect={onLocationSelect} />
     </MapContainer>
   );
 }

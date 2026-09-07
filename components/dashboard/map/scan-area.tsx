@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { MapPin, Radius } from "lucide-react";
+import { MapPin, Radius, Scan, ScanLine } from "lucide-react";
 import { ScanAreaType } from "@/app/types/scan.area";
+import { useDetectorContext } from "@/app/context/detector-context";
 
 type Props = {
    scanArea: ScanAreaType;
@@ -12,6 +13,7 @@ type Props = {
 
 export function ScanArea({scanArea,onRadiusChange}:Props) {
 const [confirmed, setConfirmed] = useState(false);
+ const { scanStatus, scan } = useDetectorContext();
 
   return (
  <section className="rounded-xl border border-slate-800 bg-slate-950 p-5">
@@ -64,9 +66,26 @@ const [confirmed, setConfirmed] = useState(false);
         </p>
       </div>
 
-      <button  onClick={() => setConfirmed(true)} className="mt-4 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium uppercase tracking-wider transition hover:border-slate-500 hover:bg-slate-900">
+      <button  onClick={() => setConfirmed(true)} className="mt-4 mb-2 w-full rounded-lg border border-slate-700 px-3 py-2 text-xs font-medium uppercase tracking-wider transition hover:border-slate-500 hover:bg-slate-900">
         {confirmed ? "Area Confirmed" : "Confirm Area"}
       </button>
+
+        <button
+                    onClick={() =>scan(scanArea)}
+                   disabled={
+  scanStatus === "scanning" ||
+  scanStatus === "analyzing"
+}
+                    className="w-full flex items-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm transition hover:border-slate-500 hover:bg-slate-900 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                    <ScanLine className="h-4 w-4" />
+
+                  {scanStatus === "idle" && "Start Scan"}
+                {scanStatus === "scanning" && "Scanning..."}
+                {scanStatus === "analyzing" && "Analyzing..."}
+                {scanStatus === "result" && "Scan Again"}
+                </button>
+
     </section>
   );
 }

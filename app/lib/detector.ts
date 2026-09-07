@@ -4,14 +4,33 @@ import { ScanAreaType } from "../types/scan.area";
 export const generateDetection = (
   scanArea: ScanAreaType
 ): DetectionResult => {
+
+  const angle = Math.random() * Math.PI * 2;
+  const distance = Math.random() * scanArea.radius;
+
+  const latitude =
+    scanArea.latitude +
+    (distance * Math.cos(angle)) / 111;
+
+  const longitude =
+    scanArea.longitude +
+    (distance * Math.sin(angle)) /
+    (111 * Math.cos((scanArea.latitude * Math.PI) / 180));
+
+
+
+
   const isMjolnir = Math.random() > 0.7;
 
   if (isMjolnir) {
     return {
       object: "MJÖLNIR",
       confidence: 99.7,
-      distance: 12.4,
+      distance: Number(distance.toFixed(1)),
       isMjolnir: true,
+      latitude,
+      longitude,
+
     };
   }
 
@@ -25,7 +44,7 @@ export const generateDetection = (
 
   const object =
     falsePositives[
-      Math.floor(Math.random() * falsePositives.length)
+    Math.floor(Math.random() * falsePositives.length)
     ];
 
   return {
@@ -35,5 +54,7 @@ export const generateDetection = (
       (Math.random() * 20 + 2).toFixed(1)
     ),
     isMjolnir: false,
+    latitude,
+    longitude,
   };
 };

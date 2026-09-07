@@ -23,6 +23,7 @@ export default function DashboardPage() {
 
         <div className="grid gap-6 lg:grid-cols-[280px_1fr_320px]">
 
+
         <ScanArea
                 scanArea={scanArea}
                 onRadiusChange={(radius) =>
@@ -34,7 +35,7 @@ export default function DashboardPage() {
               />
 
 
-          <DetectorMap scanArea={scanArea}/>
+          <DetectorMap scanArea={scanArea} setScanArea={setScanArea}/>
 
 
           <LiveFeed />
