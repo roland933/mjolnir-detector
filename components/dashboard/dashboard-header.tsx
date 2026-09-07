@@ -6,16 +6,7 @@ export function DashboardHeader() {
       <div>
         <div className="flex flex-col items-center justify-center gap-1">
 
-          {/* Mjölnir */}
-          <img
-            src="/mjolnir.png"
-            alt="Mjölnir"
-            className="
-              h-15 w-15 object-contain
-              animate-[mjolnir-glow_4s_ease-in-out_infinite]
-              
-            "
-          />
+         
 
           {/* Title */}
           <h1
@@ -35,16 +26,16 @@ export function DashboardHeader() {
 
         {/* Connection */}
         <div
-          className="flex items-center justify-center gap-2 text-md"
+          className="flex items-center justify-center gap-1 text-md"
           style={{ fontFamily: "var(--font-norse)" }}
         >
-          <Radio className="h-4 w-4 text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.35)]" />
+        <img src="/icons/asgard_connection.png" className="h-6 w-6 object-contain"/>
 
           <span className="text-slate-500">
             ASGARD CONNECTION
           </span>
 
-          <span className="font-medium text-emerald-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.3)]">
+          <span className="font-medium text-sky-400 drop-shadow-[0_0_5px_rgba(52,211,153,0.3)]">
             ONLINE
           </span>
         </div>

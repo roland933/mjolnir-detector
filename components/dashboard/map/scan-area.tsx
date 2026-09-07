@@ -73,8 +73,9 @@ const [location, setLocation] = useState("");
         </div>
 
         <div className="min-w-[260px] flex-1">
-  <div className="flex items-center gap-2">
-    <Search className="h-3.5 w-3.5 text-slate-500" />
+  <div className="flex items-center gap-1">
+      <img src="/icons/search.png" className="h-6 w-6 object-contain"/>
+   
 
     <span className="text-[10px] uppercase tracking-wider text-slate-500">
       Location
@@ -94,7 +95,7 @@ const [location, setLocation] = useState("");
         <div className="min-w-[280px] flex-1 border-l border-slate-800 pl-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Radius className="h-3.5 w-3.5 text-slate-500" />
+             <img src="/icons/radius.png" className="h-6 w-6 object-contain"/>
 
               <span className="text-xs uppercase tracking-wider text-slate-500">
                 Detection Radius
@@ -125,7 +126,7 @@ const [location, setLocation] = useState("");
           disabled={scanStatus === "scanning" || scanStatus === "analyzing"}
           className="flex  items-center gap-2 rounded-lg border border-sky-500/40 hover:cursor-pointer bg-sky-500/10 px-4 py-3 text-md font-semibold uppercase tracking-wider text-sky-400 transition hover:border-sky-400 hover:bg-sky-500/20 disabled:cursor-not-allowed disabled:opacity-50"
         >
-          <Scan className="h-4 w-4" />
+          <img src="/icons/start_scan.png" className="h-7 w-7 object-contain"/>
           {scanStatus === "scanning"
             ? "Scanning..."
             : scanStatus === "analyzing"
