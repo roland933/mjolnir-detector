@@ -2,6 +2,7 @@
 
 import { Circle, MessageCircle } from "lucide-react";
 import { useDetectorContext } from "@/app/context/detector-context";
+import { CardTexture } from "./card-texture";
 
 export function ThorMood() {
   const { result } = useDetectorContext();
@@ -9,7 +10,8 @@ export function ThorMood() {
   const mood = getThorMood(result);
 
   return (
-    <section className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80">
+    <section className="relative overflow-hidden rounded-xl border border-slate-800/80 bg-slate-900/80">
+      <CardTexture />
       <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
         <div className="flex items-center gap-2">
           <MessageCircle className="h-4 w-4 text-slate-400" />
@@ -50,8 +52,12 @@ export function ThorMood() {
           Thor's Mood
         </p>
 
-        <div className="mt-2 flex items-center gap-2">
-          <span className="text-2xl">{mood.icon}</span>
+        <div className="mt-2 flex items-center gap-1">
+         <img
+            src={mood.icon}
+            alt={mood.label}
+            className="h-9 w-9 object-contain"
+          />
 
           <span className="text-lg font-semibold uppercase tracking-wider text-amber-400"   style={{ fontFamily: "var(--font-norse)" }}>
             {mood.label}
@@ -67,25 +73,25 @@ export function ThorMood() {
 }
 
 function getThorMood(result: ReturnType<typeof useDetectorContext>["result"]) {
-  if (!result) {
-    return {
-      icon: "😐",
-      label: "Skeptical",
-      message: "Waiting for a worthy signal...",
-    };
-  }
-
-  if (result.isMjolnir) {
-    return {
-      icon: "⚡",
-      label: "Pleased",
-      message: "Finally. I knew you'd find it.",
-    };
-  }
-
+if (!result) {
   return {
-    icon: "😠",
-    label: "Annoyed",
-    message: "That is NOT my hammer.",
+    icon: "/icons/moods/skeptical.png",
+    label: "Skeptical",
+    message: "Waiting for a worthy signal...",
   };
+}
+
+if (result.isMjolnir) {
+  return {
+    icon: "/icons/moods/pleased.png",
+    label: "Pleased",
+    message: "Finally. I knew you'd find it.",
+  };
+}
+
+return {
+  icon: "/icons/moods/annoyed.png",
+  label: "Annoyed",
+  message: "That is NOT my hammer.",
+};
 }

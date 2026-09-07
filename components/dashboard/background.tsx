@@ -9,7 +9,7 @@ export function Background() {
       bg-center
       bg-no-repeat
       pointer-events-none
-      opacity-60
+      opacity-40
     "
   />
     )

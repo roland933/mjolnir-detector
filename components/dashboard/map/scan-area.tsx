@@ -21,11 +21,22 @@ export function ScanArea({
 const [location, setLocation] = useState("");
 
   return (
-    <section className="mb-4 rounded-xl border border-slate-800 bg-slate-900/80 px-5 py-4">
-      <div className="flex flex-wrap items-center gap-6">
+  <section className="relative mb-4 overflow-hidden rounded-xl border border-slate-800/80 bg-slate-900/80 px-5 py-4">
+     <div
+    className="
+      pointer-events-none
+      absolute inset-0
+      bg-[url('/scan-area-texture.png')]
+      bg-cover
+      bg-center
+      opacity-[0.12]
+    "
+  />
+
+      <div className="relative z-10  flex flex-wrap items-center gap-6">
         {/* Title */}
         <div className="flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-emerald-400" />
+          <img src="/icons/location.png" />
 
           <div>
             <h3 className="text-sm font-semibold">
@@ -75,7 +86,7 @@ const [location, setLocation] = useState("");
     value={location}
     onChange={(event) => setLocation(event.target.value)}
     placeholder="Search location..."
-    className="mt-1 w-full border-b border-slate-700 bg-transparent py-1 text-sm text-white outline-none placeholder:text-slate-600 focus:border-emerald-400"
+    className="mt-1 w-full border-b border-slate-700 bg-transparent py-1 text-sm text-white outline-none placeholder:text-slate-600 focus:border-sky-400"
   />
 </div>
 
