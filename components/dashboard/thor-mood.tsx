@@ -1,6 +1,5 @@
 "use client";
 
-import { Circle, MessageCircle } from "lucide-react";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { CardTexture } from "./card-texture";
 
@@ -13,9 +12,7 @@ export function ThorMood() {
     <section className="relative overflow-hidden rounded-xl ">
       <CardTexture />
       <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-        <div className="flex items-center gap-2 ml-8">
-        
-
+        <div className="ml-8">
           <h2 className="text-sm font-semibold uppercase tracking-wider" 
                          style={{
                 fontFamily: "var(--font-norse)",
@@ -27,7 +24,7 @@ export function ThorMood() {
               }}
                          
                          >
-            Thor Connection
+            Thor 
           </h2>
         </div>
 

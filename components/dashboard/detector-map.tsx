@@ -31,7 +31,7 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
   };
 
   return (
-    <section className="relative h-[600px] overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+    <section className="relative h-min-[600px] overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
       <div className="absolute inset-0 z-0">
         <RealMap onLocationSelect={update}
                    detection={result}  

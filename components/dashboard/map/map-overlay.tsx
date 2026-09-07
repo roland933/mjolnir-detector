@@ -1,4 +1,3 @@
-
 import { Radar } from "./radar";
 import { Result } from "./result";
 import { ScanStatus } from "@/app/types/scan.status";
@@ -12,20 +11,12 @@ type Props = {
   scanArea: ScanAreaType;
 };
 
+export function MapOverlay({ scanStatus, scan, result }: Props) {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[1000]">
+      <Radar scanStatus={scanStatus} />
 
-export function MapOverlay({scanStatus,scan,result}:Props) {
-
-    return(
-         <div className="pointer-events-none absolute inset-0 z-[1000]">
-
-              <Radar scanStatus={scanStatus} />
-        
-              
-        
-              <Result result={result} />
-
-              </div>
-
-    )
-
+      <Result result={result} />
+    </div>
+  );
 }

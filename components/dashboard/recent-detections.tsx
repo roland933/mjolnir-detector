@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, History } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { useState } from "react";
 import { HistoryModal } from "../dialogs/HistoryModal";

@@ -100,7 +100,7 @@ export function NorsePanel({
       className={`
         relative overflow-hidden rounded-xl
         border ${style.border}
-        bg-slate-900/85
+        bg-slate-950/80
         ${className}
       `}
     >
