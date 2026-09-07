@@ -14,12 +14,12 @@ export function RecentDetections() {
 
   return (
     <>
-    <section className="relative rounded-xl border border-slate-800 bg-slate-900/80">
-    <CardTexture />
+    <section className="relative rounded-xl">
+       <CardTexture />
       <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-        <div className="flex items-center gap-2">
-          <History className="h-4 w-4 text-slate-400" />
-
+        <div className="flex items-center justify-center ml-8">
+         
+         
           <h2 className="text-sm font-semibold uppercase tracking-wider"   style={{
                 fontFamily: "var(--font-norse)",
                 background:
@@ -76,16 +76,17 @@ export function RecentDetections() {
             ))}
           </div>
         )}
-
+      <div className="flex justify-center">
         <button
          style={{ fontFamily: "var(--font-norse)" }}
         onClick={() => setHistoryOpen(true)}
           type="button"
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-950/50 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-400 transition hover:border-sky-500/40 hover:text-sky-400"
+          className="mt-0 flex w-50  items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-950/50 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-400 transition hover:border-sky-500/40 hover:text-sky-400"
         >
-          <History className="h-3.5 w-3.5" />
+          <img src="/icons/history.png" className="h-5 w-5 object-contain"/>
           View History
         </button>
+      </div>
       </div>
     </section>
 

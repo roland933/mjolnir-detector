@@ -10,11 +10,11 @@ export function ThorMood() {
   const mood = getThorMood(result);
 
   return (
-    <section className="relative overflow-hidden rounded-xl border border-slate-800/80 bg-slate-900/80">
+    <section className="relative overflow-hidden rounded-xl ">
       <CardTexture />
       <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-        <div className="flex items-center gap-2">
-          <MessageCircle className="h-4 w-4 text-slate-400" />
+        <div className="flex items-center gap-2 ml-8">
+        
 
           <h2 className="text-sm font-semibold uppercase tracking-wider" 
                          style={{
@@ -31,8 +31,9 @@ export function ThorMood() {
           </h2>
         </div>
 
-        <div className="flex items-center gap-1 text-xs text-emerald-400"   style={{ fontFamily: "var(--font-norse)" }}>
-          <Circle className="h-2 w-2 fill-current animate-pulse" />
+        <div className="mr-8 flex items-center gap-1 text-xs text-emerald-400"   style={{ fontFamily: "var(--font-norse)" }}>
+          <img src="/icons/online.png" className="w-5 h-5 animate-pulse"/>
+          
           ONLINE
         </div>
       </div>
@@ -64,7 +65,7 @@ export function ThorMood() {
           </span>
         </div>
 
-        <p className="mt-3 text-md italic text-slate-400" >
+        <p className="mt-3 text-md italic text-slate-400 ml-8" >
           "{mood.message}"
         </p>
       </div>
