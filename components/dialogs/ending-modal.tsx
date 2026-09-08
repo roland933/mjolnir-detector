@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { AngryContent } from "../dashboard/ending/angry-content";
 import { ChoiceContent } from "../dashboard/ending/choice";
 import { Thor } from "../dashboard/ending/thor";
-
+import { toast } from "@/components/ui/toast"
 type EndingChoice = "return" | "keep";
 
 export type EndingState = "choice" | "angry" | "return";
@@ -22,7 +22,7 @@ type Props = {
 export function EndingModal({ open, onClose, onChoice }: Props) {
 
 
-  const [endingState, setEndingState] = useState<EndingState>("angry");
+  const [endingState, setEndingState] = useState<EndingState>("choice");
 
   const handleReturnChoice = () => {
     setEndingState("choice");
@@ -35,16 +35,22 @@ export function EndingModal({ open, onClose, onChoice }: Props) {
   }
 
   useEffect(() => {
-    if (endingState === "angry") {
+    if (endingState !== "angry") {
       return;
     }
 
     const timeout = setTimeout(() => {
       onClose();
+         toast.add({
+        title: "THOR CONNECTION OFFLINE",
+      
+      })
     }, 3000);
 
+
+
     return () => clearTimeout(timeout);
-  }, [endingState, onClose]);
+  }, [endingState]);
 
   if (!open) {
     return null;

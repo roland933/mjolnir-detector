@@ -12,8 +12,12 @@ import { NorsePanel } from "@/components/dashboard/norse-panel";
 import { DashboardWrapper } from "@/components/dashboard/dashboard-wrapper";
 import { LocationResult } from "../lib/geocoding";
 import { EndingModal } from "@/components/dialogs/ending-modal";
+import { Toaster } from "@/components/ui/toast";
+
 
 export default function DashboardPage() {
+
+
   const [scanArea, setScanArea] = useState<ScanAreaType>({
     latitude: 47.4979,
     longitude: 19.0402,
@@ -32,15 +36,7 @@ export default function DashboardPage() {
     }));
   };
 
-  const handleEndingChoice = (choice: "return" | "keep") => {
-  if (choice === "return") {
-    console.log("Mjölnir returned to Thor");
-  }
 
-  if (choice === "keep") {
-    console.log("Player kept Mjölnir");
-  }
-};
 
   useEffect(() => {
   if (!result?.isMjolnir) {
@@ -55,8 +51,11 @@ export default function DashboardPage() {
 }, [result]);
 
 
+
   return (
+     
     <main className="min-h-screen  bg-[#080b0e] text-white">
+      <Toaster />
       <Background />
       <div className="p-6 relative max-w-[1700px] mx-auto ">
         <DashboardHeader />
@@ -93,7 +92,7 @@ export default function DashboardPage() {
       </div>
       <EndingModal
         open={endingOpen}
-        onChoice={handleEndingChoice}
+       
         onClose={() => setEndingOpen(false)}
       />
     </main>
