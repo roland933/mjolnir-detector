@@ -10,6 +10,8 @@ import { ThorMood } from "@/components/dashboard/thor-mood";
 import { Background } from "@/components/dashboard/background";
 import { NorsePanel } from "@/components/dashboard/norse-panel";
 import { DashboardWrapper } from "@/components/dashboard/dashboard-wrapper";
+import { LocationResult } from "../lib/geocoding";
+
 export default function DashboardPage() {
   const [scanArea, setScanArea] = useState<ScanAreaType>({
     latitude: 47.4979,
@@ -18,6 +20,16 @@ export default function DashboardPage() {
   });
 
   const { scan, scanStatus } = useDetectorContext();
+
+const handleLocationSearch = (location: LocationResult) => {
+  setScanArea((current) => ({
+    ...current,
+    latitude: location.latitude,
+    longitude: location.longitude,
+  }));
+};
+
+
   return (
     <main className="min-h-screen  bg-[#080b0e] text-white">
       <Background />
@@ -27,6 +39,7 @@ export default function DashboardPage() {
         <DashboardWrapper>
           <div className="relative mx-auto w-full max-w-[1550px] px-4 py-5">
             <ScanArea
+              onLocationSearch={handleLocationSearch}
               scanArea={scanArea}
               onRadiusChange={(radius) =>
                 setScanArea((current) => ({

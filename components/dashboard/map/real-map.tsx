@@ -1,6 +1,7 @@
 "use client";
 import { DetectionResult } from "@/app/types/detector.result";
-import { MapContainer, TileLayer, useMapEvents, Circle } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, useMapEvents, useMap,Circle } from "react-leaflet";
 
 type Props = {
   latitude: number;
@@ -9,6 +10,22 @@ type Props = {
   detection: DetectionResult | null;
   onLocationSelect: (latitude: number, longitude: number) => void;
 };
+
+function MapController({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setView([latitude, longitude]);
+  }, [latitude, longitude, map]);
+
+  return null;
+}
 
 function MapCenterHandler({ onLocationSelect }: Props) {
   const map = useMapEvents({
@@ -32,6 +49,11 @@ export function RealMap({ onLocationSelect, radius, latitude, longitude,detectio
       <TileLayer
         attribution="&copy; OpenStreetMap contributors"
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      <MapController
+        latitude={latitude}
+        longitude={longitude}
       />
 
       <Circle

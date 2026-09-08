@@ -1,83 +1,96 @@
-import { DetectionResult } from "@/app/types/detector.result"
+import { DetectionResult } from "@/app/types/detector.result";
+import { NorsePanel } from "../norse-panel";
+
 
 type Props = {
-    result: DetectionResult | null,
-}
+  result: DetectionResult | null;
+};
 
-export function Result({result}:Props) {
+export function Result({ result }: Props) {
+  if (!result) {
+    return null;
+  }
 
-    if (!result) {
-            return null;
-        }
+  const objectImages: Record<string, string> = {
+        "Frying Pan": "/images/detections/frying-pan.png",
+        "Heavy Wrench": "/images/detections/heavy-wrench.png",
+        "Metal Pipe": "/images/detections/metal-pipe.png",
+        "Garden Shovel": "/images/detections/garden-shovel.png",
+        "Suspicious Rock": "/images/detections/suspicious-rock.png",
+        };
 
-    return (
+const image = result.isMjolnir
+  ? "/images/detections/mjolnir.png"
+  : objectImages[result.object];
 
-                <div className="absolute left-1/2 top-24 z-20 w-[280px] -translate-x-1/2">
-                    <div
-                    className={`rounded-xl border p-4 backdrop-blur ${
-                        result.isMjolnir
-                        ? "border-amber-400/40 bg-amber-400/10"
-                        : "border-slate-700 bg-slate-900/95"
-                    }`}
-                    >
-                    <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                        Detection Result
-                        </span>
+  return (
+    <div className="absolute right-6 top-6 z-20 w-[300px] animate-in fade-in slide-in-from-top-2 duration-300">
+      <NorsePanel variant={result.isMjolnir ? "accent" : "danger"}>
+        <div className="p-4">
+          <div className="flex items-center justify-between">
+            
 
-                        <span
-                        className={
-                            result.isMjolnir
-                            ? "text-amber-400"
-                            : "text-slate-500"
-                        }
-                        >
-                        {result.isMjolnir ? "MATCH" : "FALSE POSITIVE"}
-                        </span>
-                    </div>
+            <span
+             style={{ fontFamily: "var(--font-norse)" }}
+              className={
+                 `ml-8 ${result.isMjolnir ? "text-sky-400": "text-red-400"}`   
+       
+              }
+            >
+              {result.isMjolnir ? "MATCH" : "FALSE SIGNAL"}
+            </span>
+          </div>
 
-                    <h3 className="mt-3 text-xl font-bold">
-                        {result.object}
-                    </h3>
+          <h3 className="mt-3 text-xl " style={{
+                fontFamily: "var(--font-norse)",
+                
+              }}>
+            {result.object}
+          </h3>
 
-                    <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
-                        <div>
-                        <p className="text-xs text-slate-500">
-                            Confidence
-                        </p>
-
-                        <p className="font-semibold">
-                            {result.confidence}%
-                        </p>
-                        </div>
-
-                        <div>
-                        <p className="text-xs text-slate-500">
-                            Distance
-                        </p>
-
-                        <p className="font-semibold">
-                            {result.distance} km
-                        </p>
-                        </div>
-                    </div>
-
-                    {!result.isMjolnir && (
-                        <p className="mt-4 text-xs text-slate-500">
-                        The detector remains unconvinced.
-                        </p>
-                    )}
-
-                    {result.isMjolnir && (
-                        <p className="mt-4 text-sm font-medium text-amber-400">
-                        ⚡ Asgardian energy signature confirmed.
-                        </p>
-                    )}
-                    </div>
+          {image && (
+                <div className="mt-3 overflow-hidden rounded-lg border border-slate-800">
+                    <img
+                    src={image}
+                    alt={result.object}
+                    className="h-36 w-full object-cover"
+                    />
                 </div>
-    )
+                )}
 
-    
+          <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <p className="text-xs text-slate-300">
+                Confidence
+              </p>
 
+              <p className="font-semibold">
+                {result.confidence}%
+              </p>
+            </div>
 
+            <div>
+              <p className="text-xs text-slate-300">
+                Distance
+              </p>
+
+              <p className="font-semibold">
+                {result.distance} km
+              </p>
+            </div>
+          </div>
+
+          {result.isMjolnir ? (
+            <p className="mt-4 ml-5 text-sm font-medium text-sky-200">
+               Asgardian energy signature confirmed.
+            </p>
+          ) : (
+            <p className="mt-4 text-xs text-slate-500">
+              The detector remains unconvinced.
+            </p>
+          )}
+        </div>
+      </NorsePanel>
+    </div>
+  );
 }

@@ -13,6 +13,8 @@ const variants = {
     border: "border-slate-700/70",
     inner: "border-slate-600/25",
     accent: "text-slate-500",
+    cornerColor:"text-slate-500/60",
+    background: "bg-slate-950/80"
   },
   subtle: {
     border: "border-slate-800",
@@ -23,18 +25,22 @@ const variants = {
     border: "border-sky-500/50",
     inner: "border-sky-400/20",
     accent: "text-sky-400",
+    cornerColor:"text-sky-500/60",
+    background: "bg-sky-950/80"
   },
   danger: {
     border: "border-red-500/40",
     inner: "border-red-400/15",
     accent: "text-red-400",
+    cornerColor:"text-red-500/60",
+    background: "bg-red-950/80"
   },
 };
 
 function NorseCorner({
   position,
 }: {
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  position: "top-left" | "top-right" | "bottom-left" | "bottom-right",
 }) {
   const rotation = {
     "top-left": "",
@@ -42,6 +48,7 @@ function NorseCorner({
     "bottom-right": "rotate-180",
     "bottom-left": "-rotate-90",
   }[position];
+
 
   return (
     <div
@@ -99,8 +106,10 @@ export function NorsePanel({
     <section
       className={`
         relative overflow-hidden rounded-xl
+        backdrop-blur-[2px]
         border ${style.border}
-        bg-slate-950/80
+       ${style.background}
+        
         ${className}
       `}
     >
