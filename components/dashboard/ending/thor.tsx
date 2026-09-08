@@ -9,7 +9,7 @@ export function Thor({endingState}:Props) {
     const image = {
         "angry": "/angry-thor.png", 
         "choice": "/thor.png",
-        "return": "/thor.png"
+        "return": "/pleased-thor.png"
     }[endingState]
 
     return (

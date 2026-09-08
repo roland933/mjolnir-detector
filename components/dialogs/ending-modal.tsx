@@ -8,6 +8,9 @@ import { AngryContent } from "../dashboard/ending/angry-content";
 import { ChoiceContent } from "../dashboard/ending/choice";
 import { Thor } from "../dashboard/ending/thor";
 import { toast } from "@/components/ui/toast"
+import { GoodContent } from "../dashboard/ending/good-content";
+
+
 type EndingChoice = "return" | "keep";
 
 export type EndingState = "choice" | "angry" | "return";
@@ -25,7 +28,7 @@ export function EndingModal({ open, onClose, onChoice }: Props) {
   const [endingState, setEndingState] = useState<EndingState>("choice");
 
   const handleReturnChoice = () => {
-    setEndingState("choice");
+    setEndingState("return");
     onChoice("return")
   }
 
@@ -34,23 +37,25 @@ export function EndingModal({ open, onClose, onChoice }: Props) {
     onChoice("keep");
   }
 
-  useEffect(() => {
-    if (endingState !== "angry") {
-      return;
-    }
+useEffect(() => {
+  
+  if (endingState !== "angry" && endingState !== "return") {
+    return;
+  }
 
-    const timeout = setTimeout(() => {
-      onClose();
-         toast.add({
-        title: "THOR CONNECTION OFFLINE",
-      
-      })
-    }, 3000);
+  const timeout = setTimeout(() => {
+    onClose();
 
+    toast.add({
+      title:
+        endingState === "angry"
+          ? "THOR CONNECTION OFFLINE"
+          : "GIFT RECEIVED — NEW LIFE POTION",
+    });
+  }, 5000);
 
-
-    return () => clearTimeout(timeout);
-  }, [endingState]);
+  return () => clearTimeout(timeout);
+}, [endingState]);
 
   if (!open) {
     return null;
@@ -77,104 +82,106 @@ export function EndingModal({ open, onClose, onChoice }: Props) {
 
             <div className="relative flex flex-col justify-center p-8 lg:p-12">
               {endingState === "choice" ? (
-                <>
-                  <ChoiceContent />
+  <>
+    <ChoiceContent />
 
-                  <div className="mt-10 space-y-3">
-                    {/* Return Mjölnir */}
-                    <button
-                      type="button"
-                      onClick={handleReturnChoice}
-                      className="
-            group relative w-full cursor-pointer overflow-hidden rounded-lg
-            border border-sky-500/40
-            bg-slate-950/80
-            p-4 text-left
-            transition
-            hover:border-sky-400
-            hover:bg-sky-500/10
+    <div className="mt-10 space-y-3">
+      {/* Return Mjölnir */}
+      <button
+        type="button"
+        onClick={handleReturnChoice}
+        className="
+          group relative w-full cursor-pointer overflow-hidden rounded-lg
+          border border-sky-500/40
+          bg-slate-950/80
+          p-4 text-left
+          transition
+          hover:border-sky-400
+          hover:bg-sky-500/10
+        "
+      >
+        <div
+          className="
+            pointer-events-none absolute inset-0
+            bg-[url('/card-texture.png')]
+            bg-cover bg-center
+            opacity-20
           "
-                    >
-                      <div
-                        className="
-              pointer-events-none absolute inset-0
-              bg-[url('/card-texture.png')]
-              bg-cover bg-center
-              opacity-20
-            "
-                      />
+        />
 
-                      <div className="relative z-10 flex items-center gap-4">
-                        <img
-                          src="/icons/return-mjolnir.png"
-                          alt=""
-                          className="h-14 w-14 object-contain opacity-90 transition group-hover:scale-105"
-                        />
+        <div className="relative z-10 flex items-center gap-4">
+          <img
+            src="/icons/return-mjolnir.png"
+            alt=""
+            className="h-14 w-14 object-contain opacity-90 transition group-hover:scale-105"
+          />
 
-                        <div>
-                          <p
-                            style={{ fontFamily: "var(--font-norse)" }}
-                            className="text-2xl tracking-wider text-sky-400"
-                          >
-                            RETURN MJÖLNIR
-                          </p>
+          <div>
+            <p
+              style={{ fontFamily: "var(--font-norse)" }}
+              className="text-2xl tracking-wider text-sky-400"
+            >
+              RETURN MJÖLNIR
+            </p>
 
-                          <p className="mt-1 text-sm uppercase tracking-[0.2em] text-slate-500">
-                            To Thor
-                          </p>
-                        </div>
-                      </div>
-                    </button>
+            <p className="mt-1 text-sm uppercase tracking-[0.2em] text-slate-500">
+              To Thor
+            </p>
+          </div>
+        </div>
+      </button>
 
-                    {/* Keep Mjölnir */}
-                    <button
-                      type="button"
-                      onClick={handleKeepChoice}
-                      className="
-            group relative w-full cursor-pointer overflow-hidden rounded-lg
-            border border-red-500/40
-            bg-slate-950/80
-            p-4 text-left
-            transition
-            hover:border-red-400
-            hover:bg-red-500/10
+      {/* Keep Mjölnir */}
+      <button
+        type="button"
+        onClick={handleKeepChoice}
+        className="
+          group relative w-full cursor-pointer overflow-hidden rounded-lg
+          border border-red-500/40
+          bg-slate-950/80
+          p-4 text-left
+          transition
+          hover:border-red-400
+          hover:bg-red-500/10
+        "
+      >
+        <div
+          className="
+            pointer-events-none absolute inset-0
+            bg-[url('/card-texture.png')]
+            bg-cover bg-center
+            opacity-20
           "
-                    >
-                      <div
-                        className="
-              pointer-events-none absolute inset-0
-              bg-[url('/card-texture.png')]
-              bg-cover bg-center
-              opacity-20
-            "
-                      />
+        />
 
-                      <div className="relative z-10 flex items-center gap-4">
-                        <img
-                          src="/icons/keep-mjolnir.png"
-                          alt=""
-                          className="h-14 w-14 object-contain opacity-90 transition group-hover:scale-105"
-                        />
+        <div className="relative z-10 flex items-center gap-4">
+          <img
+            src="/icons/keep-mjolnir.png"
+            alt=""
+            className="h-14 w-14 object-contain opacity-90 transition group-hover:scale-105"
+          />
 
-                        <div>
-                          <p
-                            style={{ fontFamily: "var(--font-norse)" }}
-                            className="text-2xl tracking-wider text-red-400"
-                          >
-                            KEEP IT
-                          </p>
+          <div>
+            <p
+              style={{ fontFamily: "var(--font-norse)" }}
+              className="text-2xl tracking-wider text-red-400"
+            >
+              KEEP IT
+            </p>
 
-                          <p className="mt-1 text-sm uppercase tracking-[0.2em] text-slate-500">
-                            For myself...
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <AngryContent />
-              )}
+            <p className="mt-1 text-sm uppercase tracking-[0.2em] text-slate-500">
+              For myself...
+            </p>
+          </div>
+        </div>
+      </button>
+    </div>
+  </>
+) : endingState === "angry" ? (
+  <AngryContent />
+) : (
+  <GoodContent />
+)}
             </div>
 
 

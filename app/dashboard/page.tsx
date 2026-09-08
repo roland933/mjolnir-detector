@@ -26,7 +26,7 @@ export default function DashboardPage() {
 
   const { scan, scanStatus,result } = useDetectorContext();
 
-  const [endingOpen, setEndingOpen] = useState(true);
+  const [endingOpen, setEndingOpen] = useState(false);
 
   const handleLocationSearch = (location: LocationResult) => {
     setScanArea((current) => ({
