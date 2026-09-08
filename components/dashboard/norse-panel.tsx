@@ -118,7 +118,7 @@ export function NorsePanel({
         className="
           pointer-events-none
           absolute inset-0
-          bg-[url('/thor-card-texture.png')]
+          bg-[url('/card-texture.png')]
           bg-cover
           bg-center
           opacity-[0.10]

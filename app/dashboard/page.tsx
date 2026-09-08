@@ -3,7 +3,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DetectorMap } from "@/components/dashboard/detector-map";
 import { RecentDetections } from "@/components/dashboard/recent-detections";
 import { ScanArea } from "@/components/dashboard/map/scan-area";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScanAreaType } from "../types/scan.area";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { ThorMood } from "@/components/dashboard/thor-mood";
@@ -11,6 +11,7 @@ import { Background } from "@/components/dashboard/background";
 import { NorsePanel } from "@/components/dashboard/norse-panel";
 import { DashboardWrapper } from "@/components/dashboard/dashboard-wrapper";
 import { LocationResult } from "../lib/geocoding";
+import { EndingModal } from "@/components/dialogs/ending-modal";
 
 export default function DashboardPage() {
   const [scanArea, setScanArea] = useState<ScanAreaType>({
@@ -19,15 +20,39 @@ export default function DashboardPage() {
     radius: 25,
   });
 
-  const { scan, scanStatus } = useDetectorContext();
+  const { scan, scanStatus,result } = useDetectorContext();
 
-const handleLocationSearch = (location: LocationResult) => {
-  setScanArea((current) => ({
-    ...current,
-    latitude: location.latitude,
-    longitude: location.longitude,
-  }));
+  const [endingOpen, setEndingOpen] = useState(true);
+
+  const handleLocationSearch = (location: LocationResult) => {
+    setScanArea((current) => ({
+      ...current,
+      latitude: location.latitude,
+      longitude: location.longitude,
+    }));
+  };
+
+  const handleEndingChoice = (choice: "return" | "keep") => {
+  if (choice === "return") {
+    console.log("Mjölnir returned to Thor");
+  }
+
+  if (choice === "keep") {
+    console.log("Player kept Mjölnir");
+  }
 };
+
+  useEffect(() => {
+  if (!result?.isMjolnir) {
+    return;
+  }
+
+  const timeout = setTimeout(() => {
+    setEndingOpen(true);
+  }, 1500);
+
+  return () => clearTimeout(timeout);
+}, [result]);
 
 
   return (
@@ -66,6 +91,11 @@ const handleLocationSearch = (location: LocationResult) => {
           </div>
         </DashboardWrapper>
       </div>
+      <EndingModal
+        open={endingOpen}
+        onChoice={handleEndingChoice}
+        onClose={() => setEndingOpen(false)}
+      />
     </main>
   );
 }
