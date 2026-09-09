@@ -11,6 +11,8 @@ export const useDetector = () => {
   const [scanStatus, setScanStatus] = useState<ScanStatus>("idle");
   const [result, setResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<DetectionHistoryItem[]>([]);
+  const [showResult, setShowResult] = useState(false);
+  
 
   const {
   playFalseSignal,
@@ -35,7 +37,7 @@ export const useDetector = () => {
           }
 
       setResult(detection);
-
+setShowResult(true);
     
 
       setHistory((current) => [
@@ -56,5 +58,7 @@ export const useDetector = () => {
     result,
     history,
     scan,
+    showResult,
+    setShowResult
   };
 };

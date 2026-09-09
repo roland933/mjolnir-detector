@@ -14,6 +14,7 @@ import { LocationResult } from "../lib/geocoding";
 import { EndingModal } from "@/components/dialogs/ending-modal";
 import { Toaster } from "@/components/ui/toast";
 import { Lightning } from "@/components/dashboard/ending/lightning";
+import { useSoundEffects } from "../hooks/use-sound-effects";
 
 
 export default function DashboardPage() {
@@ -26,9 +27,14 @@ export default function DashboardPage() {
   });
 
   const { scan, scanStatus,result } = useDetectorContext();
-
   const [endingOpen, setEndingOpen] = useState(false);
   const [lightning, setLightning] = useState(false);
+
+    const {
+    playThunder,
+  } = useSoundEffects();
+
+
   const handleLocationSearch = (location: LocationResult) => {
     setScanArea((current) => ({
       ...current,
@@ -39,6 +45,7 @@ export default function DashboardPage() {
 
 
 
+
 useEffect(() => {
   if (!result?.isMjolnir) {
     return;
@@ -46,8 +53,8 @@ useEffect(() => {
 
   const timeout = setTimeout(() => {
     setLightning(true);
-
-    setTimeout(() => {
+    playThunder();
+    setTimeout(() =>   {
       setEndingOpen(true);
     }, 500);
   }, 1500);
