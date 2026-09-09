@@ -13,6 +13,7 @@ import { DashboardWrapper } from "@/components/dashboard/dashboard-wrapper";
 import { LocationResult } from "../lib/geocoding";
 import { EndingModal } from "@/components/dialogs/ending-modal";
 import { Toaster } from "@/components/ui/toast";
+import { Lightning } from "@/components/dashboard/ending/lightning";
 
 
 export default function DashboardPage() {
@@ -27,7 +28,7 @@ export default function DashboardPage() {
   const { scan, scanStatus,result } = useDetectorContext();
 
   const [endingOpen, setEndingOpen] = useState(false);
-
+  const [lightning, setLightning] = useState(false);
   const handleLocationSearch = (location: LocationResult) => {
     setScanArea((current) => ({
       ...current,
@@ -38,13 +39,17 @@ export default function DashboardPage() {
 
 
 
-  useEffect(() => {
+useEffect(() => {
   if (!result?.isMjolnir) {
     return;
   }
 
   const timeout = setTimeout(() => {
-    setEndingOpen(true);
+    setLightning(true);
+
+    setTimeout(() => {
+      setEndingOpen(true);
+    }, 500);
   }, 1500);
 
   return () => clearTimeout(timeout);
@@ -57,8 +62,10 @@ export default function DashboardPage() {
     <main className="min-h-screen  bg-[#080b0e] text-white">
       <Toaster />
       <Background />
+      <Lightning active={lightning} />
       <div className="p-6 relative max-w-[1700px] mx-auto ">
         <DashboardHeader />
+
 
         <DashboardWrapper>
           <div className="relative mx-auto w-full max-w-[1550px] px-4 py-5">

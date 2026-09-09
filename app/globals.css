@@ -148,3 +148,64 @@
       drop-shadow(0 0 20px rgba(70, 150, 255, 0.18));
   }
 }
+
+
+@keyframes lightning {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  15% {
+    opacity: 0.2;
+  }
+
+  22% {
+    opacity: 1;
+  }
+
+  35% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes lightning-flash {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  18% {
+    opacity: 0.1;
+  }
+
+  25% {
+    opacity: 0.4;
+  }
+
+  40% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-lightning {
+  animation: lightning 700ms ease-out forwards;
+}
+
+.animate-lightning-flash {
+  animation: lightning-flash 700ms ease-out forwards;
+}
