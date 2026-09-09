@@ -8,7 +8,7 @@ import { Title } from "../scan-area/title";
 import { Background } from "../scan-area/background";
 import { LocationResult, searchLocations } from "@/app/lib/geocoding";
 import { RadiusSlider } from "../scan-area/radius";
-
+import { useSoundEffects } from "@/app/hooks/use-sound-effects";
 type Props = {
   scanArea: ScanAreaType;
   scanStatus: ScanStatus;
@@ -28,6 +28,11 @@ export function ScanArea({
   const [suggestions, setSuggestions] = useState<LocationResult[]>([]);
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+const {
+  playScanStart,
+  startScanning,
+  stopScanning,
+} = useSoundEffects();
 
   useEffect(() => {
     if (!location.trim()) {
@@ -60,6 +65,18 @@ export function ScanArea({
 
     return () => clearTimeout(timeout);
   }, [location]);
+
+
+  useEffect(() => {
+  if (
+    scanStatus === "scanning" ||
+    scanStatus === "analyzing"
+  ) {
+    return;
+  }
+
+  stopScanning();
+}, [scanStatus]);
 
   return (
     <section className="z-50 relative mb-3  rounded-xl border border-slate-800/80 bg-slate-950/80 px-4 py-4">
@@ -140,7 +157,11 @@ export function ScanArea({
         {/* Start Scan */}
         <button
           style={{ fontFamily: "var(--font-norse)" }}
-          onClick={onScan}
+         onClick={() => {
+         playScanStart();
+        startScanning();
+        onScan();
+        }}
           disabled={scanStatus === "scanning" || scanStatus === "analyzing"}
           className="flex w-42  items-center gap-2 rounded-lg border border-sky-500/40 hover:cursor-pointer bg-sky-500/10 px-4 py-3 text-md font-semibold uppercase tracking-wider text-sky-400 transition hover:border-sky-400 hover:bg-sky-500/20 disabled:cursor-not-allowed disabled:opacity-50"
         >
