@@ -48,7 +48,7 @@ export function RealMap({ onLocationSelect, radius, latitude, longitude,detectio
     >
       <TileLayer
         attribution="&copy; OpenStreetMap contributors"
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
       />
 
       <MapController

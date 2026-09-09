@@ -1,3 +1,4 @@
+import { useSoundEffects } from '@/app/hooks/use-sound-effects';
 import { useState } from "react";
 import { ScanStatus } from "../types/scan.status";
 import { DetectionResult } from "../types/detector.result";
@@ -11,6 +12,11 @@ export const useDetector = () => {
   const [result, setResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<DetectionHistoryItem[]>([]);
 
+  const {
+  playFalseSignal,
+  playMjolnirFound,
+} = useSoundEffects();
+
   const scan = (scanArea: ScanAreaType) => {
     setResult(null);
     setScanStatus("scanning");
@@ -22,7 +28,15 @@ export const useDetector = () => {
     setTimeout(() => {
       const detection = generateDetection(scanArea);
 
+        if (detection.isMjolnir) {
+            playMjolnirFound();
+          } else {
+            playFalseSignal();
+          }
+
       setResult(detection);
+
+    
 
       setHistory((current) => [
         {
