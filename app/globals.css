@@ -209,3 +209,50 @@
 .animate-lightning-flash {
   animation: lightning-flash 700ms ease-out forwards;
 }
+
+
+.viking-marker {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  border-radius: 50%;
+
+  background: rgba(7, 15, 25, 0.85);
+
+  color: #94a3b8;
+
+  font-size: 18px;
+
+  box-shadow:
+    0 0 8px rgba(148, 163, 184, 0.25),
+    inset 0 0 8px rgba(148, 163, 184, 0.08);
+}
+
+
+.viking-marker.nearby {
+  width: 26px;
+  height: 26px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(148, 163, 184, 0.65);
+  border-radius: 50%;
+
+  background: rgba(7, 14, 24, 0.95);
+
+  color: rgba(203, 213, 225, 0.75);
+
+  font-size: 15px;
+
+  box-shadow:
+    0 0 8px rgba(148, 163, 184, 0.2);
+
+  opacity: 0.8;
+}

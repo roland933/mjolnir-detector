@@ -11,9 +11,11 @@ type Props = {
 
   result: DetectionResult | null;
   scanArea: ScanAreaType;
+  radarHeading: number;
+  signalStrength: "none" | "weak" | "strong";
 };
 
-export function MapOverlay({ scanStatus, result }: Props) {
+export function MapOverlay({ scanStatus, result, radarHeading,signalStrength }: Props) {
   const { showResult, setShowResult } = useDetectorContext();
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function MapOverlay({ scanStatus, result }: Props) {
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1000]">
-      <Radar scanStatus={scanStatus} />
+      <Radar scanStatus={scanStatus} heading={radarHeading} signalActive={true} signalStrength={signalStrength} />
 
       {showResult && <Result result={result} />}
     </div>
