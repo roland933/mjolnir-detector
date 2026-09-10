@@ -11,6 +11,7 @@ import {
 } from "react-leaflet";
 
 import L from "leaflet";
+import { ScanStatus } from "@/app/types/scan.status";
 
 export type VikingLocation = {
   name: string;
@@ -22,13 +23,14 @@ export type VikingLocation = {
 type Props = {
   latitude: number;
   longitude: number;
-  radius: number;
   detection: DetectionResult | null;
   onMapMove: (heading: number) => void;
   onLocationSelect: (latitude: number, longitude: number) => void;
   onSignalChange: (distance: number) => void;
   onNearbyLocationChange: (location: VikingLocation | null) => void;
   nearbyLocation: VikingLocation | null;
+  signalStrength: "none" | "weak" | "strong";
+  scanStatus: ScanStatus;
 };
 
 function MapController({
@@ -117,12 +119,34 @@ const VIKING_LOCATIONS: VikingLocation[] = [
 const vikingIcon = L.divIcon({
   className: "",
   html: `
-    <div class="viking-marker nearby">
+    <div class="viking-marker">
       ᛟ
     </div>
   `,
   iconSize: [26, 26],
   iconAnchor: [13, 13],
+});
+
+const nearbyVikingIcon = L.divIcon({
+  className: "",
+  html: `
+    <div class="viking-marker nearby">
+      ᛟ
+    </div>
+  `,
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+});
+
+const strongVikingIcon = L.divIcon({
+  className: "",
+  html: `
+    <div class="viking-marker strong">
+      ᛟ
+    </div>
+  `,
+  iconSize: [32, 32],
+  iconAnchor: [16, 16],
 });
 
 
@@ -158,11 +182,13 @@ function RadarMovementController({
 
     onSignalChange(nearestDistance);
 
-    if (nearestDistance < 40000) {
-      onNearbyLocationChange(nearestLocation);
-    } else {
-      onNearbyLocationChange(null);
-    }
+   if (nearestDistance < 100000) {
+        onNearbyLocationChange(nearestLocation);
+      } else {
+        onNearbyLocationChange(null);
+      }
+
+
   };
 
   useEffect(() => {
@@ -210,16 +236,58 @@ function RadarMovementController({
   return null;
 }
 
+function MapInteractionController({
+  scanStatus,
+}: {
+  scanStatus: ScanStatus;
+}) {
+  const map = useMap();
+
+  useEffect(() => {
+    const locked =
+      scanStatus === "scanning" ||
+      scanStatus === "analyzing";
+
+    if (locked) {
+      map.dragging.disable();
+      map.scrollWheelZoom.disable();
+      map.doubleClickZoom.disable();
+      map.boxZoom.disable();
+      map.keyboard.disable();
+      map.touchZoom.disable();
+    } else {
+      map.dragging.enable();
+      map.scrollWheelZoom.enable();
+      map.doubleClickZoom.enable();
+      map.boxZoom.enable();
+      map.keyboard.enable();
+      map.touchZoom.enable();
+    }
+
+    return () => {
+      map.dragging.enable();
+      map.scrollWheelZoom.enable();
+      map.doubleClickZoom.enable();
+      map.boxZoom.enable();
+      map.keyboard.enable();
+      map.touchZoom.enable();
+    };
+  }, [scanStatus, map]);
+
+  return null;
+}
+
 export function RealMap({
   onLocationSelect,
-  radius,
   latitude,
   longitude,
   detection,
   onMapMove,
   onSignalChange,
   onNearbyLocationChange,
-  nearbyLocation
+  nearbyLocation,
+  signalStrength,
+  scanStatus
 
 }: Props) {
   return (
@@ -235,21 +303,43 @@ export function RealMap({
         maxBoundsViscosity={1.0}
         className="h-full w-full"
       >
+
+        <MapInteractionController scanStatus={scanStatus} />
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
 
-        {nearbyLocation && (
-          <Marker
-            key={nearbyLocation.name}
-            position={[
-              nearbyLocation.latitude,
-              nearbyLocation.longitude,
-            ]}
-            icon={vikingIcon}
-          />
-        )}
+        {nearbyLocation && signalStrength !== "none" && (
+  <>
+    <Marker
+      key={nearbyLocation.name}
+      position={[
+        nearbyLocation.latitude,
+        nearbyLocation.longitude,
+      ]}
+      icon={vikingIcon}
+    />
+
+    {scanStatus === "analyzing" && (
+      <Circle
+        center={[
+          nearbyLocation.latitude,
+          nearbyLocation.longitude,
+        ]}
+        radius={12000}
+        pathOptions={{
+          color: "#38bdf8",
+          weight: 2,
+          opacity: 0.7,
+          fillColor: "#38bdf8",
+          fillOpacity: 0.08,
+          className: "analyzing-marker",
+        }}
+      />
+    )}
+  </>
+)}
 
         <MapController
           latitude={latitude}

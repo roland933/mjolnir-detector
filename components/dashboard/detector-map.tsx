@@ -58,9 +58,11 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
           onSignalChange={setNearestVikingDistance}
           latitude={scanArea.latitude}
           nearbyLocation={nearbyLocation}
+          signalStrength={signalStrength}
           onNearbyLocationChange={setNearbyLocation}
           longitude={scanArea.longitude}
-          radius={scanArea.radius} />
+           scanStatus={scanStatus}
+          />
       </div>
       <MapOverlay
         scanStatus={scanStatus}

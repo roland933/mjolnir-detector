@@ -8,14 +8,20 @@ import { useEffect } from "react";
 
 type Props = {
   scanStatus: ScanStatus;
-
+  scan: () => void;
   result: DetectionResult | null;
   scanArea: ScanAreaType;
   radarHeading: number;
   signalStrength: "none" | "weak" | "strong";
 };
 
-export function MapOverlay({ scanStatus, result, radarHeading,signalStrength }: Props) {
+export function MapOverlay({
+  scanStatus,
+  result,
+  radarHeading,
+  signalStrength,
+  scan,
+}: Props) {
   const { showResult, setShowResult } = useDetectorContext();
 
   useEffect(() => {
@@ -32,7 +38,13 @@ export function MapOverlay({ scanStatus, result, radarHeading,signalStrength }: 
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1000]">
-      <Radar scanStatus={scanStatus} heading={radarHeading} signalActive={true} signalStrength={signalStrength} />
+      <Radar
+        scanStatus={scanStatus}
+        heading={radarHeading}
+        signalStrength={signalStrength}
+        onScan={scan}
+        
+      />
 
       {showResult && <Result result={result} />}
     </div>
