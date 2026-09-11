@@ -43,6 +43,9 @@ export function MapOverlay({
         heading={radarHeading}
         signalStrength={signalStrength}
         onScan={scan}
+         mjolnirDetected={
+    scanStatus === "result" && result?.isMjolnir === true
+  }
         
       />
 

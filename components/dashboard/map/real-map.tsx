@@ -76,6 +76,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 17.5453,
     isMjolnir: false,
     falsePositive: "Heavy Wrench",
+     image: "/images/detections/heavy-wrench.png",
   },
   {
     name: "Kaupang",
@@ -84,6 +85,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 10.1065,
     isMjolnir: false,
     falsePositive: "Suspicious Rock",
+     image: "/images/detections/heavy-wrench.png",
   },
   {
     name: "Hedeby",
@@ -92,6 +94,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 9.5653,
     isMjolnir: false,
     falsePositive: "Metal Pipe",
+     image: "/images/detections/heavy-wrench.png",
   },
   {
     name: "Ribe",
@@ -100,6 +103,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 8.7649,
     isMjolnir: false,
     falsePositive: "Garden Shovel",
+     image: "/images/detections/heavy-wrench.png",
   },
   {
     name: "Jelling",
@@ -108,6 +112,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 9.4196,
     isMjolnir: false,
     falsePositive: "Frying Pan",
+     image: "/images/detections/heavy-wrench.png",
   },
   {
     name: "Uppsala",
@@ -116,6 +121,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 17.6389,
     isMjolnir: false,
     falsePositive: "Metal Pipe",
+     image: "/images/detections/heavy-wrench.png",
   },
   {
     name: "Trondheim",
@@ -123,7 +129,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     latitude: 63.4305,
     longitude: 10.3951,
     isMjolnir: true,
-     image: "/locations/trondheim.webp"
+    image: "/images/detections/mjolnir.png",
   },
   {
     name: "Borg",
@@ -132,6 +138,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     longitude: 13.6167,
     isMjolnir: false,
     falsePositive: "Suspicious Rock",
+     image: "/images/detections/heavy-wrench.png",
   },
 ];
 
@@ -315,6 +322,7 @@ export function RealMap({
       <MapContainer
         center={[64.5, 13.5]}
         zoom={5}
+        minZoom={5}
         maxBounds={[
           [45, -70],
           [80, 40],

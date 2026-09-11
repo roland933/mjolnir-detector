@@ -11,18 +11,9 @@ export function Result({ result }: Props) {
     return null;
   }
 
-  const objectImages: Record<string, string> = {
-        "Frying Pan": "/images/detections/frying-pan.png",
-        "Heavy Wrench": "/images/detections/heavy-wrench.png",
-        "Metal Pipe": "/images/detections/metal-pipe.png",
-        "Garden Shovel": "/images/detections/garden-shovel.png",
-        "Suspicious Rock": "/images/detections/suspicious-rock.png",
-        };
 
-const image = result.isMjolnir
-  ? "/images/detections/mjolnir.png"
-  : objectImages[result.object];
-
+const image = result.image;
+  
   return (
     <div className="absolute right-6 top-6 z-20 w-[300px] animate-in fade-in slide-in-from-top-2 duration-300">
       <NorsePanel variant={result.isMjolnir ? "accent" : "danger"}>
@@ -41,12 +32,16 @@ const image = result.isMjolnir
             </span>
           </div>
 
-          <h3 className="mt-3 text-xl " style={{
-                fontFamily: "var(--font-norse)",
-                
-              }}>
-            {result.object}
-          </h3>
+              <h3
+        className="mt-3 text-xl"
+        style={{ fontFamily: "var(--font-norse)" }}
+      >
+        {result.object}
+      </h3>
+
+      <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">
+        {result.locationName}
+      </p>
 
           {image && (
                 <div className="mt-3 overflow-hidden rounded-lg border border-slate-800">

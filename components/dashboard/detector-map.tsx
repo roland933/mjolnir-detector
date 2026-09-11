@@ -24,8 +24,6 @@ type Props = {
 }
 
 
-
-
 export function DetectorMap({ scanArea, setScanArea }: Props) {
 
   const { scanStatus, scan, result } = useDetectorContext();

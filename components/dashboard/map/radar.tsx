@@ -5,10 +5,11 @@ type RadarProps = {
   heading: number;
   signalStrength: "none" | "weak" | "strong";
   onScan: () => void;
-  scanStatus:ScanStatus
+  scanStatus:ScanStatus;
+   mjolnirDetected: boolean;
 };
 
-export function Radar({ heading, signalStrength,onScan,scanStatus }: RadarProps) {
+export function Radar({ heading, signalStrength,onScan,scanStatus,mjolnirDetected }: RadarProps) {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="relative h-[320px] w-[320px]">
@@ -87,50 +88,77 @@ export function Radar({ heading, signalStrength,onScan,scanStatus }: RadarProps)
 
     {/* Center */}
      
+    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+  {mjolnirDetected ? (
+    <div
+      className="
+        relative
+        flex h-16 w-16
+        items-center justify-center
+        rounded-full
+        border-2 border-amber-300
+        bg-amber-400/20
+        shadow-[0_0_35px_rgba(251,191,36,0.75)]
+        animate-mjolnir-signal
+      "
+    >
+      <span className="text-2xl text-amber-200">
+        ⚡
+      </span>
 
-<div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-  <button
-    type="button"
-    onClick={onScan}
-    disabled={signalStrength !== "strong"}
-    className={`
-      pointer-events-auto
-      flex h-11 w-11 items-center justify-center
-      rounded-full border-2
-      transition-all duration-300
+      <div
+        className="
+          pointer-events-none
+          absolute inset-[-10px]
+          rounded-full
+          border border-amber-300/50
+        "
+      />
+    </div>
+  ) : (
+    <button
+      type="button"
+      onClick={onScan}
+      disabled={signalStrength !== "strong"}
+      className={`
+        pointer-events-auto
+        flex h-11 w-11 items-center justify-center
+        rounded-full border-2
+        transition-all duration-300
 
-      ${
-      signalStrength === "none"
-        ? `
-          cursor-default
-          border-sky-400/80
-          bg-sky-400/15
-          shadow-[0_0_18px_rgba(56,189,248,0.25)]
-        `
-        : signalStrength === "weak"
-        ? `
-          cursor-default
-          animate-pulse
-          border-sky-300
-          bg-sky-400/30
-          shadow-[0_0_28px_rgba(56,189,248,0.5)]
-        `
-        : `
-          cursor-pointer
-          animate-pulse
-          border-sky-200
-          bg-sky-400/50
-          shadow-[0_0_45px_rgba(56,189,248,0.85)]
-        `
-    }
-    `}
-  >
-    {signalStrength === "strong" ? (
-      <ScanSearch className="h-5 w-5 text-sky-100" />
-    ) : (
-      <Crosshair className="h-5 w-5 text-sky-300" />
-    )}
-  </button>
+        ${
+          signalStrength === "none"
+            ? `
+              cursor-default
+              border-sky-400/80
+              bg-sky-400/15
+              shadow-[0_0_18px_rgba(56,189,248,0.25)]
+            `
+            : signalStrength === "weak"
+            ? `
+              cursor-default
+              animate-pulse
+              border-sky-300
+              bg-sky-400/30
+              shadow-[0_0_28px_rgba(56,189,248,0.5)]
+            `
+            : `
+              cursor-pointer
+              animate-pulse
+              border-sky-200
+              bg-sky-400/50
+              shadow-[0_0_45px_rgba(56,189,248,0.85)]
+            `
+        }
+      `}
+    >
+      {signalStrength === "strong" ? (
+        <ScanSearch className="h-5 w-5 text-sky-100" />
+      ) : (
+        <Crosshair className="h-5 w-5 text-sky-300" />
+      )}
+    </button>
+  )}
 </div>
 
         {/* Sweep */}
