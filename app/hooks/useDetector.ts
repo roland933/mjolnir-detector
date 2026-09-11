@@ -25,7 +25,8 @@ export const useDetector = () => {
 
   const scan = (
     scanArea: ScanAreaType,
-    target: DetectionTarget
+    target: DetectionTarget,
+    distance: number,
   ) => {
     setResult(null);
     setScanStatus("scanning");
@@ -36,8 +37,8 @@ export const useDetector = () => {
 
     setTimeout(() => {
       const detection = generateDetection(
-        scanArea,
-        target
+        target,
+        distance
       );
 
       if (detection.isMjolnir) {

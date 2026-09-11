@@ -5,26 +5,33 @@ type DetectionTarget = {
   name: string;
   latitude: number;
   longitude: number;
+  isMjolnir: boolean;
+  falsePositive?: string;
+   image?: string;
 };
 
 export const generateDetection = (
-  scanArea: ScanAreaType,
-  target: DetectionTarget
-): DetectionResult => {
-  const latitude = target.latitude;
-  const longitude = target.longitude;
 
-  return {
-    object: "MJÖLNIR",
-    confidence: 99.7,
-    distance: Number(
-      Math.sqrt(
-        Math.pow(latitude - scanArea.latitude, 2) +
-        Math.pow(longitude - scanArea.longitude, 2)
-      ).toFixed(1)
-    ),
-    isMjolnir: true,
-    latitude,
-    longitude,
-  };
+  target: DetectionTarget,
+  distance: number
+): DetectionResult => {
+  const isMjolnir = target.isMjolnir;
+
+return {
+  object: isMjolnir
+    ? "MJÖLNIR"
+    : target.falsePositive ?? "UNKNOWN",
+
+  confidence: isMjolnir ? 99.7 : 72,
+
+  distance: Number((distance / 1000).toFixed(1)),
+
+  isMjolnir,
+
+  latitude: target.latitude,
+  longitude: target.longitude,
+
+  locationName: target.name,
+  image: target.image,
+};
 };

@@ -19,6 +19,8 @@ export type VikingLocation = {
   latitude: number;
   longitude: number;
   isMjolnir: boolean;
+  image?: string;
+  falsePositive?: string;
 };
 
 type Props = {
@@ -72,56 +74,64 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     country: "Sweden",
     latitude: 59.3361,
     longitude: 17.5453,
-    isMjolnir: true
+    isMjolnir: false,
+    falsePositive: "Heavy Wrench",
   },
   {
     name: "Kaupang",
     country: "Norway",
     latitude: 59.0353,
     longitude: 10.1065,
-     isMjolnir: false
+    isMjolnir: false,
+    falsePositive: "Suspicious Rock",
   },
   {
     name: "Hedeby",
     country: "Denmark",
     latitude: 54.4911,
     longitude: 9.5653,
-     isMjolnir: false
+    isMjolnir: false,
+    falsePositive: "Metal Pipe",
   },
   {
     name: "Ribe",
     country: "Denmark",
     latitude: 55.3297,
     longitude: 8.7649,
-     isMjolnir: false
+    isMjolnir: false,
+    falsePositive: "Garden Shovel",
   },
   {
     name: "Jelling",
     country: "Denmark",
     latitude: 55.7566,
     longitude: 9.4196,
-     isMjolnir: false
+    isMjolnir: false,
+    falsePositive: "Frying Pan",
   },
   {
     name: "Uppsala",
     country: "Sweden",
     latitude: 59.8586,
     longitude: 17.6389,
-    isMjolnir: false
+    isMjolnir: false,
+    falsePositive: "Metal Pipe",
   },
   {
     name: "Trondheim",
     country: "Norway",
     latitude: 63.4305,
     longitude: 10.3951,
-     isMjolnir: false
+    isMjolnir: true,
+     image: "/locations/trondheim.webp"
   },
   {
     name: "Borg",
     country: "Norway",
     latitude: 68.2333,
     longitude: 13.6167,
-     isMjolnir: false
+    isMjolnir: false,
+    falsePositive: "Suspicious Rock",
   },
 ];
 
@@ -191,11 +201,11 @@ function RadarMovementController({
 
     onSignalChange(nearestDistance);
 
-   if (nearestDistance < 100000) {
-        onNearbyLocationChange(nearestLocation);
-      } else {
-        onNearbyLocationChange(null);
-      }
+    if (nearestDistance < 100000) {
+      onNearbyLocationChange(nearestLocation);
+    } else {
+      onNearbyLocationChange(null);
+    }
 
 
   };
@@ -320,35 +330,35 @@ export function RealMap({
         />
 
         {nearbyLocation && signalStrength !== "none" && (
-  <>
-    <Marker
-      key={nearbyLocation.name}
-      position={[
-        nearbyLocation.latitude,
-        nearbyLocation.longitude,
-      ]}
-      icon={vikingIcon}
-    />
+          <>
+            <Marker
+              key={nearbyLocation.name}
+              position={[
+                nearbyLocation.latitude,
+                nearbyLocation.longitude,
+              ]}
+              icon={vikingIcon}
+            />
 
-    {scanStatus === "analyzing" && (
-      <Circle
-        center={[
-          nearbyLocation.latitude,
-          nearbyLocation.longitude,
-        ]}
-        radius={12000}
-        pathOptions={{
-          color: "#38bdf8",
-          weight: 2,
-          opacity: 0.7,
-          fillColor: "#38bdf8",
-          fillOpacity: 0.08,
-          className: "analyzing-marker",
-        }}
-      />
-    )}
-  </>
-)}
+            {scanStatus === "analyzing" && (
+              <Circle
+                center={[
+                  nearbyLocation.latitude,
+                  nearbyLocation.longitude,
+                ]}
+                radius={12000}
+                pathOptions={{
+                  color: "#38bdf8",
+                  weight: 2,
+                  opacity: 0.7,
+                  fillColor: "#38bdf8",
+                  fillOpacity: 0.08,
+                  className: "analyzing-marker",
+                }}
+              />
+            )}
+          </>
+        )}
 
         <MapController
           latitude={latitude}

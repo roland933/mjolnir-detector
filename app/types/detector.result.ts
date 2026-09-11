@@ -5,4 +5,7 @@ export type DetectionResult = {
   isMjolnir: boolean;
   latitude: number;
   longitude: number;
+
+  locationName: string;
+  image?: string;
 };

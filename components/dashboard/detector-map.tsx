@@ -68,10 +68,14 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
         scanStatus={scanStatus}
         signalStrength={signalStrength}
         radarHeading={radarHeading}
-        scan={() => {
+       scan={() => {
           if (!nearbyLocation) return;
 
-          scan(scanArea, nearbyLocation);
+          scan(
+            scanArea,
+            nearbyLocation,
+            nearestVikingDistance
+          );
         }}
         result={result}
         scanArea={scanArea}
