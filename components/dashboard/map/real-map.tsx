@@ -18,6 +18,7 @@ export type VikingLocation = {
   country: string;
   latitude: number;
   longitude: number;
+  isMjolnir: boolean;
 };
 
 type Props = {
@@ -71,48 +72,56 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     country: "Sweden",
     latitude: 59.3361,
     longitude: 17.5453,
+    isMjolnir: true
   },
   {
     name: "Kaupang",
     country: "Norway",
     latitude: 59.0353,
     longitude: 10.1065,
+     isMjolnir: false
   },
   {
     name: "Hedeby",
     country: "Denmark",
     latitude: 54.4911,
     longitude: 9.5653,
+     isMjolnir: false
   },
   {
     name: "Ribe",
     country: "Denmark",
     latitude: 55.3297,
     longitude: 8.7649,
+     isMjolnir: false
   },
   {
     name: "Jelling",
     country: "Denmark",
     latitude: 55.7566,
     longitude: 9.4196,
+     isMjolnir: false
   },
   {
     name: "Uppsala",
     country: "Sweden",
     latitude: 59.8586,
     longitude: 17.6389,
+    isMjolnir: false
   },
   {
     name: "Trondheim",
     country: "Norway",
     latitude: 63.4305,
     longitude: 10.3951,
+     isMjolnir: false
   },
   {
     name: "Borg",
     country: "Norway",
     latitude: 68.2333,
     longitude: 13.6167,
+     isMjolnir: false
   },
 ];
 
