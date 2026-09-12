@@ -2,6 +2,7 @@
 
 import { useDetectorContext } from "@/app/context/detector-context";
 import { CardTexture } from "./card-texture";
+import { PanelHeader } from "../panel/panel-header";
 
 export function ThorMood() {
   const { result } = useDetectorContext();
@@ -11,29 +12,14 @@ export function ThorMood() {
   return (
     <section className="relative overflow-hidden rounded-xl ">
       <CardTexture />
-      <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-        <div className="ml-8">
-          <h2 className="text-sm font-semibold uppercase tracking-wider" 
-                         style={{
-                fontFamily: "var(--font-norse)",
-                background:
-                  "linear-gradient(180deg, #dbeafe 0%, #8da9bd 45%, #526b7a 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                textShadow: "0 0 14px rgba(80, 160, 220, 0.22)",
-              }}
-                         
-                         >
-            Thor 
-          </h2>
-        </div>
-
-        <div className="mr-8 flex items-center gap-1 text-xs text-emerald-400"   style={{ fontFamily: "var(--font-norse)" }}>
+      <PanelHeader title="Thor">
+         <div className="flex items-center gap-1 text-xs text-emerald-400"   style={{ fontFamily: "var(--font-norse)" }}>
           <img src="/icons/online.png" className="w-5 h-5 animate-pulse"/>
           
           ONLINE
         </div>
-      </div>
+      </PanelHeader>
+
 
       <div className="relative h-64 overflow-hidden bg-slate-950 mb-3">
         <img

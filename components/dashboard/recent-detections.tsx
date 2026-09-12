@@ -5,6 +5,7 @@ import { useDetectorContext } from "@/app/context/detector-context";
 import { useState } from "react";
 import { HistoryModal } from "../dialogs/HistoryModal";
 import { CardTexture } from "./card-texture";
+import { PanelHeader } from "../panel/panel-header";
 
 export function RecentDetections() {
   const { history } = useDetectorContext();
@@ -14,26 +15,14 @@ export function RecentDetections() {
 
   return (
     <>
-    <section className="relative rounded-xl">
-       <CardTexture />
-      <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-        <div className="flex items-center justify-center ml-8">
-         
-         
-          <h2 className="text-sm font-semibold uppercase tracking-wider"   style={{
-                fontFamily: "var(--font-norse)",
-                background:
-                  "linear-gradient(180deg, #dbeafe 0%, #8da9bd 45%, #526b7a 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                textShadow: "0 0 14px rgba(80, 160, 220, 0.22)",
-              }}>
-            Recent Detections
-          </h2>
-        </div>
+    <section className="relative rounded-xl overflow-hidden">
 
-        <ArrowRight className="h-4 w-4 text-slate-600" />
-      </div>
+       <CardTexture />
+
+       <PanelHeader title="Recent Detections">
+               <ArrowRight className="h-4 w-4 text-slate-600" />
+        </PanelHeader>
+      
 
       <div className="p-4">
         {recentDetections.length === 0 ? (

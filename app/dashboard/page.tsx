@@ -2,14 +2,12 @@
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DetectorMap } from "@/components/dashboard/detector-map";
 import { RecentDetections } from "@/components/dashboard/recent-detections";
-import { ScanArea } from "@/components/dashboard/map/scan-area";
 import { useEffect, useState } from "react";
 import { ScanAreaType } from "../types/scan.area";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { ThorMood } from "@/components/dashboard/thor-mood";
 import { Background } from "@/components/dashboard/background";
 import { NorsePanel } from "@/components/dashboard/norse-panel";
-import { DashboardWrapper } from "@/components/dashboard/dashboard-wrapper";
 import { LocationResult } from "../lib/geocoding";
 import { EndingModal } from "@/components/dialogs/ending-modal";
 import { Toaster } from "@/components/ui/toast";
@@ -64,51 +62,55 @@ useEffect(() => {
 
 
 
-  return (
-     
-    <main className="min-h-screen  bg-[#080b0e] text-white">
-      <Toaster />
-      <Background />
-      <Lightning active={lightning} />
-      <div className="p-6 relative max-w-[1700px] mx-auto ">
-        <DashboardHeader />
+return (
+  <main className="relative h-screen overflow-hidden bg-[#080b0e] text-white">
+    <Toaster />
 
+    <Background />
+    <Lightning active={lightning} />
 
-        <DashboardWrapper>
-          <div className="relative mx-auto w-full max-w-[1550px] px-4 py-5">
-            <ScanArea
-              onLocationSearch={handleLocationSearch}
-              scanArea={scanArea}
-              onRadiusChange={(radius) =>
-                setScanArea((current) => ({
-                  ...current,
-                  radius,
-                }))
-              }
-              scanStatus={scanStatus}
-              onScan={() => scan(scanArea)}
-            />
-
-            <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_360px]">
-              <DetectorMap scanArea={scanArea} setScanArea={setScanArea} />
-
-              <div className="space-y-3">
-                <NorsePanel >
-                  <ThorMood />
-                </NorsePanel>
-                <NorsePanel>
-                  <RecentDetections />
-                </NorsePanel>
-              </div>
-            </div>
-          </div>
-        </DashboardWrapper>
-      </div>
-      <EndingModal
-        open={endingOpen}
-       
-        onClose={() => setEndingOpen(false)}
+    {/* Full screen map */}
+    <div className="absolute inset-0">
+      <DetectorMap
+        scanArea={scanArea}
+        setScanArea={setScanArea}
       />
-    </main>
-  );
+    </div>
+
+    {/* Left HUD */}
+    <aside
+      className="
+        absolute
+        left-0
+        top-0
+        z-[1100]
+        flex
+        h-full
+        w-[320px]
+        flex-col
+        px-4
+        py-5
+      "
+    >
+      <DashboardHeader />
+
+      <div className="mt-4 flex flex-1 flex-col gap-4">
+        <NorsePanel>
+          <ThorMood />
+        </NorsePanel>
+
+        <div className="min-h-0 flex-1">
+          <NorsePanel>
+            <RecentDetections />
+          </NorsePanel>
+        </div>
+      </div>
+    </aside>
+
+    <EndingModal
+      open={endingOpen}
+      onClose={() => setEndingOpen(false)}
+    />
+  </main>
+);
 }

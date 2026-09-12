@@ -10,37 +10,44 @@ type Props = {
 
 const variants = {
   default: {
-    border: "border-slate-700/70",
-    inner: "border-slate-600/25",
-    accent: "text-slate-500",
-    cornerColor:"text-slate-500/60",
-    background: "bg-slate-950/80"
+    border: "border-neutral-400/20",
+    inner: "border-neutral-300/10",
+    accent: "text-neutral-400",
+    cornerColor: "text-neutral-400/40",
+    background: "bg-neutral-950/50",
   },
+
   subtle: {
-    border: "border-slate-800",
-    inner: "border-slate-700/20",
-    accent: "text-slate-600",
+    border: "border-neutral-500/10",
+    inner: "border-neutral-400/5",
+    accent: "text-neutral-500",
+    cornerColor: "text-neutral-500/30",
+    background: "bg-neutral-950/35",
   },
+
   accent: {
-    border: "border-sky-500/50",
-    inner: "border-sky-400/20",
+    border: "border-sky-400/35",
+    inner: "border-sky-300/10",
     accent: "text-sky-400",
-    cornerColor:"text-sky-500/60",
-    background: "bg-sky-950/80"
+    cornerColor: "text-sky-400/40",
+    background: "bg-neutral-950/50",
   },
+
   danger: {
-    border: "border-red-500/40",
-    inner: "border-red-400/15",
+    border: "border-red-400/30",
+    inner: "border-red-300/10",
     accent: "text-red-400",
-    cornerColor:"text-red-500/60",
-    background: "bg-red-950/80"
+    cornerColor: "text-red-400/35",
+    background: "bg-neutral-950/50",
   },
 };
 
 function NorseCorner({
   position,
+  color,
 }: {
-  position: "top-left" | "top-right" | "bottom-left" | "bottom-right",
+  position: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  color: string;
 }) {
   const rotation = {
     "top-left": "",
@@ -48,7 +55,6 @@ function NorseCorner({
     "bottom-right": "rotate-180",
     "bottom-left": "-rotate-90",
   }[position];
-
 
   return (
     <div
@@ -65,7 +71,7 @@ function NorseCorner({
       <svg
         viewBox="0 0 32 32"
         fill="none"
-        className="h-full w-full text-slate-500/60"
+        className={`h-full w-full ${color}`}
       >
         <path
           d="M2 30V12L12 2H30"
@@ -105,15 +111,17 @@ export function NorsePanel({
   return (
     <section
       className={`
-        relative overflow-hidden rounded-xl
-        backdrop-blur-[2px]
-        border ${style.border}
-       ${style.background}
-        
+        relative
+        overflow-hidden
+        rounded-xl
+        border
+        ${style.border}
+        ${style.background}
+        backdrop-blur-md
         ${className}
       `}
     >
-      {/* Background texture */}
+      {/* Rune texture */}
       <div
         className="
           pointer-events-none
@@ -121,7 +129,17 @@ export function NorsePanel({
           bg-[url('/card-texture.png')]
           bg-cover
           bg-center
-          opacity-[0.10]
+          opacity-[0.055]
+          grayscale
+        "
+      />
+
+      {/* Soft overlay */}
+      <div
+        className="
+          pointer-events-none
+          absolute inset-0
+          bg-neutral-900/10
         "
       />
 
@@ -131,15 +149,12 @@ export function NorsePanel({
           pointer-events-none
           absolute inset-1
           rounded-lg
-          border ${style.inner}
+          border
+          ${style.inner}
         `}
       />
 
-      {/* Norse corners */}
-      <NorseCorner position="top-left" />
-      <NorseCorner position="top-right" />
-      <NorseCorner position="bottom-right" />
-      <NorseCorner position="bottom-left" />
+ 
 
       {/* Content */}
       <div className="relative z-10">

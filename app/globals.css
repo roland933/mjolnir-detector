@@ -339,3 +339,64 @@
 .animate-mjolnir-signal {
   animation: mjolnir-signal 1.4s ease-in-out infinite;
 }
+
+
+@keyframes mjolnir-signal {
+  0% {
+    transform: translate(-50%, -50%) scale(0.75);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(0.75);
+    opacity: 0.3;
+  }
+}
+
+.animate-mjolnir-signal {
+  animation: mjolnir-signal 1.4s ease-in-out infinite;
+}
+
+@keyframes mjolnir-signal-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 0.45;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.35);
+    opacity: 0;
+  }
+}
+
+.animate-mjolnir-signal-ring {
+  animation: mjolnir-signal-ring 1.8s ease-out infinite;
+}
+
+
+.leaflet-control-zoom a {
+  background: rgba(30, 30, 30, 0.75) !important;
+  color: rgb(195, 195, 195) !important;
+  border-color: rgba(150, 150, 150, 0.25) !important;
+  backdrop-filter: blur(6px);
+}
+
+.leaflet-control-zoom a:hover {
+  background: rgba(45, 45, 45, 0.9) !important;
+  color: rgb(220, 220, 220) !important;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid rgba(150, 150, 150, 0.25) !important;
+  border-radius: 6px !important;
+  overflow: hidden;
+}

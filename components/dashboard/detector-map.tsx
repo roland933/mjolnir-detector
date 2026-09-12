@@ -32,6 +32,16 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
   const [nearbyLocation, setNearbyLocation] =
     useState<VikingLocation | null>(null);
 
+const mjolnirSignal =
+  nearbyLocation?.isMjolnir
+    ? Math.max(
+        0,
+        Math.min(
+          100,
+          Math.round(100 - (nearestVikingDistance / 100000) * 100)
+        )
+      )
+    : 0;
   const update = (latitude: number, longitude: number) => {
     setScanArea((current) => ({
       ...current,
@@ -48,7 +58,7 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
         : "none";
 
   return (
-    <section className="relative h-min-[600px] overflow-hidden rounded-xl border border-slate-800 bg-slate-950">
+    <section className="relative h-full overflow-hidden">
       <div className="absolute inset-0 z-0">
         <RealMap onLocationSelect={update}
           detection={result}
@@ -65,6 +75,7 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
       <MapOverlay
         scanStatus={scanStatus}
         signalStrength={signalStrength}
+         mjolnirSignal={mjolnirSignal}
         radarHeading={radarHeading}
        scan={() => {
           if (!nearbyLocation) return;
