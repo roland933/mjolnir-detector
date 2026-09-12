@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { useState } from "react";
 import { HistoryModal } from "../dialogs/HistoryModal";
-import { CardTexture } from "./card-texture";
+import { CardTexture } from "../dashboard/card-texture";
 import { PanelHeader } from "../panel/panel-header";
 
 export function RecentDetections() {
@@ -17,16 +17,16 @@ export function RecentDetections() {
     <>
     <section className="relative rounded-xl overflow-hidden">
 
-       <CardTexture />
+      
 
        <PanelHeader title="Recent Detections">
-               <ArrowRight className="h-4 w-4 text-slate-600" />
+               <ArrowRight className="h-4 w-4 text-neutral-600" />
         </PanelHeader>
       
 
       <div className="p-4">
         {recentDetections.length === 0 ? (
-          <p className="py-6 text-center text-md text-slate-600">
+          <p className="py-6 text-center text-md text-neutral-600">
             No detections recorded yet.
           </p>
         ) : (
@@ -58,7 +58,7 @@ export function RecentDetections() {
                   </div>
                 </div>
 
-                <span className="text-[10px] text-slate-600">
+                <span className="text-[10px] text-neutral-600">
                   {formatTime(detection.timestamp)}
                 </span>
               </div>
@@ -70,9 +70,9 @@ export function RecentDetections() {
          style={{ fontFamily: "var(--font-norse)" }}
         onClick={() => setHistoryOpen(true)}
           type="button"
-          className="mt-0 flex w-50  items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-950/50 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-slate-400 transition hover:border-sky-500/40 hover:text-sky-400"
+          className="mt-0 flex w-50  items-center justify-center gap-2 rounded-lg border border-neutral-700 bg-neutral-950/50 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-neutral-400 transition hover:border-sky-500/40 hover:text-sky-400"
         >
-          <img src="/icons/history.png" className="h-5 w-5 object-contain"/>
+       
           View History
         </button>
       </div>

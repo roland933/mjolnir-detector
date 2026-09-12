@@ -1,8 +1,8 @@
 "use client";
 
 import { useDetectorContext } from "@/app/context/detector-context";
-import { CardTexture } from "./card-texture";
-import { PanelHeader } from "../panel/panel-header";
+import { CardTexture } from "../card-texture";
+import { PanelHeader } from "../../panel/panel-header";
 
 export function ThorMood() {
   const { result } = useDetectorContext();
@@ -11,8 +11,8 @@ export function ThorMood() {
 
   return (
     <section className="relative overflow-hidden rounded-xl ">
-      <CardTexture />
-      <PanelHeader title="Thor">
+      
+      <PanelHeader >
          <div className="flex items-center gap-1 text-xs text-emerald-400"   style={{ fontFamily: "var(--font-norse)" }}>
           <img src="/icons/online.png" className="w-5 h-5 animate-pulse"/>
           
@@ -32,9 +32,7 @@ export function ThorMood() {
       </div>
 
       <div className="px-4 pb-4">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-slate-500">
-          Thor's Mood
-        </p>
+      
 
         <div className="mt-2 flex items-center gap-1">
          <img

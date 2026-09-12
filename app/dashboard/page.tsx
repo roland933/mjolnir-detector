@@ -1,11 +1,11 @@
 "use client";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { DetectorMap } from "@/components/dashboard/detector-map";
-import { RecentDetections } from "@/components/dashboard/recent-detections";
+import { RecentDetections } from "@/components/recentDetections/recent-detections";
 import { useEffect, useState } from "react";
 import { ScanAreaType } from "../types/scan.area";
 import { useDetectorContext } from "@/app/context/detector-context";
-import { ThorMood } from "@/components/dashboard/thor-mood";
+import { ThorMood } from "@/components/dashboard/thorMood/thor-mood";
 import { Background } from "@/components/dashboard/background";
 import { NorsePanel } from "@/components/dashboard/norse-panel";
 import { LocationResult } from "../lib/geocoding";
@@ -78,34 +78,60 @@ return (
     </div>
 
     {/* Left HUD */}
-    <aside
-      className="
-        absolute
-        left-0
-        top-0
-        z-[1100]
-        flex
-        h-full
-        w-[320px]
-        flex-col
-        px-4
-        py-5
-      "
-    >
-      <DashboardHeader />
+<aside
+  className="
+    absolute
+    left-0
+    top-0
+    z-[1100]
+    h-full
+    w-[320px]
+    px-4
+    py-4
+     
+  "
+>
+<div
+  className="
+    relative
+    flex
+    h-full
+    flex-col
+    overflow-hidden
+    rounded-xl
+    bg-neutral-950/30
+    backdrop-blur-[3px]
+  "
+>
+  {/* Sidebar texture */}
+  <div
+    className="
+      pointer-events-none
+      absolute inset-0
+      bg-[url('/card-texture.png')]
+      bg-cover
+      bg-center
+      opacity-[0.07]
+      grayscale
+    "
+  />
 
-      <div className="mt-4 flex flex-1 flex-col gap-4">
-        <NorsePanel>
-          <ThorMood />
-        </NorsePanel>
+  <div className="relative z-10 flex h-full flex-col">
+    {/* Header */}
+    <DashboardHeader />
 
-        <div className="min-h-0 flex-1">
-          <NorsePanel>
-            <RecentDetections />
-          </NorsePanel>
-        </div>
-      </div>
-    </aside>
+    {/* Thor */}
+    <div className="mt-3">
+      <ThorMood />
+    </div>
+
+    {/* Recent */}
+    <div className="mt-3 min-h-0 flex-1 border-t border-neutral-400/10 pt-3">
+      <RecentDetections />
+    </div>
+  </div>
+</div>
+</aside>
 
     <EndingModal
       open={endingOpen}
