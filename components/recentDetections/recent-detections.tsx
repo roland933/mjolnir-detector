@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { useState } from "react";
 import { HistoryModal } from "../dialogs/HistoryModal";
-import { CardTexture } from "../dashboard/card-texture";
 import { PanelHeader } from "../panel/panel-header";
 
 export function RecentDetections() {
@@ -17,8 +16,6 @@ export function RecentDetections() {
     <>
     <section className="relative rounded-xl overflow-hidden">
 
-      
-
        <PanelHeader title="Recent Detections">
                <ArrowRight className="h-4 w-4 text-neutral-600" />
         </PanelHeader>
@@ -26,7 +23,7 @@ export function RecentDetections() {
 
       <div className="p-4">
         {recentDetections.length === 0 ? (
-          <p className="py-6 text-center text-md text-neutral-600">
+          <p className="py-6 text-center text-md text-neutral-300">
             No detections recorded yet.
           </p>
         ) : (
