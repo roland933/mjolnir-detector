@@ -12,7 +12,7 @@ export function MjolnirEnergyWaveform({ strength }: Props) {
     <div className="relative h-[58px] w-[220px]">
       <svg
         viewBox="0 0 220 58"
-        className="h-full w-full overflow-visible"
+        className="h-full w-full overflow-visible scale-125 origin-center"
         fill="none"
       >
         {/* Outer energy fragments */}
@@ -135,7 +135,7 @@ export function MjolnirEnergyWaveform({ strength }: Props) {
           />
 
           <path
-           className="mjolnir-energy-flow"
+           className="mjolnir-rune-pulse"
             d="M128 29H160"
             stroke="currentColor"
             strokeWidth="1"
