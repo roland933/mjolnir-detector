@@ -400,3 +400,47 @@
   border-radius: 6px !important;
   overflow: hidden;
 }
+
+@keyframes mjolnir-rune-pulse {
+  0%,
+  100% {
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes mjolnir-energy-breathe {
+  0%,
+  100% {
+    transform: scaleY(0.92);
+  }
+
+  50% {
+    transform: scaleY(1.08);
+  }
+}
+
+@keyframes mjolnir-energy-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -24;
+  }
+}
+
+.mjolnir-rune-pulse {
+  animation: mjolnir-rune-pulse 2.4s ease-in-out infinite;
+}
+
+.mjolnir-energy-breathe {
+  animation: mjolnir-energy-breathe 2.8s ease-in-out infinite;
+}
+
+.mjolnir-energy-flow {
+  animation: mjolnir-energy-flow 2.5s linear infinite;
+}

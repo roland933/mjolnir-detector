@@ -13,6 +13,7 @@ import {
 import L from "leaflet";
 import { ScanStatus } from "@/app/types/scan.status";
 import { ZoomControl } from "react-leaflet";
+import { MapBoundaryFog } from "./MapBoundaryFog";
 
 export type VikingLocation = {
   name: string;
@@ -71,6 +72,13 @@ function MapCenterHandler({ onLocationSelect }: Props) {
 
 const VIKING_LOCATIONS: VikingLocation[] = [
   {
+  name: "Þingvellir",
+  country: "Iceland",
+  latitude: 64.2559,
+  longitude: -21.129,
+  isMjolnir: true,
+},
+  {
     name: "Birka",
     country: "Sweden",
     latitude: 59.3361,
@@ -124,14 +132,7 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     falsePositive: "Metal Pipe",
     image: "/images/detections/heavy-wrench.png",
   },
-  {
-    name: "Trondheim",
-    country: "Norway",
-    latitude: 63.4305,
-    longitude: 10.3951,
-    isMjolnir: true,
-    image: "/images/detections/mjolnir.png",
-  },
+ 
   {
     name: "Borg",
     country: "Norway",
@@ -326,20 +327,25 @@ export function RealMap({
         minZoom={5}
 
         zoomControl={false}
-        maxBounds={[
-          [30, -100],
-          [85, 80],
-        ]}
+       maxBounds={[
+  [45, -70],
+  [80, 40],
+]}
         maxBoundsViscosity={1.0}
         className="h-full w-full"
       >
         <ZoomControl position="bottomright" />
 
         <MapInteractionController scanStatus={scanStatus} />
+
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
+
+           {/* Map boundary fog */}
+        <MapBoundaryFog />
+
 
         {nearbyLocation && signalStrength !== "none" && (
           <>
@@ -428,6 +434,7 @@ export function RealMap({
         }}
       />
 
+   
     </div>
   );
 }

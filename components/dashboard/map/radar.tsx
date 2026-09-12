@@ -1,6 +1,6 @@
 import { ScanStatus } from "@/app/types/scan.status";
 import { Crosshair, ScanSearch } from "lucide-react";
-import { RadarGraphic } from "../radar/radar-graphic";
+import { RadarGraphic } from "./radar/radar-graphic";
 
 type RadarProps = {
   heading: number;

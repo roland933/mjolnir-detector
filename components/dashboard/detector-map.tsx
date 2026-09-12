@@ -8,10 +8,10 @@ import { useDetectorContext } from "@/app/context/detector-context";
 
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import type { VikingLocation } from "./map/real-map";
+import type { VikingLocation } from "./map/realMap/real-map";
 
 const RealMap = dynamic(
-  () => import("./map/real-map").then((mod) => mod.RealMap),
+  () => import("./map/realMap/real-map").then((mod) => mod.RealMap),
   {
     ssr: false,
   }

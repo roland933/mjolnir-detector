@@ -41,12 +41,12 @@ export function ThorMood() {
             className="h-9 w-9 object-contain"
           />
 
-          <span className="text-lg font-semibold uppercase tracking-wider text-amber-400"   style={{ fontFamily: "var(--font-norse)" }}>
+          <span className="text-lg font-semibold uppercase tracking-wider text-neutral-300"   style={{ fontFamily: "var(--font-norse)" }}>
             {mood.label}
           </span>
         </div>
 
-        <p className="mt-3 text-md italic text-slate-400 ml-8" >
+        <p className="mt-3 text-md italic text-neutral-400" >
           "{mood.message}"
         </p>
       </div>

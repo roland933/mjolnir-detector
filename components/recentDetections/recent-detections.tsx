@@ -70,7 +70,7 @@ export function RecentDetections() {
          style={{ fontFamily: "var(--font-norse)" }}
         onClick={() => setHistoryOpen(true)}
           type="button"
-          className="mt-0 flex w-50  items-center justify-center gap-2 rounded-lg border border-neutral-700 bg-neutral-950/50 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-neutral-400 transition hover:border-sky-500/40 hover:text-sky-400"
+          className="mt-0 flex w-50 hover:cursor-pointer  items-center justify-center gap-2 rounded-lg border border-neutral-700 bg-neutral-950/50 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-neutral-400 transition hover:border-sky-500/40 hover:text-sky-400"
         >
        
           View History

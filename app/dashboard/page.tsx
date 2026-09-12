@@ -1,5 +1,5 @@
 "use client";
-import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+import { DashboardHeader } from "@/components/dashboard/header/dashboard-header";
 import { DetectorMap } from "@/components/dashboard/detector-map";
 import { RecentDetections } from "@/components/recentDetections/recent-detections";
 import { useEffect, useState } from "react";

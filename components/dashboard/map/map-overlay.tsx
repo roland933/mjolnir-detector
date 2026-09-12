@@ -6,6 +6,7 @@ import { ScanAreaType } from "@/app/types/scan.area";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { useEffect } from "react";
 import { MjolnirSignal } from "../mjolnir-signal";
+import { MjolnirEnergyWaveform } from "../mjolnirSignal/mjolnir-energy-waveform";
 type Props = {
   scanStatus: ScanStatus;
   scan: () => void;
@@ -43,7 +44,6 @@ export function MapOverlay({
 
       
       <MjolnirSignal strength={mjolnirSignal} />
-    
 
       <Radar
         scanStatus={scanStatus}

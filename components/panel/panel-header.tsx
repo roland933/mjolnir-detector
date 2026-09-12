@@ -9,7 +9,7 @@ export function PanelHeader({title,children}:Props) {
     return(
         <div className="flex items-center justify-between border-b border-neutral-400/10 px-4 py-3">
           {title && (
-               <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400/70" 
+               <h2 className="text-sm font-semibold uppercase tracking-wider text-neutral-400" 
                          style={{
                 fontFamily: "var(--font-norse)",
                
@@ -23,7 +23,7 @@ export function PanelHeader({title,children}:Props) {
          
        
 
-        <div className="flex items-center gap-1 text-xs text-emerald-400"   style={{ fontFamily: "var(--font-norse)" }}>
+        <div className="flex items-center gap-1 text-xs text-emerald-300"   style={{ fontFamily: "var(--font-norse)" }}>
             {children}
          
         </div>
