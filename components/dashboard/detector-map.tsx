@@ -29,8 +29,8 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
   const { scanStatus, scan, result } = useDetectorContext();
   const [radarHeading, setRadarHeading] = useState(0);
   const [nearestVikingDistance, setNearestVikingDistance] = useState(Infinity);
-  const [nearbyLocation, setNearbyLocation] =
-    useState<VikingLocation | null>(null);
+  const [nearbyLocation, setNearbyLocation] = useState<VikingLocation | null>(null);
+  const [discoveredLocation, setDiscoveredLocations] = useState<Set<VikingLocation>>(new Set())
 
 const mjolnirSignal =
   nearbyLocation?.isMjolnir
@@ -57,6 +57,15 @@ const mjolnirSignal =
         ? "weak"
         : "none";
 
+
+  const handleLocationDiscovered = (location: VikingLocation) => {
+        setDiscoveredLocations((current) => {
+          const next = new Set(current);
+          next.add(location.name);
+          return next;
+        });
+};      
+
   return (
     <section className="relative h-full overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -68,6 +77,8 @@ const mjolnirSignal =
           nearbyLocation={nearbyLocation}
           signalStrength={signalStrength}
           onNearbyLocationChange={setNearbyLocation}
+          onLocationDiscovered={handleLocationDiscovered}
+          discoveredLocations={discoveredLocation}
           longitude={scanArea.longitude}
           scanStatus={scanStatus}
         />

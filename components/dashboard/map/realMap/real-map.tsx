@@ -14,6 +14,7 @@ import L from "leaflet";
 import { ScanStatus } from "@/app/types/scan.status";
 import { ZoomControl } from "react-leaflet";
 import { MapBoundaryFog } from "./MapBoundaryFog";
+import { NordicTexture } from "./nordic-texture";
 
 export type VikingLocation = {
   name: string;
@@ -33,9 +34,12 @@ type Props = {
   onLocationSelect: (latitude: number, longitude: number) => void;
   onSignalChange: (distance: number) => void;
   onNearbyLocationChange: (location: VikingLocation | null) => void;
+  onLocationDiscovered: (location: VikingLocation) => void
+  discoveredLocations: Set<string>;
   nearbyLocation: VikingLocation | null;
   signalStrength: "none" | "weak" | "strong";
   scanStatus: ScanStatus;
+
 };
 
 function MapController({
@@ -177,16 +181,29 @@ const strongVikingIcon = L.divIcon({
   iconAnchor: [16, 16],
 });
 
+const discoveredVikingIcon = L.divIcon({
+  className: "",
+  html: `
+    <div class="viking-marker discovered">
+      ᛟ
+    </div>
+  `,
+  iconSize: [30, 30],
+  iconAnchor: [15, 15],
+});
+
 
 
 function RadarMovementController({
   onHeadingChange,
   onSignalChange,
   onNearbyLocationChange,
+  onLocationDiscovered,
 }: {
   onHeadingChange: (heading: number) => void;
   onSignalChange: (distance: number) => void;
   onNearbyLocationChange: (location: VikingLocation | null) => void;
+  onLocationDiscovered: (location: VikingLocation) => void
 }) {
   const map = useMap();
   const previousCenter = useRef<L.LatLng | null>(null);
@@ -194,7 +211,7 @@ function RadarMovementController({
   const updateSignal = () => {
     const center = map.getCenter();
 
-    let nearestLocation = null;
+    let nearestLocation: VikingLocation | null = null;
     let nearestDistance = Infinity;
 
     VIKING_LOCATIONS.forEach((location) => {
@@ -211,7 +228,9 @@ function RadarMovementController({
     onSignalChange(nearestDistance);
 
     if (nearestDistance < 100000) {
+     onLocationDiscovered(nearestLocation);
       onNearbyLocationChange(nearestLocation);
+    
     } else {
       onNearbyLocationChange(null);
     }
@@ -313,6 +332,8 @@ export function RealMap({
   onMapMove,
   onSignalChange,
   onNearbyLocationChange,
+  onLocationDiscovered,
+  discoveredLocations,
   nearbyLocation,
   signalStrength,
   scanStatus
@@ -327,10 +348,11 @@ export function RealMap({
         minZoom={5}
 
         zoomControl={false}
-       maxBounds={[
-  [45, -70],
-  [80, 40],
-]}
+      maxBounds={[
+        [25, -120],
+        [88, 100],
+      ]}
+
         maxBoundsViscosity={1.0}
         className="h-full w-full"
       >
@@ -346,37 +368,49 @@ export function RealMap({
            {/* Map boundary fog */}
         <MapBoundaryFog />
 
+        {VIKING_LOCATIONS
+        .filter((location) => discoveredLocations.has(location.name))
+        .map((location) => (
+          <Marker
+            key={`discovered-${location.name}`}
+            position={[location.latitude, location.longitude]}
+            icon={discoveredVikingIcon}
+          />
+        ))}
 
-        {nearbyLocation && signalStrength !== "none" && (
-          <>
-            <Marker
-              key={nearbyLocation.name}
-              position={[
-                nearbyLocation.latitude,
-                nearbyLocation.longitude,
-              ]}
-              icon={vikingIcon}
-            />
 
-            {scanStatus === "analyzing" && (
-              <Circle
-                center={[
-                  nearbyLocation.latitude,
-                  nearbyLocation.longitude,
-                ]}
-                radius={12000}
-                pathOptions={{
-                  color: "#38bdf8",
-                  weight: 2,
-                  opacity: 0.7,
-                  fillColor: "#38bdf8",
-                  fillOpacity: 0.08,
-                  className: "analyzing-marker",
-                }}
-              />
-            )}
-          </>
-        )}
+        {nearbyLocation &&
+  signalStrength !== "none" &&
+  !discoveredLocations.has(nearbyLocation.name) && (
+    <>
+      <Marker
+        key={nearbyLocation.name}
+        position={[
+          nearbyLocation.latitude,
+          nearbyLocation.longitude,
+        ]}
+        icon={vikingIcon}
+      />
+
+      {scanStatus === "analyzing" && (
+        <Circle
+          center={[
+            nearbyLocation.latitude,
+            nearbyLocation.longitude,
+          ]}
+          radius={12000}
+          pathOptions={{
+            color: "#38bdf8",
+            weight: 2,
+            opacity: 0.7,
+            fillColor: "#38bdf8",
+            fillOpacity: 0.08,
+            className: "analyzing-marker",
+          }}
+        />
+      )}
+    </>
+)}
 
         <MapController
           latitude={latitude}
@@ -387,6 +421,7 @@ export function RealMap({
           onHeadingChange={onMapMove}
           onSignalChange={onSignalChange}
           onNearbyLocationChange={onNearbyLocationChange}
+          onLocationDiscovered={onLocationDiscovered}
         />
 
         {detection && (
@@ -406,20 +441,8 @@ export function RealMap({
         />
       </MapContainer>
 
-      {/* Nordic texture */}
-      <div
-        className="
-    pointer-events-none
-    absolute inset-0
-    z-[500]
-    opacity-20
-  "
-        style={{
-          backgroundImage: "url('/maps/texture.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      />
+     
+     <NordicTexture />
 
       {/* Dark vignette */}
       <div
