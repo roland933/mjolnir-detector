@@ -32,16 +32,16 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
   const [nearbyLocation, setNearbyLocation] = useState<VikingLocation | null>(null);
   const [discoveredLocation, setDiscoveredLocations] = useState<Set<VikingLocation>>(new Set())
 
-const mjolnirSignal =
-  nearbyLocation?.isMjolnir
-    ? Math.max(
+  const mjolnirSignal =
+    nearbyLocation?.isMjolnir
+      ? Math.max(
         0,
         Math.min(
           100,
           Math.round(100 - (nearestVikingDistance / 100000) * 100)
         )
       )
-    : 0;
+      : 0;
   const update = (latitude: number, longitude: number) => {
     setScanArea((current) => ({
       ...current,
@@ -51,20 +51,20 @@ const mjolnirSignal =
   };
 
   const signalStrength =
-    nearestVikingDistance < 30000
+    nearestVikingDistance < 50000
       ? "strong"
-      : nearestVikingDistance < 100000
+      : nearestVikingDistance < 200000
         ? "weak"
         : "none";
 
 
   const handleLocationDiscovered = (location: VikingLocation) => {
-        setDiscoveredLocations((current) => {
-          const next = new Set(current);
-          next.add(location.name);
-          return next;
-        });
-};      
+    setDiscoveredLocations((current) => {
+      const next = new Set(current);
+      next.add(location.name);
+      return next;
+    });
+  };
 
   return (
     <section className="relative h-full overflow-hidden">
@@ -77,7 +77,7 @@ const mjolnirSignal =
           nearbyLocation={nearbyLocation}
           signalStrength={signalStrength}
           onNearbyLocationChange={setNearbyLocation}
-          onLocationDiscovered={handleLocationDiscovered}
+    
           discoveredLocations={discoveredLocation}
           longitude={scanArea.longitude}
           scanStatus={scanStatus}
@@ -86,17 +86,23 @@ const mjolnirSignal =
       <MapOverlay
         scanStatus={scanStatus}
         signalStrength={signalStrength}
-         mjolnirSignal={mjolnirSignal}
+        mjolnirSignal={mjolnirSignal}
         radarHeading={radarHeading}
+        nearbyLocation={nearbyLocation}
+        discoveredLocations={discoveredLocation}
+        
        scan={() => {
-          if (!nearbyLocation) return;
+            if (!nearbyLocation) return;
 
-          scan(
-            scanArea,
-            nearbyLocation,
-            nearestVikingDistance
-          );
-        }}
+            scan(
+              scanArea,
+              nearbyLocation,
+              nearestVikingDistance,
+              () => {
+                handleLocationDiscovered(nearbyLocation);
+              }
+            );
+          }}
         result={result}
         scanArea={scanArea}
 

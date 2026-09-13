@@ -27,6 +27,7 @@ export const useDetector = () => {
     scanArea: ScanAreaType,
     target: DetectionTarget,
     distance: number,
+     onComplete?: (detection: DetectionResult) => void
   ) => {
     setResult(null);
     setScanStatus("scanning");
@@ -60,6 +61,7 @@ export const useDetector = () => {
       ]);
 
       setScanStatus("result");
+      onComplete?.(detection);
     }, 3000);
   };
 

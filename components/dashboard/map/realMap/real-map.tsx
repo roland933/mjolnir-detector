@@ -198,12 +198,11 @@ function RadarMovementController({
   onHeadingChange,
   onSignalChange,
   onNearbyLocationChange,
-  onLocationDiscovered,
+ 
 }: {
   onHeadingChange: (heading: number) => void;
   onSignalChange: (distance: number) => void;
   onNearbyLocationChange: (location: VikingLocation | null) => void;
-  onLocationDiscovered: (location: VikingLocation) => void
 }) {
   const map = useMap();
   const previousCenter = useRef<L.LatLng | null>(null);
@@ -227,13 +226,11 @@ function RadarMovementController({
 
     onSignalChange(nearestDistance);
 
-    if (nearestDistance < 100000) {
-     onLocationDiscovered(nearestLocation);
-      onNearbyLocationChange(nearestLocation);
-    
-    } else {
-      onNearbyLocationChange(null);
-    }
+    if (nearestDistance < 200000 && nearestLocation) {
+          onNearbyLocationChange(nearestLocation);
+        } else {
+          onNearbyLocationChange(null);
+        }
 
 
   };

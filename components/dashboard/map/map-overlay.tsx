@@ -5,8 +5,7 @@ import { DetectionResult } from "@/app/types/detector.result";
 import { ScanAreaType } from "@/app/types/scan.area";
 import { useDetectorContext } from "@/app/context/detector-context";
 import { useEffect } from "react";
-import { MjolnirSignal } from "../mjolnir-signal";
-import { MjolnirEnergyWaveform } from "../mjolnirSignal/mjolnir-energy-waveform";
+import { VikingLocation } from "./realMap/real-map";
 type Props = {
   scanStatus: ScanStatus;
   scan: () => void;
@@ -15,6 +14,8 @@ type Props = {
   radarHeading: number;
   signalStrength: "none" | "weak" | "strong";
   mjolnirSignal: number;
+ nearbyLocation: VikingLocation | null,
+  discoveredLocations: Set<string>;
 };
 
 export function MapOverlay({
@@ -22,7 +23,8 @@ export function MapOverlay({
   result,
   radarHeading,
   signalStrength,
-  mjolnirSignal,
+  nearbyLocation,
+  discoveredLocations,
   scan,
 }: Props) {
   const { showResult, setShowResult } = useDetectorContext();
@@ -42,19 +44,20 @@ export function MapOverlay({
   return (
     <div className="pointer-events-none absolute inset-0 z-[1000]">
 
-      
-      <MjolnirSignal strength={mjolnirSignal} />
+
+     
 
       <Radar
         scanStatus={scanStatus}
         heading={radarHeading}
-       
+        nearbyLocation={nearbyLocation}
         signalStrength={signalStrength}
+        discoveredLocations={discoveredLocations}
         onScan={scan}
-         mjolnirDetected={
-    scanStatus === "result" && result?.isMjolnir === true
-  }
-        
+        mjolnirDetected={
+          scanStatus === "result" && result?.isMjolnir === true
+        }
+
       />
 
       {showResult && <Result result={result} />}

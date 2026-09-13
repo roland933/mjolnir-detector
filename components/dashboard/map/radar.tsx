@@ -1,6 +1,7 @@
 import { ScanStatus } from "@/app/types/scan.status";
 import { Crosshair, ScanSearch } from "lucide-react";
 import { RadarGraphic } from "./radar/radar-graphic";
+import { VikingLocation } from "./realMap/real-map";
 
 type RadarProps = {
   heading: number;
@@ -8,14 +9,16 @@ type RadarProps = {
   onScan: () => void;
   scanStatus: ScanStatus;
   mjolnirDetected: boolean;
+  nearbyLocation: VikingLocation | null,
+  discoveredLocations: Set<string>
 };
 
-export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDetected }: RadarProps) {
+export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDetected,nearbyLocation,discoveredLocations }: RadarProps) {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="relative h-[320px] w-[320px]">
 
-      <div className="absolute inset-0 text-slate-400/50">
+      <div className="absolute inset-0 text-slate-400/50 z-0">
             <RadarGraphic />
           </div>
 
@@ -36,8 +39,31 @@ export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDete
       animate-scan-wave
     "
           />
+
         )}
 
+
+{nearbyLocation &&
+  signalStrength !== "none" &&
+  !discoveredLocations.has(nearbyLocation.name) && (
+    <div
+      className="
+        pointer-events-none
+        absolute
+        left-1/2
+        top-1/2
+        z-10
+        h-[70px]
+        w-[70px]
+        -translate-x-1/2
+        -translate-y-1/2
+      "
+    >
+      <div className="absolute inset-0 rounded-full border-2 border-sky-300/60 animate-proximity-wave" />
+
+      <div className="absolute inset-0 rounded-full border border-sky-200/35 animate-proximity-wave-delayed" />
+    </div>
+  )}
         {scanStatus === "analyzing" && (
           <div
             className="
@@ -60,7 +86,7 @@ export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDete
 
         {/* Center */}
 
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
           {mjolnirDetected ? (
             <div
               className="
