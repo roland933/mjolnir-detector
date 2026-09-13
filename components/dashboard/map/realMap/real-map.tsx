@@ -15,6 +15,7 @@ import { ScanStatus } from "@/app/types/scan.status";
 import { ZoomControl } from "react-leaflet";
 import { MapBoundaryFog } from "./MapBoundaryFog";
 import { NordicTexture } from "./nordic-texture";
+import { createVikingIcon } from "@/app/factory/createVikingIcon";
 
 export type VikingLocation = {
   name: string;
@@ -147,52 +148,6 @@ const VIKING_LOCATIONS: VikingLocation[] = [
     image: "/images/detections/heavy-wrench.png",
   },
 ];
-
-const vikingIcon = L.divIcon({
-  className: "",
-  html: `
-    <div class="viking-marker">
-      ᛟ
-    </div>
-  `,
-  iconSize: [26, 26],
-  iconAnchor: [13, 13],
-});
-
-const nearbyVikingIcon = L.divIcon({
-  className: "",
-  html: `
-    <div class="viking-marker nearby">
-      ᛟ
-    </div>
-  `,
-  iconSize: [28, 28],
-  iconAnchor: [14, 14],
-});
-
-const strongVikingIcon = L.divIcon({
-  className: "",
-  html: `
-    <div class="viking-marker strong">
-      ᛟ
-    </div>
-  `,
-  iconSize: [32, 32],
-  iconAnchor: [16, 16],
-});
-
-const discoveredVikingIcon = L.divIcon({
-  className: "",
-  html: `
-    <div class="viking-marker discovered">
-      ᛟ
-    </div>
-  `,
-  iconSize: [30, 30],
-  iconAnchor: [15, 15],
-});
-
-
 
 function RadarMovementController({
   onHeadingChange,
@@ -371,7 +326,7 @@ export function RealMap({
           <Marker
             key={`discovered-${location.name}`}
             position={[location.latitude, location.longitude]}
-            icon={discoveredVikingIcon}
+            icon={createVikingIcon({ type: "discovered" })}
           />
         ))}
 
@@ -386,7 +341,7 @@ export function RealMap({
           nearbyLocation.latitude,
           nearbyLocation.longitude,
         ]}
-        icon={vikingIcon}
+         icon={createVikingIcon({ type: "undiscovered" })}
       />
 
       {scanStatus === "analyzing" && (

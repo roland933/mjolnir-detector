@@ -18,7 +18,7 @@ export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDete
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="relative h-[320px] w-[320px]">
 
-      <div className="absolute inset-0 text-slate-400/50 z-0">
+      <div className="absolute inset-0 text-slate-400/20 z-0">
             <RadarGraphic />
           </div>
 

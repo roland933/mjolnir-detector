@@ -5,7 +5,7 @@ export function NordicTexture() {
     pointer-events-none
     absolute inset-0
     z-[500]
-    opacity-20
+    opacity-10
   "
         style={{
           backgroundImage: "url('/maps/texture.png')",
