@@ -7,7 +7,7 @@ import { MapOverlay } from "./map/map-overlay";
 import { useDetectorContext } from "@/app/context/detector-context";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { VikingLocation } from "./map/realMap/real-map";
 
 const RealMap = dynamic(
@@ -31,6 +31,8 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
   const [nearestVikingDistance, setNearestVikingDistance] = useState(Infinity);
   const [nearbyLocation, setNearbyLocation] = useState<VikingLocation | null>(null);
   const [discoveredLocation, setDiscoveredLocations] = useState<Set<VikingLocation>>(new Set())
+  const [signalLocation, setSignalLocation] =
+    useState<VikingLocation | null>(null);
 
   const mjolnirSignal =
     nearbyLocation?.isMjolnir
@@ -66,6 +68,8 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
     });
   };
 
+
+
   return (
     <section className="relative h-full overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -77,7 +81,8 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
           nearbyLocation={nearbyLocation}
           signalStrength={signalStrength}
           onNearbyLocationChange={setNearbyLocation}
-    
+          signalLocation={signalLocation}
+          onSignalLocationChange={setSignalLocation}
           discoveredLocations={discoveredLocation}
           longitude={scanArea.longitude}
           scanStatus={scanStatus}
@@ -88,21 +93,22 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
         signalStrength={signalStrength}
         mjolnirSignal={mjolnirSignal}
         radarHeading={radarHeading}
+        signalLocation={signalLocation}
         nearbyLocation={nearbyLocation}
         discoveredLocations={discoveredLocation}
-        
-       scan={() => {
-            if (!nearbyLocation) return;
 
-            scan(
-              scanArea,
-              nearbyLocation,
-              nearestVikingDistance,
-              () => {
-                handleLocationDiscovered(nearbyLocation);
-              }
-            );
-          }}
+        scan={() => {
+          if (!nearbyLocation) return;
+
+          scan(
+            scanArea,
+            nearbyLocation,
+            nearestVikingDistance,
+            () => {
+              handleLocationDiscovered(nearbyLocation);
+            }
+          );
+        }}
         result={result}
         scanArea={scanArea}
 

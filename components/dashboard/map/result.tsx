@@ -15,8 +15,8 @@ export function Result({ result }: Props) {
 const image = result.image;
   
   return (
-    <div className="absolute right-6 top-6 z-20 w-[300px] animate-in fade-in slide-in-from-top-2 duration-300">
-      <NorsePanel variant={result.isMjolnir ? "accent" : "danger"}>
+    <div className="absolute left-1/2 -translate-x-1/2 top-6 z-20 w-[300px] animate-in fade-in slide-in-from-top-2 duration-300">
+      <NorsePanel>
         <div className="p-4">
           <div className="flex items-center justify-between">
             
@@ -24,11 +24,11 @@ const image = result.image;
             <span
              style={{ fontFamily: "var(--font-norse)" }}
               className={
-                 `ml-8 ${result.isMjolnir ? "text-sky-400": "text-red-400"}`   
+                 `${result.isMjolnir ? "text-sky-400": "text-neutral-400"}`   
        
               }
             >
-              {result.isMjolnir ? "MATCH" : "FALSE SIGNAL"}
+              {result.isMjolnir ? "MJÖLNIR" : "DISCOVERED ITEM"}
             </span>
           </div>
 
@@ -39,7 +39,7 @@ const image = result.image;
         {result.object}
       </h3>
 
-      <p className="mt-1 text-xs uppercase tracking-widest text-slate-500">
+      <p className="mt-1 text-sm uppercase tracking-widest text-neutral-500">
         {result.locationName}
       </p>
 
@@ -55,7 +55,7 @@ const image = result.image;
 
           <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
             <div>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-neutral-300">
                 Confidence
               </p>
 
@@ -65,7 +65,7 @@ const image = result.image;
             </div>
 
             <div>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-neutral-300">
                 Distance
               </p>
 
@@ -75,15 +75,7 @@ const image = result.image;
             </div>
           </div>
 
-          {result.isMjolnir ? (
-            <p className="mt-4 ml-5 text-sm font-medium text-sky-200">
-               Asgardian energy signature confirmed.
-            </p>
-          ) : (
-            <p className="mt-4 text-xs text-slate-500">
-              The detector remains unconvinced.
-            </p>
-          )}
+      
         </div>
       </NorsePanel>
     </div>

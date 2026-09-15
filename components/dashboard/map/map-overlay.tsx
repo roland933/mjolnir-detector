@@ -16,6 +16,7 @@ type Props = {
   mjolnirSignal: number;
  nearbyLocation: VikingLocation | null,
   discoveredLocations: Set<string>;
+  signalLocation:  VikingLocation | null,
 };
 
 export function MapOverlay({
@@ -25,6 +26,7 @@ export function MapOverlay({
   signalStrength,
   nearbyLocation,
   discoveredLocations,
+  signalLocation,
   scan,
 }: Props) {
   const { showResult, setShowResult } = useDetectorContext();
@@ -41,11 +43,35 @@ export function MapOverlay({
     return () => clearTimeout(timeout);
   }, [result]);
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== "e") return;
+  
+      if (
+        signalStrength !== "strong" ||
+        !nearbyLocation ||
+        scanStatus !== "idle"
+      ) {
+        return;
+      }
+  
+      scan();
+    };
+  
+    window.addEventListener("keydown", handleKeyDown);
+  
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [
+    signalStrength,
+    nearbyLocation,
+    scanStatus,
+    scan,
+  ]);
+
   return (
     <div className="pointer-events-none absolute inset-0 z-[1000]">
-
-
-     
 
       <Radar
         scanStatus={scanStatus}
@@ -53,6 +79,7 @@ export function MapOverlay({
         nearbyLocation={nearbyLocation}
         signalStrength={signalStrength}
         discoveredLocations={discoveredLocations}
+        signalLocation={signalLocation}
         onScan={scan}
         mjolnirDetected={
           scanStatus === "result" && result?.isMjolnir === true

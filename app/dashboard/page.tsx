@@ -21,7 +21,6 @@ export default function DashboardPage() {
 
   const { result } = useDetectorContext();
   const [endingOpen, setEndingOpen] = useState(false);
-  const [lightning, setLightning] = useState(false);
 
   const { playThunder } = useSoundEffects();
 
@@ -31,7 +30,7 @@ export default function DashboardPage() {
     }
 
     const timeout = setTimeout(() => {
-      setLightning(true);
+     
       playThunder();
       setTimeout(() => {
         setEndingOpen(true);
@@ -46,7 +45,7 @@ export default function DashboardPage() {
       <Toaster />
 
       <Background />
-      <Lightning active={lightning} />
+      
 
       {/* Full screen map */}
       <div className="absolute inset-0">

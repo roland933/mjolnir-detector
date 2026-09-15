@@ -2,6 +2,8 @@ import { ScanStatus } from "@/app/types/scan.status";
 import { Crosshair, ScanSearch } from "lucide-react";
 import { RadarGraphic } from "./radar/radar-graphic";
 import { VikingLocation } from "./realMap/real-map";
+import {  ScanStatusMarker } from "./radar/scan-status-marker";
+import { Sweep } from "./radar/sweep";
 
 type RadarProps = {
   heading: number;
@@ -11,9 +13,10 @@ type RadarProps = {
   mjolnirDetected: boolean;
   nearbyLocation: VikingLocation | null,
   discoveredLocations: Set<string>
+  signalLocation: VikingLocation | null,
 };
 
-export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDetected,nearbyLocation,discoveredLocations }: RadarProps) {
+export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDetected,nearbyLocation,discoveredLocations,signalLocation }: RadarProps) {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="relative h-[320px] w-[320px]">
@@ -23,29 +26,8 @@ export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDete
           </div>
 
 
-        {scanStatus === "scanning" && (
-          <div
-            className="
-      pointer-events-none
-      absolute
-      left-1/2
-      top-1/2
-      h-[44px]
-      w-[44px]
-      rounded-full
-      border-2
-      border-sky-300/70
-      bg-sky-400/10
-      animate-scan-wave
-    "
-          />
-
-        )}
-
-
-{nearbyLocation &&
-  signalStrength !== "none" &&
-  !discoveredLocations.has(nearbyLocation.name) && (
+        {scanStatus === "idle" && signalLocation &&
+  !discoveredLocations.has(signalLocation.name) && (
     <div
       className="
         pointer-events-none
@@ -64,56 +46,16 @@ export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDete
       <div className="absolute inset-0 rounded-full border border-sky-200/35 animate-proximity-wave-delayed" />
     </div>
   )}
-        {scanStatus === "analyzing" && (
-          <div
-            className="
-      pointer-events-none
-      absolute
-      left-1/2
-      top-1/2
-      h-[44px]
-      w-[44px]
-      rounded-full
-      border-2
-      border-sky-300/70
-      bg-sky-400/10
-      animate-analyzing-pulse
-    "
-          />
-        )}
+
+
+  <ScanStatusMarker  scanStatus={scanStatus}/>
 
 
 
         {/* Center */}
 
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-          {mjolnirDetected ? (
-            <div
-              className="
-        relative
-        flex h-16 w-16
-        items-center justify-center
-        rounded-full
-        border-2 border-amber-300
-        bg-amber-400/20
-        shadow-[0_0_35px_rgba(251,191,36,0.75)]
-        animate-mjolnir-signal
-      "
-            >
-              <span className="text-2xl text-amber-200">
-                ⚡
-              </span>
-
-              <div
-                className="
-          pointer-events-none
-          absolute inset-[-10px]
-          rounded-full
-          border border-amber-300/50
-        "
-              />
-            </div>
-          ) : (
+        
             <button
               type="button"
               onClick={onScan}
@@ -155,16 +97,10 @@ export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDete
                 <Crosshair className="h-5 w-5 text-sky-300" />
               )}
             </button>
-          )}
+          
         </div>
 
-        {/* Sweep */}
-        <div
-          className="absolute left-1/2 top-1/2 h-[160px] w-[2px] origin-bottom -translate-x-1/2 -translate-y-full bg-gradient-to-t from-sky-300/90 via-sky-400/50 to-transparent transition-transform duration-300"
-          style={{
-            transform: `translate(-50%, -100%) rotate(${heading}deg)`,
-          }}
-        />
+       <Sweep heading={heading} />
 
       </div>
     </div>

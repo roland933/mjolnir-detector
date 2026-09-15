@@ -40,6 +40,8 @@ type Props = {
   nearbyLocation: VikingLocation | null;
   signalStrength: "none" | "weak" | "strong";
   scanStatus: ScanStatus;
+  signalLocation: VikingLocation | null;
+  onSignalLocationChange: (location: VikingLocation | null) => void;
 
 };
 
@@ -153,11 +155,14 @@ function RadarMovementController({
   onHeadingChange,
   onSignalChange,
   onNearbyLocationChange,
- 
+ onSignalLocationChange
 }: {
   onHeadingChange: (heading: number) => void;
   onSignalChange: (distance: number) => void;
   onNearbyLocationChange: (location: VikingLocation | null) => void;
+  onSignalLocationChange: (
+  location: VikingLocation | null
+) => void;
 }) {
   const map = useMap();
   const previousCenter = useRef<L.LatLng | null>(null);
@@ -185,6 +190,12 @@ function RadarMovementController({
           onNearbyLocationChange(nearestLocation);
         } else {
           onNearbyLocationChange(null);
+        }
+
+        if (nearestDistance < 300000 && nearestLocation) {
+          onSignalLocationChange(nearestLocation);
+        } else {
+          onSignalLocationChange(null);
         }
 
 
@@ -285,6 +296,7 @@ export function RealMap({
   onSignalChange,
   onNearbyLocationChange,
   onLocationDiscovered,
+  onSignalLocationChange,
   discoveredLocations,
   nearbyLocation,
   signalStrength,
@@ -322,13 +334,14 @@ export function RealMap({
 
         {VIKING_LOCATIONS
         .filter((location) => discoveredLocations.has(location.name))
-        .map((location) => (
-          <Marker
+        .map((location) => {
+          const type = location.isMjolnir ? "mjolnir" : "discovered";
+       return <Marker
             key={`discovered-${location.name}`}
             position={[location.latitude, location.longitude]}
-            icon={createVikingIcon({ type: "discovered" })}
+            icon={createVikingIcon({ type: type})}
           />
-        ))}
+})}
 
 
         {nearbyLocation &&
@@ -374,6 +387,7 @@ export function RealMap({
           onSignalChange={onSignalChange}
           onNearbyLocationChange={onNearbyLocationChange}
           onLocationDiscovered={onLocationDiscovered}
+          onSignalLocationChange={onSignalLocationChange}
         />
 
         {detection && (
