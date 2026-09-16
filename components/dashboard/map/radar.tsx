@@ -23,7 +23,14 @@ export function Radar({
   discoveredLocations,
   signalLocation,
 }: RadarProps) {
+  const detectorEffect =
+  signalStrength === "strong"
+    ? "animate-detector-strong"
+    : signalStrength === "weak"
+      ? "animate-detector-weak"
+      : "drop-shadow-[0_8px_6px_rgba(0,0,0,0.65)]";
   return (
+    
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
       <div className="relative h-[230px] w-[230px]">
 
@@ -61,7 +68,7 @@ export function Radar({
             <img
               src="/idle.png"
               alt="Mjölnir detector"
-              className="h-full w-full object-contain drop-shadow-[0_8px_6px_rgba(0,0,0,0.55)]"
+              className={`h-50 w-50 object-contain ${detectorEffect}`}
             />
           </button>
         </div>

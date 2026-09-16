@@ -542,3 +542,29 @@
   animation: proximity-wave-delayed 2.2s ease-out infinite;
   animation-delay: 1.1s;
 }
+
+@keyframes detector-weak {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.25));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.45));
+  }
+}
+
+@keyframes detector-strong {
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.45));
+  }
+
+  50% {
+    filter: drop-shadow(0 0 9px rgba(56, 189, 248, 0.7));
+  }
+}
+
+
+
+.animate-detector-strong {
+  animation: detector-strong 0.9s ease-in-out infinite;
+}
