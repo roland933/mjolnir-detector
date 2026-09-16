@@ -329,8 +329,7 @@ export function RealMap({
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
 
-           {/* Map boundary fog */}
-        <MapBoundaryFog />
+  
 
         {VIKING_LOCATIONS
         .filter((location) => discoveredLocations.has(location.name))
