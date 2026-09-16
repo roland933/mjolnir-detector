@@ -6,16 +6,14 @@ import {
   TileLayer,
   useMapEvents,
   useMap,
-  Circle,
-  Marker,
 } from "react-leaflet";
 
 import L from "leaflet";
 import { ScanStatus } from "@/app/types/scan.status";
 import { ZoomControl } from "react-leaflet";
-import { MapBoundaryFog } from "./MapBoundaryFog";
-import { NordicTexture } from "./nordic-texture";
-import { createVikingIcon } from "@/app/factory/createVikingIcon";
+import { VIKING_LOCATIONS } from "@/app/data/viking.locations";
+import { DarkVignette } from "./dark-vignette";
+import { VikingLocationMarker } from "./viking-locations-marker";
 
 export type VikingLocation = {
   name: string;
@@ -76,80 +74,6 @@ function MapCenterHandler({ onLocationSelect }: Props) {
 
   return null;
 }
-
-const VIKING_LOCATIONS: VikingLocation[] = [
-  {
-  name: "Þingvellir",
-  country: "Iceland",
-  latitude: 64.2559,
-  longitude: -21.129,
-  isMjolnir: true,
-},
-  {
-    name: "Birka",
-    country: "Sweden",
-    latitude: 59.3361,
-    longitude: 17.5453,
-    isMjolnir: false,
-    falsePositive: "Heavy Wrench",
-    image: "/images/detections/heavy-wrench.png",
-  },
-  {
-    name: "Kaupang",
-    country: "Norway",
-    latitude: 59.0353,
-    longitude: 10.1065,
-    isMjolnir: false,
-    falsePositive: "Suspicious Rock",
-    image: "/images/detections/heavy-wrench.png",
-  },
-  {
-    name: "Hedeby",
-    country: "Denmark",
-    latitude: 54.4911,
-    longitude: 9.5653,
-    isMjolnir: false,
-    falsePositive: "Metal Pipe",
-    image: "/images/detections/heavy-wrench.png",
-  },
-  {
-    name: "Ribe",
-    country: "Denmark",
-    latitude: 55.3297,
-    longitude: 8.7649,
-    isMjolnir: false,
-    falsePositive: "Garden Shovel",
-    image: "/images/detections/heavy-wrench.png",
-  },
-  {
-    name: "Jelling",
-    country: "Denmark",
-    latitude: 55.7566,
-    longitude: 9.4196,
-    isMjolnir: false,
-    falsePositive: "Frying Pan",
-    image: "/images/detections/heavy-wrench.png",
-  },
-  {
-    name: "Uppsala",
-    country: "Sweden",
-    latitude: 59.8586,
-    longitude: 17.6389,
-    isMjolnir: false,
-    falsePositive: "Metal Pipe",
-    image: "/images/detections/heavy-wrench.png",
-  },
- 
-  {
-    name: "Borg",
-    country: "Norway",
-    latitude: 68.2333,
-    longitude: 13.6167,
-    isMjolnir: false,
-    falsePositive: "Suspicious Rock",
-    image: "/images/detections/heavy-wrench.png",
-  },
-];
 
 function RadarMovementController({
   onHeadingChange,
@@ -329,52 +253,14 @@ export function RealMap({
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
 
-  
 
-        {VIKING_LOCATIONS
-        .filter((location) => discoveredLocations.has(location.name))
-        .map((location) => {
-          const type = location.isMjolnir ? "mjolnir" : "discovered";
-       return <Marker
-            key={`discovered-${location.name}`}
-            position={[location.latitude, location.longitude]}
-            icon={createVikingIcon({ type: type})}
-          />
-})}
+        <VikingLocationMarker discoveredLocations={discoveredLocations} 
+                              signalStrength={signalStrength} 
+                              nearbyLocation={nearbyLocation}
+                              scanStatus={scanStatus}
+                              
+                              />
 
-
-        {nearbyLocation &&
-  signalStrength !== "none" &&
-  !discoveredLocations.has(nearbyLocation.name) && (
-    <>
-      <Marker
-        key={nearbyLocation.name}
-        position={[
-          nearbyLocation.latitude,
-          nearbyLocation.longitude,
-        ]}
-         icon={createVikingIcon({ type: "undiscovered" })}
-      />
-
-      {scanStatus === "analyzing" && (
-        <Circle
-          center={[
-            nearbyLocation.latitude,
-            nearbyLocation.longitude,
-          ]}
-          radius={12000}
-          pathOptions={{
-            color: "#38bdf8",
-            weight: 2,
-            opacity: 0.7,
-            fillColor: "#38bdf8",
-            fillOpacity: 0.08,
-            className: "analyzing-marker",
-          }}
-        />
-      )}
-    </>
-)}
 
         <MapController
           latitude={latitude}
@@ -389,38 +275,16 @@ export function RealMap({
           onSignalLocationChange={onSignalLocationChange}
         />
 
-        {detection && (
-          <Circle
-            center={[detection.latitude, detection.longitude]}
-            radius={1500}
-            pathOptions={{
-              color: detection.isMjolnir ? "#fbbf24" : "#ef4444",
-              fillColor: detection.isMjolnir ? "#fbbf24" : "#ef4444",
-              fillOpacity: 0.8,
-            }}
-          />
-        )}
 
         <MapCenterHandler
           onLocationSelect={onLocationSelect}
         />
+
+
       </MapContainer>
 
-     
-     <NordicTexture />
-
-      {/* Dark vignette */}
-      <div
-        className="
-          pointer-events-none
-          absolute inset-0
-          z-[501]
-        "
-        style={{
-          background:
-            "radial-gradient(circle, transparent 45%, rgba(0,0,0,0.45) 100%)",
-        }}
-      />
+    
+      <DarkVignette />
 
    
     </div>

@@ -7,6 +7,7 @@ import { useDetectorContext } from "@/app/context/detector-context";
 import { useEffect } from "react";
 import { VikingLocation } from "./realMap/real-map";
 import { playSound } from "@/lib/audio/sounds";
+
 type Props = {
   scanStatus: ScanStatus;
   scan: () => void;
@@ -47,7 +48,7 @@ export function MapOverlay({
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() !== "e") return;
-       console.log(4444,scanStatus,signalStrength)
+       
       if (
         signalStrength !== "strong" ||
         !nearbyLocation ||
@@ -76,7 +77,7 @@ export function MapOverlay({
 
   return (
     <div className="pointer-events-none absolute inset-0 z-[1000]">
-
+   
       <Radar
         scanStatus={scanStatus}
         heading={radarHeading}

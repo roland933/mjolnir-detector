@@ -1,9 +1,6 @@
 import { ScanStatus } from "@/app/types/scan.status";
-import { Crosshair, ScanSearch } from "lucide-react";
-import { RadarGraphic } from "./radar/radar-graphic";
 import { VikingLocation } from "./realMap/real-map";
-import {  ScanStatusMarker } from "./radar/scan-status-marker";
-import { Sweep } from "./radar/sweep";
+import { ScanStatusMarker } from "./radar/scan-status-marker";
 
 type RadarProps = {
   heading: number;
@@ -11,96 +8,63 @@ type RadarProps = {
   onScan: () => void;
   scanStatus: ScanStatus;
   mjolnirDetected: boolean;
-  nearbyLocation: VikingLocation | null,
-  discoveredLocations: Set<string>
-  signalLocation: VikingLocation | null,
+  nearbyLocation: VikingLocation | null;
+  discoveredLocations: Set<string>;
+  signalLocation: VikingLocation | null;
 };
 
-export function Radar({ heading, signalStrength, onScan, scanStatus, mjolnirDetected,nearbyLocation,discoveredLocations,signalLocation }: RadarProps) {
+export function Radar({
+  heading,
+  signalStrength,
+  onScan,
+  scanStatus,
+  mjolnirDetected,
+  nearbyLocation,
+  discoveredLocations,
+  signalLocation,
+}: RadarProps) {
   return (
     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-      <div className="relative h-[320px] w-[320px]">
+      <div className="relative h-[230px] w-[230px]">
 
-      <div className="absolute inset-0 text-slate-400/20 z-0">
-            <RadarGraphic />
-          </div>
+        <ScanStatusMarker scanStatus={scanStatus} />
 
+        {/* Center detector */}
+        <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+          <button
+            type="button"
+            onClick={onScan}
+            disabled={signalStrength !== "strong"}
+            className={`
+              pointer-events-auto
+              relative flex h-[110px] w-[110px]
+              items-center justify-center
+              transition-all duration-300
 
-        {scanStatus === "idle" && signalLocation &&
-  !discoveredLocations.has(signalLocation.name) && (
-    <div
-      className="
-        pointer-events-none
-        absolute
-        left-1/2
-        top-1/2
-        z-10
-        h-[70px]
-        w-[70px]
-        -translate-x-1/2
-        -translate-y-1/2
-      "
-    >
-      <div className="absolute inset-0 rounded-full border-2 border-sky-300/60 animate-proximity-wave" />
-
-      <div className="absolute inset-0 rounded-full border border-sky-200/35 animate-proximity-wave-delayed" />
-    </div>
-  )}
-
-
-  <ScanStatusMarker  scanStatus={scanStatus}/>
-
-
-
-        {/* Center */}
-
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-        
-            <button
-              type="button"
-              onClick={onScan}
-              disabled={signalStrength !== "strong"}
-              className={`
-        pointer-events-auto
-        flex h-11 w-11 items-center justify-center
-        rounded-full border-2
-        transition-all duration-300
-
-        ${signalStrength === "none"
+              ${
+                signalStrength === "none"
                   ? `
-              cursor-default
-              border-sky-400/80
-              bg-sky-400/15
-              shadow-[0_0_18px_rgba(56,189,248,0.25)]
-            `
+                    opacity-70
+                  `
                   : signalStrength === "weak"
                     ? `
-              cursor-default
-              animate-pulse
-              border-sky-300
-              bg-sky-400/30
-              shadow-[0_0_28px_rgba(56,189,248,0.5)]
-            `
+                      drop-shadow-[0_0_12px_rgba(56,189,248,0.45)]
+                    `
                     : `
-              cursor-pointer
-              animate-pulse
-              border-sky-200
-              bg-sky-400/50
-              shadow-[0_0_45px_rgba(56,189,248,0.85)]
-            `
-                }
-      `}
-            >
-              {signalStrength === "strong" ? (
-                <ScanSearch className="h-5 w-5 text-sky-100" />
-              ) : (
-                <Crosshair className="h-5 w-5 text-sky-300" />
-              )}
-            </button>
-          
+                      cursor-pointer
+                      animate-pulse
+                      drop-shadow-[0_0_22px_rgba(56,189,248,0.85)]
+                    `
+              }
+            `}
+          >
+            <img
+              src="/idle.png"
+              alt="Mjölnir detector"
+              className="h-full w-full object-contain drop-shadow-[0_8px_6px_rgba(0,0,0,0.55)]"
+            />
+          </button>
         </div>
-
-       <Sweep heading={heading} />
 
       </div>
     </div>
