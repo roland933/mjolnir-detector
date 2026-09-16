@@ -19,14 +19,12 @@ const RealMap = dynamic(
 type Props = {
   scanArea: ScanAreaType,
   setScanArea: React.Dispatch<React.SetStateAction<ScanAreaType>>;
-
-
 }
 
 
 export function DetectorMap({ scanArea, setScanArea }: Props) {
 
-  const { scanStatus, scan, result } = useDetectorContext();
+  const { scanStatus, scan, result,setScanStatus } = useDetectorContext();
   const [radarHeading, setRadarHeading] = useState(0);
   const [nearestVikingDistance, setNearestVikingDistance] = useState(Infinity);
   const [nearbyLocation, setNearbyLocation] = useState<VikingLocation | null>(null);
@@ -106,6 +104,7 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
             nearestVikingDistance,
             () => {
               handleLocationDiscovered(nearbyLocation);
+              setScanStatus('idle')
             }
           );
         }}

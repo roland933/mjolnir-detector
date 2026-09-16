@@ -5,7 +5,7 @@ import { DetectionResult } from "../types/detector.result";
 import { generateDetection } from "../lib/detector";
 import { ScanAreaType } from "../types/scan.area";
 import { DetectionHistoryItem } from "../types/detection.history";
-
+import { playSound } from "@/lib/audio/sounds";
 type DetectionTarget = {
   name: string;
   latitude: number;
@@ -18,10 +18,6 @@ export const useDetector = () => {
   const [history, setHistory] = useState<DetectionHistoryItem[]>([]);
   const [showResult, setShowResult] = useState(false);
 
-  const {
-    playFalseSignal,
-    playMjolnirFound,
-  } = useSoundEffects();
 
   const scan = (
     scanArea: ScanAreaType,
@@ -43,9 +39,9 @@ export const useDetector = () => {
       );
 
       if (detection.isMjolnir) {
-        playMjolnirFound();
+       playSound("mjolnir",0.5)
       } else {
-        playFalseSignal();
+        playSound("discoveredItem",0.3)
       }
 
       setResult(detection);
@@ -72,5 +68,6 @@ export const useDetector = () => {
     scan,
     showResult,
     setShowResult,
+    setScanStatus
   };
 };

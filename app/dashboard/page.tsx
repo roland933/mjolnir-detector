@@ -9,8 +9,6 @@ import { ThorMood } from "@/components/dashboard/thorMood/thor-mood";
 import { Background } from "@/components/dashboard/background";
 import { EndingModal } from "@/components/dialogs/ending-modal";
 import { Toaster } from "@/components/ui/toast";
-import { Lightning } from "@/components/dashboard/ending/lightning";
-import { useSoundEffects } from "../hooks/use-sound-effects";
 
 export default function DashboardPage() {
   const [scanArea, setScanArea] = useState<ScanAreaType>({
@@ -22,7 +20,7 @@ export default function DashboardPage() {
   const { result } = useDetectorContext();
   const [endingOpen, setEndingOpen] = useState(false);
 
-  const { playThunder } = useSoundEffects();
+
 
   useEffect(() => {
     if (!result?.isMjolnir) {
@@ -31,7 +29,7 @@ export default function DashboardPage() {
 
     const timeout = setTimeout(() => {
      
-      playThunder();
+    
       setTimeout(() => {
         setEndingOpen(true);
       }, 500);

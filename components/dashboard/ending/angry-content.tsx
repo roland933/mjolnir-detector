@@ -10,11 +10,11 @@ export function AngryContent ()  {
                 YOU DARE, MORTAL?
             </p>
 
-            <p className="mt-6 max-w-lg text-md italic text-slate-300">
+            <p className="mt-6 max-w-lg text-md italic text-neutral-300">
                 "That is MY hammer."
             </p>
 
-            <p className="mt-3 text-xl text-slate-500">
+            <p className="mt-3 text-xl text-neutral-500">
                 You have made a terrible decision.
             </p>
 

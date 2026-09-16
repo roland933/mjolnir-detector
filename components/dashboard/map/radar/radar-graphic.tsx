@@ -1,258 +1,139 @@
-export function RadarGraphic() {
-  const ticks = Array.from({ length: 24 });
+export function RadarGraphic({
+  heading,
+  signalStrength,
+}: {
+  heading: number;
+  signalStrength: "none" | "weak" | "strong";
+}) {
+  const isStrong = signalStrength === "strong";
+  const isWeak = signalStrength === "weak";
+
+  const signalColor = isStrong
+    ? "#67e8f9"
+    : isWeak
+      ? "#38bdf8"
+      : "#94a3b8";
+
+  const signalOpacity = isStrong ? 0.9 : isWeak ? 0.65 : 0.45;
 
   return (
-    <svg
-      viewBox="0 0 320 320"
-      className="absolute inset-0 h-full w-full"
-      aria-hidden="true"
-    >
-      {/* Outer frame */}
-      <circle
-        cx="160"
-        cy="160"
-        r="154"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        opacity="0.35"
+    <div className="relative h-[250px] w-[250px]">
+      {/* Subtle artifact surface */}
+      <div
+        className="absolute inset-[14px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(15,23,25,0.18), rgba(2,6,8,0.08) 65%, transparent 75%)",
+        }}
       />
 
-      <circle
-        cx="160"
-        cy="160"
-        r="146"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.2"
+      {/* Main engraved ring */}
+      <div
+        className="absolute inset-[18px] rounded-full border-2"
+        style={{
+          borderColor: `rgba(103, 232, 249, ${signalOpacity})`,
+          boxShadow: isStrong
+            ? "0 0 14px rgba(103,232,249,0.18)"
+            : "0 0 8px rgba(103,232,249,0.06)",
+        }}
       />
 
-      {/* Norse ring */}
-      <circle
-        cx="160"
-        cy="160"
-        r="132"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        opacity="0.3"
+      {/* Inner engraved ring */}
+      <div
+        className="absolute inset-[32px] rounded-full border border-slate-400/30"
       />
 
-      <circle
-        cx="160"
-        cy="160"
-        r="124"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeDasharray="2 6"
-        opacity="0.35"
-      />
-
-      {/* Radar rings */}
-      <circle
-        cx="160"
-        cy="160"
-        r="96"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.28"
-      />
-
-      <circle
-        cx="160"
-        cy="160"
-        r="64"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.25"
-      />
-
-      <circle
-        cx="160"
-        cy="160"
-        r="32"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.2"
-      />
-
-      {/* Cardinal lines */}
-      <line
-        x1="160"
-        y1="24"
-        x2="160"
-        y2="296"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.2"
-      />
-
-      <line
-        x1="24"
-        y1="160"
-        x2="296"
-        y2="160"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.2"
-      />
-
-      {/* Diagonal guides */}
-      <line
-        x1="64"
-        y1="64"
-        x2="256"
-        y2="256"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.12"
-      />
-
-      <line
-        x1="256"
-        y1="64"
-        x2="64"
-        y2="256"
-        stroke="currentColor"
-        strokeWidth="1"
-        opacity="0.12"
-      />
-
-      {/* Outer ticks */}
-      {ticks.map((_, index) => {
-        const angle = index * 15;
-        const major = index % 6 === 0;
-
-        return (
-          <line
-            key={angle}
-            x1="160"
-            y1={major ? "8" : "12"}
-            x2="160"
-            y2={major ? "24" : "19"}
-            stroke="currentColor"
-            strokeWidth={major ? 1.5 : 1}
-            opacity={major ? 0.5 : 0.25}
-            transform={`rotate(${angle} 160 160)`}
+      {/* Rune inscription */}
+      <svg
+        className="pointer-events-none absolute inset-0 z-[2] h-full w-full"
+        viewBox="0 0 250 250"
+      >
+        <defs>
+          <path
+            id="rune-ring"
+            d="
+              M 125 125
+              m -100 0
+              a 100 100 0 1 1 200 0
+              a 100 100 0 1 1 -200 0
+            "
           />
-        );
-      })}
+        </defs>
 
-      {/* Cardinal Norse markers */}
-      <text
-        x="160"
-        y="18"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        className="fill-current"
-        fontSize="17"
-        opacity="0.55"
-      >
+        <text
+          fill="rgba(203, 213, 225, 0.68)"
+          fontSize="7"
+          fontWeight="500"
+          letterSpacing="3"
+          style={{
+            filter:
+              "drop-shadow(0 0 3px rgba(148,163,184,0.3))",
+          }}
+        >
+          <textPath
+            href="#rune-ring"
+            startOffset="0%"
+          >
+            ᛏ ᚺ ᛟ ᚱ · ᛗ ᛃ ᛟ ᛚ ᚾ ᛁ ᚱ · ᛏ ᚺ ᛟ ᚱ · ᛗ ᛃ ᛟ ᛚ ᚾ ᛁ ᚱ · ᛏ ᚺ ᛟ ᚱ · ᛗ ᛃ ᛟ ᛚ ᚾ ᛁ ᚱ
+          </textPath>
+        </text>
+      </svg>
+
+      {/* Cardinal engraving */}
+      <div className="absolute left-1/2 top-[8px] -translate-x-1/2 text-[9px] text-slate-300/50">
         ᛏ
-      </text>
+      </div>
 
-      <text
-        x="302"
-        y="160"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        className="fill-current"
-        fontSize="17"
-        opacity="0.55"
-      >
-        ᚱ
-      </text>
+      <div className="absolute bottom-[8px] left-1/2 -translate-x-1/2 text-[9px] text-slate-300/50">
+        ᛉ
+      </div>
 
-      <text
-        x="160"
-        y="302"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        className="fill-current"
-        fontSize="17"
-        opacity="0.55"
-      >
-        ᛟ
-      </text>
-
-      <text
-        x="18"
-        y="160"
-        textAnchor="middle"
-        dominantBaseline="middle"
-        className="fill-current"
-        fontSize="17"
-        opacity="0.55"
-      >
+      <div className="absolute left-[8px] top-1/2 -translate-y-1/2 text-[9px] text-slate-300/50">
         ᚠ
-      </text>
+      </div>
 
-      {/* Small rune groups */}
-      <text
-        x="92"
-        y="46"
-        className="fill-current"
-        fontSize="11"
-        letterSpacing="5"
-        opacity="0.28"
-      >
-        ᚱᛟᚾ
-      </text>
+      <div className="absolute right-[8px] top-1/2 -translate-y-1/2 text-[9px] text-slate-300/50">
+        ᚱ
+      </div>
 
-      <text
-        x="205"
-        y="46"
-        className="fill-current"
-        fontSize="11"
-        letterSpacing="5"
-        opacity="0.28"
-      >
-        ᛏᚨᛚ
-      </text>
+      {/* Minimal crosshair */}
+      <div className="absolute left-1/2 top-[34px] h-[182px] w-px -translate-x-1/2 bg-slate-400/15" />
 
-      <text
-        x="92"
-        y="282"
-        className="fill-current"
-        fontSize="11"
-        letterSpacing="5"
-        opacity="0.28"
-      >
-        ᛉᚠᚱ
-      </text>
+      <div className="absolute left-[34px] top-1/2 h-px w-[182px] -translate-y-1/2 bg-slate-400/15" />
 
-      <text
-        x="205"
-        y="282"
-        className="fill-current"
-        fontSize="11"
-        letterSpacing="5"
-        opacity="0.28"
-      >
-        ᛞᛟᚾ
-      </text>
-
-      {/* Center */}
-      <circle
-        cx="160"
-        cy="160"
-        r="8"
-        fill="currentColor"
-        opacity="0.18"
+      {/* Norse center glyph */}
+      <div
+        className="absolute left-1/2 top-1/2 z-[4] h-7 w-7 -translate-x-1/2 -translate-y-1/2 rotate-45 border"
+        style={{
+          borderColor: `rgba(103, 232, 249, ${signalOpacity})`,
+          boxShadow: isStrong
+            ? "0 0 10px rgba(103,232,249,0.2)"
+            : "none",
+        }}
       />
 
-      <circle
-        cx="160"
-        cy="160"
-        r="3"
-        fill="currentColor"
-        opacity="0.55"
+      <div
+        className="absolute left-1/2 top-1/2 z-[5] h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{
+          backgroundColor: signalColor,
+          boxShadow: `0 0 9px rgba(103,232,249,${signalOpacity})`,
+        }}
       />
-    </svg>
+
+      {/* Radar sweep */}
+      <div
+        className="absolute left-1/2 top-1/2 z-[3] h-[91px] w-px origin-bottom"
+        style={{
+          transform: `rotate(${heading}deg)`,
+          transformOrigin: "bottom center",
+          background: `linear-gradient(
+            to top,
+            rgba(103,232,249,${signalOpacity}),
+            rgba(103,232,249,0.08),
+            transparent
+          )`,
+        }}
+      />
+    </div>
   );
 }
