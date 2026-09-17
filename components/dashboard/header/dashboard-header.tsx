@@ -4,7 +4,8 @@ export function DashboardHeader() {
       className="
         relative
         overflow-hidden
-        bg-neutral-950/90
+        bg-neutral-950/10
+        
       "
     >
 
@@ -12,7 +13,7 @@ export function DashboardHeader() {
       <img
         src="/logo.png"
         alt="Mjölnir Detector"
-        className="w-[175px]"
+        className="w-[175px]  "
       />
                 
       

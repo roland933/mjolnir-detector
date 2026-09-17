@@ -79,17 +79,20 @@ function RadarMovementController({
   onHeadingChange,
   onSignalChange,
   onNearbyLocationChange,
- onSignalLocationChange
+  onSignalLocationChange
 }: {
   onHeadingChange: (heading: number) => void;
   onSignalChange: (distance: number) => void;
   onNearbyLocationChange: (location: VikingLocation | null) => void;
   onSignalLocationChange: (
-  location: VikingLocation | null
-) => void;
+    location: VikingLocation | null
+  ) => void;
 }) {
   const map = useMap();
   const previousCenter = useRef<L.LatLng | null>(null);
+  const WEAK_RADIUS = 400000;
+  const STRONG_RADIUS = 120000;
+
 
   const updateSignal = () => {
     const center = map.getCenter();
@@ -110,17 +113,20 @@ function RadarMovementController({
 
     onSignalChange(nearestDistance);
 
-    if (nearestDistance < 200000 && nearestLocation) {
-          onNearbyLocationChange(nearestLocation);
-        } else {
-          onNearbyLocationChange(null);
-        }
 
-        if (nearestDistance < 300000 && nearestLocation) {
-          onSignalLocationChange(nearestLocation);
-        } else {
-          onSignalLocationChange(null);
-        }
+    // Marker + scan target
+    if (nearestDistance < STRONG_RADIUS && nearestLocation) {
+      onNearbyLocationChange(nearestLocation);
+    } else {
+      onNearbyLocationChange(null);
+    }
+
+    // Weak signal
+    if (nearestDistance < WEAK_RADIUS && nearestLocation) {
+      onSignalLocationChange(nearestLocation);
+    } else {
+      onSignalLocationChange(null);
+    }
 
 
   };
@@ -236,10 +242,10 @@ export function RealMap({
         minZoom={5}
 
         zoomControl={false}
-      maxBounds={[
-        [25, -120],
-        [88, 100],
-      ]}
+        maxBounds={[
+          [25, -120],
+          [88, 100],
+        ]}
 
         maxBoundsViscosity={1.0}
         className="h-full w-full"
@@ -254,12 +260,12 @@ export function RealMap({
         />
 
 
-        <VikingLocationMarker discoveredLocations={discoveredLocations} 
-                              signalStrength={signalStrength} 
-                              nearbyLocation={nearbyLocation}
-                              scanStatus={scanStatus}
-                              
-                              />
+        <VikingLocationMarker discoveredLocations={discoveredLocations}
+          signalStrength={signalStrength}
+          nearbyLocation={nearbyLocation}
+          scanStatus={scanStatus}
+
+        />
 
 
         <MapController
@@ -283,10 +289,10 @@ export function RealMap({
 
       </MapContainer>
 
-    
+
       <DarkVignette />
 
-   
+
     </div>
   );
 }

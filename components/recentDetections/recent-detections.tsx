@@ -57,7 +57,10 @@ export function RecentDetections() {
             ))}
           </div>
         )}
+
+
       <div className="flex justify-center">
+        {recentDetections.length > 2 && (
         <button
          style={{ fontFamily: "var(--font-norse)" }}
         onClick={() => setHistoryOpen(true)}
@@ -67,6 +70,7 @@ export function RecentDetections() {
        
           View History
         </button>
+        )}
       </div>
       </div>
     </section>

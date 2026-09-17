@@ -50,12 +50,12 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
     }));
   };
 
-  const signalStrength =
-    nearestVikingDistance < 50000
-      ? "strong"
-      : nearestVikingDistance < 200000
-        ? "weak"
-        : "none";
+const signalStrength =
+  nearestVikingDistance < 120000
+    ? "strong"
+    : nearestVikingDistance < 400000
+      ? "weak"
+      : "none";
 
 
   const handleLocationDiscovered = (location: VikingLocation) => {
@@ -96,7 +96,7 @@ export function DetectorMap({ scanArea, setScanArea }: Props) {
         discoveredLocations={discoveredLocation}
 
         scan={() => {
-          if (!nearbyLocation) return;
+          if ((!nearbyLocation) || (discoveredLocation.has(nearbyLocation.name))) return;
 
           scan(
             scanArea,

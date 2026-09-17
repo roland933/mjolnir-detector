@@ -4,12 +4,12 @@ export function Background() {
      <div
     className="
       fixed inset-0
-      bg-[url('/background.png')]
-      bg-cover
+      bg-[url('/card-texture.png')]
+      
       bg-center
-      bg-no-repeat
+       opacity-[0.055]
       pointer-events-none
-      opacity-10
+     
     "
   />
     )

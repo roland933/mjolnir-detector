@@ -68,7 +68,7 @@ export function Radar({
             <img
               src="/idle.png"
               alt="Mjölnir detector"
-              className={`h-50 w-50 object-contain ${detectorEffect}`}
+              className={`h-20 w-20 object-contain ${detectorEffect}`}
             />
           </button>
         </div>
