@@ -49,7 +49,7 @@ export default function DashboardPage() {
           <SideBar />
 
         <main className="min-w-0 flex-1">
-            <MjolnirWorldMap showFog/>
+            <MjolnirWorldMap showFog={false}/>
         </main>
       </div>
 

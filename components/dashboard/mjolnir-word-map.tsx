@@ -5,6 +5,7 @@ import {
 } from "react";
 
 import "./MjolnirWorldMap.css";
+import { WORLD_ITEMS, WorldItem } from "@/app/data/world.item";
 
 type Direction =
   | "down"
@@ -12,30 +13,14 @@ type Direction =
   | "left"
   | "right";
 
-type VikingLocation = {
-  id: string;
-  name: string;
-  x: number;
-  y: number;
-  rune: string;
-
-  discovered?: boolean;
-
-  item?: {
-    name: string;
-  };
-};
-
-
-
 /*
  * =========================
  * WORLD
  * =========================
  */
 
-const MAP_WIDTH = 2100;
-const MAP_HEIGHT = 882;
+const MAP_WIDTH = 1536;
+const MAP_HEIGHT = 1024;
 
 /*
  * =========================
@@ -46,86 +31,7 @@ const MAP_HEIGHT = 882;
 const PLAYER_SPEED = 130;
 const PLAYER_SIZE = 64;
 
-/*
- * =========================
- * VIKING LOCATIONS
- * =========================
- */
 
-const VIKING_LOCATIONS: VikingLocation[] = [
-  {
-    id: "borg",
-    name: "Borg",
-    x: 250,
-    y: 230,
-    rune: "ᛒ",
-  },
-
-  {
-    id: "trondheim",
-    name: "Trondheim",
-    x: 760,
-    y: 150,
-    rune: "ᛏ",
-    item: {
-      name: "Ancient Rune",
-    },
-  },
-
-  {
-    id: "uppsala",
-    name: "Uppsala",
-    x: 1120,
-    y: 280,
-    rune: "ᚢ",
-  },
-
-  {
-    id: "kaupang",
-    name: "Kaupang",
-    x: 430,
-    y: 440,
-    rune: "ᚲ",
-    item: {
-      name: "Old Viking Compass",
-    },
-  },
-
-  {
-    id: "birka",
-    name: "Birka",
-    x: 850,
-    y: 400,
-    rune: "ᛒ",
-    item: {
-      name: "Broken Mjölnir Fragment",
-    },
-  },
-
-  {
-    id: "ribe",
-    name: "Ribe",
-    x: 300,
-    y: 690,
-    rune: "ᚱ",
-  },
-
-  {
-    id: "hedby",
-    name: "Hedeby",
-    x: 560,
-    y: 650,
-    rune: "ᚺ",
-  },
-
-  {
-    id: "jelling",
-    name: "Jelling",
-    x: 1250,
-    y: 680,
-    rune: "ᛃ",
-  },
-];
 
 /*
  * =========================
@@ -142,6 +48,75 @@ function getDirectionRow(
     left: 2,
     right: 3,
   }[direction];
+}
+
+function WorldItemMarker({ item }: { item: WorldItem }) {
+  return (
+    <div
+      className="absolute -translate-x-1/2 -translate-y-1/2"
+      style={{
+        left: item.x,
+        top: item.y,
+      }}
+    >
+      <span hidden>{item.id}</span>
+      <div className="flex items-center justify-center">
+        {item.type === "rune" && (
+          <img
+            src="/items/rune.png"
+            alt=""
+            className="
+              h-17
+              w-17
+              object-contain
+              drop-shadow-[0_0_6px_rgba(195,154,90,0.65)]
+              drop-shadow-[0_3px_5px_rgba(0,0,0,0.95)]
+            "
+          />
+        )}
+
+        {item.type === "scroll" && (
+          <img
+            src="/items/scroll.png"
+            alt=""
+            className="
+              h-7
+              w-7
+              object-contain
+              drop-shadow-[0_3px_5px_rgba(0,0,0,0.95)]
+            "
+          />
+        )}
+
+        {item.type === "chest" && (
+          <img
+            src="/items/chest.png"
+            alt=""
+            className="
+              h-9
+              w-9
+              object-contain
+              drop-shadow-[0_3px_6px_rgba(0,0,0,0.95)]
+            "
+          />
+        )}
+
+        {item.type === "mjolnir" && (
+          <img
+            src="/items/mjolnir.png"
+            alt=""
+            className="
+              h-18
+              w-18
+              object-contain
+              drop-shadow-[0_0_8px_rgba(195,154,90,0.65)]
+              drop-shadow-[0_4px_8px_rgba(0,0,0,0.95)]
+            "
+          />
+        )}
+      </div>
+    </div>
+  );
 }
 
 /*
@@ -183,12 +158,12 @@ export default function MjolnirWorldMap({
    */
 
   const [player, setPlayer] = useState({
-    x: MAP_WIDTH / 2,
-    y: MAP_HEIGHT / 2,
+    x:450,
+    y: 821
   });
 
   const [direction, setDirection] =
-    useState<Direction>("down");
+    useState<Direction>("up");
 
   const [walking, setWalking] =
     useState(false);
@@ -549,14 +524,14 @@ export default function MjolnirWorldMap({
            * Collision
            */
 
-          if (
+        /*  if (
             !isWalkable(
               nextX,
               nextY
             )
           ) {
             return current;
-          }
+          }*/
 
           return {
             x: nextX,
@@ -653,19 +628,17 @@ export default function MjolnirWorldMap({
             )
           `,
         }}
-
-
       >
 
           {showFog && (
-  <div
-    className="mjolnir-fog"
-    style={{
-      "--fog-x": `${player.x - cameraX}px`,
-      "--fog-y": `${player.y - cameraY}px`,
-    } as React.CSSProperties}
-  />
-)}
+            <div
+              className="mjolnir-fog"
+              style={{
+                "--fog-x": `${player.x - cameraX}px`,
+                "--fog-y": `${player.y - cameraY}px`,
+              } as React.CSSProperties}
+            />
+          )}
 
 
         {/* MAP */}
@@ -677,28 +650,9 @@ export default function MjolnirWorldMap({
           alt=""
         />
 
-        {/* VIKING LOCATIONS */}
-
-        {VIKING_LOCATIONS.map(
-          (location) => (
-            <div
-              key={location.id}
-              className="mjolnir-location"
-              style={{
-                left: location.x,
-                top: location.y,
-              }}
-            >
-              <div className="mjolnir-location-marker">
-                {location.rune}
-              </div>
-
-              <div className="mjolnir-location-name">
-                {location.name}
-              </div>
-            </div>
-          )
-        )}
+       {WORLD_ITEMS.map((item) => (
+        <WorldItemMarker key={item.id} item={item} />
+      ))}
 
         {/* PLAYER */}
 
@@ -732,27 +686,6 @@ export default function MjolnirWorldMap({
       </div>
 
 
-
-      {/* CONTROLS */}
-
-      {showControls && (
-        <div className="mjolnir-controls">
-          <div className="mjolnir-controls-title">
-            WANDERER
-          </div>
-
-          <div>
-            <kbd>W</kbd>
-            <kbd>A</kbd>
-            <kbd>S</kbd>
-            <kbd>D</kbd>
-          </div>
-
-          <span>
-            Explore the world
-          </span>
-        </div>
-      )}
 
       {/* DEBUG */}
 
