@@ -9,6 +9,7 @@ export type WorldItem = {
   type: WorldItemType;
   x: number;
   y: number;
+  name?:string;
 };
 
 export const WORLD_ITEMS: WorldItem[] = [
@@ -18,24 +19,28 @@ export const WORLD_ITEMS: WorldItem[] = [
     type: "rune",
     x: 255,
     y: 395,
+    name: "Fenrir Rune",
   },
   {
     id: "rune-2",
     type: "rune",
     x: 705,
     y: 175,
+    name: "Jörmungandr Rune",
   },
   {
     id: "rune-3",
     type: "rune",
     x: 1045,
     y: 135,
+     name: "Hel Rune",
   },
   {
     id: "rune-4",
     type: "rune",
     x: 755,
     y: 465,
+     name: "Ragnarök Rune",
   },
 
   // Scrolls
