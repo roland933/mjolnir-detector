@@ -1,0 +1,534 @@
+.mjolnir-world-map {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+
+  background: #171a17;
+}
+
+.mjolnir-world {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  transform-origin: top left;
+
+  will-change: transform;
+}
+
+.mjolnir-world-map-image {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 2100px;
+  height: 887px;
+
+  display: block;
+
+  user-select: none;
+  pointer-events: none;
+
+  object-fit: fill;
+
+  filter:
+    brightness(0.6)
+    saturate(0.7);
+}
+
+/*
+ * =========================
+ * PLAYER
+ * =========================
+ */
+
+.mjolnir-player {
+  position: absolute;
+
+  width: 64px;
+  height: 64px;
+
+  pointer-events: none;
+
+  z-index: 20;
+
+  transform: translateZ(0);
+}
+
+.mjolnir-player::before {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 68%;
+
+  width: 72px;
+  height: 38px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      ellipse,
+      rgba(
+        240,
+        230,
+        195,
+        0.48
+      ) 0%,
+
+      rgba(
+        235,
+        225,
+        190,
+        0.24
+      ) 25%,
+
+      rgba(
+        235,
+        225,
+        190,
+        0.08
+      ) 55%,
+
+      transparent 78%
+    );
+
+  filter: blur(2px);
+
+  z-index: -1;
+}
+
+.mjolnir-wanderer {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 64px;
+  height: 64px;
+
+  background-image:
+    url("/wanderer.png");
+
+  background-repeat:
+    no-repeat;
+
+  background-size:
+    256px 256px;
+
+  background-position-x: 0;
+
+  user-select: none;
+  pointer-events: none;
+
+  will-change:
+    background-position;
+}
+
+.mjolnir-wanderer.walking {
+  animation:
+    mjolnir-wanderer-walk
+    0.8s
+    steps(4)
+    infinite;
+}
+
+@keyframes mjolnir-wanderer-walk {
+  from {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -256px;
+  }
+}
+
+/*
+ * =========================
+ * VIKING LOCATIONS
+ * =========================
+ */
+
+.mjolnir-location {
+  position: absolute;
+
+  transform:
+    translate(-50%, -50%);
+
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  pointer-events: none;
+}
+
+.mjolnir-location-marker {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(
+      220,
+      210,
+      180,
+      0.65
+    );
+
+  border-radius: 50%;
+
+  background:
+    rgba(
+      25,
+      28,
+      25,
+      0.88
+    );
+
+  color: #d8c9a5;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 18px;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(
+      20,
+      23,
+      20,
+      0.35
+    ),
+
+    0 4px 12px
+    rgba(
+      0,
+      0,
+      0,
+      0.45
+    );
+}
+
+.mjolnir-location-name {
+  margin-top: 5px;
+
+  padding: 3px 7px;
+
+  background:
+    rgba(
+      20,
+      23,
+      20,
+      0.78
+    );
+
+  border:
+    1px solid
+    rgba(
+      220,
+      210,
+      180,
+      0.16
+    );
+
+  color: #d8d0bc;
+
+  font-family:
+    Georgia,
+    serif;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  white-space: nowrap;
+
+  text-shadow:
+    0 1px 3px black;
+}
+
+/*
+ * =========================
+ * CONTROLS
+ * =========================
+ */
+
+.mjolnir-controls {
+  position: absolute;
+
+  left: 20px;
+  bottom: 20px;
+
+  min-width: 150px;
+
+  padding: 12px 14px;
+
+  background:
+    rgba(
+      20,
+      23,
+      20,
+      0.82
+    );
+
+  border:
+    1px solid
+    rgba(
+      220,
+      210,
+      180,
+      0.18
+    );
+
+  color: #d8d0bc;
+
+  backdrop-filter:
+    blur(6px);
+
+  pointer-events: none;
+
+  z-index: 50;
+}
+
+.mjolnir-controls-title {
+  margin-bottom: 8px;
+
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  color: #b8ad92;
+}
+
+.mjolnir-controls kbd {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 25px;
+  height: 25px;
+
+  margin-right: 3px;
+
+  border:
+    1px solid
+    rgba(
+      220,
+      210,
+      180,
+      0.25
+    );
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.04
+    );
+
+  color: #ddd4bf;
+
+  font-family: monospace;
+
+  font-size: 11px;
+}
+
+.mjolnir-controls span {
+  display: block;
+
+  margin-top: 8px;
+
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+
+  opacity: 0.55;
+}
+
+/*
+ * =========================
+ * DEBUG
+ * =========================
+ */
+
+.mjolnir-debug {
+  position: absolute;
+
+  top: 20px;
+  right: 20px;
+
+  padding: 10px 12px;
+
+  background:
+    rgba(
+      20,
+      23,
+      20,
+      0.75
+    );
+
+  border:
+    1px solid
+    rgba(
+      220,
+      210,
+      180,
+      0.15
+    );
+
+  color: #bdb6a5;
+
+  font-family: monospace;
+
+  font-size: 11px;
+
+  line-height: 1.7;
+
+  pointer-events: none;
+
+  z-index: 50;
+}
+
+.mjolnir-debug strong {
+  color: #e0d5bd;
+
+  font-weight: normal;
+}
+
+
+.mjolnir-fog {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+
+  background: rgba(7, 12, 15, 0.72);
+
+  mask-image:
+    radial-gradient(
+      circle 300px at var(--fog-x) var(--fog-y),
+      transparent 0%,
+      transparent 42%,
+      rgba(0, 0, 0, 0.08) 52%,
+      rgba(0, 0, 0, 0.25) 64%,
+      rgba(0, 0, 0, 0.48) 76%,
+      rgba(0, 0, 0, 0.72) 88%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle 300px at var(--fog-x) var(--fog-y),
+      transparent 0%,
+      transparent 42%,
+      rgba(0, 0, 0, 0.08) 52%,
+      rgba(0, 0, 0, 0.25) 64%,
+      rgba(0, 0, 0, 0.48) 76%,
+      rgba(0, 0, 0, 0.72) 88%,
+      rgba(0, 0, 0, 0.9) 100%
+    );
+}
+
+.mjolnir-fog::before {
+  content: "";
+  position: absolute;
+  inset: -25%;
+
+  background:
+    radial-gradient(
+      ellipse at 20% 30%,
+      rgba(40, 52, 58, 0.45),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 70% 45%,
+      rgba(20, 30, 35, 0.5),
+      transparent 48%
+    ),
+    radial-gradient(
+      ellipse at 45% 80%,
+      rgba(35, 45, 50, 0.42),
+      transparent 52%
+    );
+
+  filter: blur(45px);
+  opacity: 0.85;
+
+  animation: mjolnir-fog-drift 28s ease-in-out infinite;
+}
+
+.mjolnir-fog::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+
+  background:
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(55, 68, 74, 0.35),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 25% 75%,
+      rgba(15, 24, 29, 0.5),
+      transparent 50%
+    );
+
+  filter: blur(55px);
+  opacity: 0.75;
+
+  animation: mjolnir-fog-drift-reverse 34s ease-in-out infinite;
+}
+
+@keyframes mjolnir-fog-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0);
+  }
+
+  50% {
+    transform: translate3d(3%, 2%, 0);
+  }
+
+  100% {
+    transform: translate3d(-2%, -1%, 0);
+  }
+}
+
+@keyframes mjolnir-fog-drift-reverse {
+  0% {
+    transform: translate3d(2%, 1%, 0);
+  }
+
+  50% {
+    transform: translate3d(-3%, -2%, 0);
+  }
+
+  100% {
+    transform: translate3d(2%, 1%, 0);
+  }
+}
