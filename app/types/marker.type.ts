@@ -1,1 +1,0 @@
-export type MarkerType = "undiscovered"|"signal"|"discovered"|"mjolnir"

@@ -10,6 +10,7 @@ type UseWorldInteractionProps = {
   player: PlayerPosition;
 
   discoveredRunes: string[];
+
   setDiscoveredRunes: React.Dispatch<
     React.SetStateAction<string[]>
   >;
@@ -18,6 +19,12 @@ type UseWorldInteractionProps = {
   setDiscoveredChests: React.Dispatch<
     React.SetStateAction<string[]>
   >;
+
+  discoveredScrolls:string[],
+  setDiscoveredScrolls: React.Dispatch<
+    React.SetStateAction<string[]>
+  >;
+  
 
   setDiscoveryMessage: React.Dispatch<
     React.SetStateAction<string | null>
@@ -30,9 +37,12 @@ export function useWorldInteraction({
   setDiscoveredRunes,
   discoveredChests,
   setDiscoveredChests,
+  discoveredScrolls,
+  setDiscoveredScrolls,
   setDiscoveryMessage,
 }: UseWorldInteractionProps) {
   useEffect(() => {
+
     const INTERACTION_DISTANCE = 70;
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -62,6 +72,10 @@ export function useWorldInteraction({
           return !discoveredChests.includes(item.id);
         }
 
+         if (item.type === "scroll") {
+          return !discoveredScrolls.includes(item.id);
+        }
+
         return false;
       });
 
@@ -87,6 +101,15 @@ export function useWorldInteraction({
         ]);
 
         setDiscoveryMessage("Chest opened");
+      }
+
+      if (nearbyItem.type === "scroll") {
+        setDiscoveredScrolls((current) => [
+          ...current,
+          nearbyItem.id,
+        ]);
+
+        setDiscoveryMessage("Collected");
       }
 
       setTimeout(() => {

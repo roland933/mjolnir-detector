@@ -33,7 +33,6 @@ type MjolnirWorldMapProps = {
 
 export default function MjolnirWorldMap({
   debug = false,
-  showControls = false,
   showFog = true,
 }: MjolnirWorldMapProps) {
 
@@ -55,6 +54,7 @@ export default function MjolnirWorldMap({
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const [discoveredRunes, setDiscoveredRunes] = useState<string[]>([]);
   const [discoveredChests, setDiscoveredChests] = useState<string[]>([]);
+  const [discoveredScrolls, setDiscoveredScrolls] = useState<string[]>([]);
   const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
   const {viewportSize} = useViewPort(viewportRef);
 
@@ -64,9 +64,11 @@ export default function MjolnirWorldMap({
       player,
       discoveredRunes,
       discoveredChests,
+      discoveredScrolls,
       setDiscoveredRunes,
       setDiscoveredChests,
       setDiscoveryMessage,
+      setDiscoveredScrolls
     });
 
   const {cameraX,cameraY} = useCamera(MAP_WIDTH,MAP_HEIGHT,viewportSize,player)
@@ -118,6 +120,7 @@ export default function MjolnirWorldMap({
               key={item.id}
               item={item}
               player={player}
+              discoveredScrolls={discoveredScrolls}
               discoveredChests={discoveredChests}
               discoveredRunes={discoveredRunes} />
           ))}

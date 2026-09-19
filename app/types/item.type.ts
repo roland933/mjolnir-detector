@@ -1,0 +1,1 @@
+export type ItemType = "rune" | "chest" | "scroll" | "relic"

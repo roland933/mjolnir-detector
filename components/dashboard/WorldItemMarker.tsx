@@ -1,17 +1,22 @@
 import { WorldItem } from "@/app/data/world.item";
 import { Rune } from "./items/Rune";
 import { Chest } from "./items/Chest";
+import { ItemLabel } from "./items/ItemLabel";
+import { Scroll } from "./items/Scroll";
+import { Relic } from "./items/Relic";
 
 export function WorldItemMarker({
   item,
   player,
   discoveredRunes,
   discoveredChests,
+  discoveredScrolls,
 }: {
   item: WorldItem;
   player: { x: number; y: number };
   discoveredRunes: string[];
-  discoveredChests:string[];
+  discoveredChests: string[];
+  discoveredScrolls: string[];
 }) {
   const distance = Math.hypot(
     player.x - item.x,
@@ -20,11 +25,13 @@ export function WorldItemMarker({
 
   const isNearby = distance <= 70;
 
-const isDiscovered =
-  (item.type === "rune" &&
-    discoveredRunes.includes(item.id)) ||
-  (item.type === "chest" &&
-    discoveredChests.includes(item.id));
+  const isDiscovered =
+    (item.type === "rune" &&
+      discoveredRunes.includes(item.id)) ||
+    (item.type === "chest" &&
+      discoveredChests.includes(item.id)) ||
+    (item.type === "scroll" &&
+      discoveredScrolls.includes(item.id));
 
   return (
     <div
@@ -35,39 +42,28 @@ const isDiscovered =
       }}
     >
       <div className="relative flex items-center justify-center">
-        {/* INTERACTION LABEL */}
-        {isNearby && !isDiscovered && (
-          <div
-            className="
-              absolute
-              bottom-full
-              left-1/2
-              mb-2
-              -translate-x-1/2
-              whitespace-nowrap
-              bg-black/60
-              px-2.5
-              py-1
-              text-[10px]
-              uppercase
-              tracking-[0.18em]
-              text-[#d6d0c4]
-              drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]
-            "
-          >
-            {item.type === "rune" ? "Examine" : "Open"}
-          </div>
+
+        <ItemLabel isDiscovered={isDiscovered}
+          isNearby={isNearby}
+          itemType={item.type} />
+
+
+        {item.type === "rune" && (
+          <Rune isDiscovered={isDiscovered} />
         )}
 
-      
-       {item.type === "rune" && (
-            <Rune isDiscovered={isDiscovered} />
-          )}
+        {item.type === "chest" && (
+          <Chest isDiscovered={isDiscovered} />
+        )}
 
-          {item.type === "chest" && (
-            <Chest isDiscovered={isDiscovered} />
-          )}
-      
+        {item.type === "scroll" && (
+          <Scroll isDiscovered={isDiscovered} />
+        )}
+
+         {item.type === "mjolnir" && (
+          <Relic isDiscovered={isDiscovered} />
+        )}
+
       </div>
     </div>
   );
