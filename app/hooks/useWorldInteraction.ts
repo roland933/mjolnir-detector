@@ -1,6 +1,11 @@
 import { useEffect } from "react";
-import { ITEM_LOOT, ItemLootType, WORLD_ITEMS } from "@/app/data/world.item";
+import {
+  ITEM_LOOT,
+  ItemLootType,
+  WORLD_ITEMS,
+} from "@/app/data/world.item";
 import { GAME_CONFIG } from "../config/gameConfig";
+import { useGameStore } from "../../stores/gameStore"
 
 type PlayerPosition = {
   x: number;
@@ -9,27 +14,6 @@ type PlayerPosition = {
 
 type UseWorldInteractionProps = {
   player: PlayerPosition;
-
-  discoveredRunes: string[];
-
-  setDiscoveredRunes: React.Dispatch<
-    React.SetStateAction<string[]>
-  >;
-
-  discoveredChests: string[];
-  setDiscoveredChests: React.Dispatch<
-    React.SetStateAction<string[]>
-  >;
-
-  discoveredScrolls: string[],
-  setDiscoveredScrolls: React.Dispatch<
-    React.SetStateAction<string[]>
-  >;
-
-  discoveredRelic: string[],
-  setDiscoveredRelic: React.Dispatch<
-    React.SetStateAction<string[]>
-  >;
 
   setDiscoveryMessage: React.Dispatch<
     React.SetStateAction<string | null>
@@ -46,27 +30,48 @@ type UseWorldInteractionProps = {
   setShowEndingModal: React.Dispatch<
     React.SetStateAction<boolean>
   >;
-
-
 };
 
 export function useWorldInteraction({
   player,
-  discoveredRunes,
-  setDiscoveredRunes,
-  discoveredChests,
-  setDiscoveredChests,
-  discoveredScrolls,
-  setDiscoveredScrolls,
-  discoveredRelic,
-  setDiscoveredRelic,
-  setShowRelicsModal,
-  setPlalyerMessage,
   setDiscoveryMessage,
+  setPlalyerMessage,
+  setShowRelicsModal,
   setShowEndingModal,
 }: UseWorldInteractionProps) {
-  useEffect(() => {
+  const discoveredRunes = useGameStore(
+    (state) => state.discoveredRunes
+  );
 
+  const discoveredChests = useGameStore(
+    (state) => state.discoveredChests
+  );
+
+  const discoveredScrolls = useGameStore(
+    (state) => state.discoveredScrolls
+  );
+
+  const collectedRelics = useGameStore(
+    (state) => state.collectedRelics
+  );
+
+  const addRune = useGameStore(
+    (state) => state.addRune
+  );
+
+  const addChest = useGameStore(
+    (state) => state.addChest
+  );
+
+  const addScroll = useGameStore(
+    (state) => state.addScroll
+  );
+
+  const addRelic = useGameStore(
+    (state) => state.addRelic
+  );
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase();
 
@@ -82,7 +87,9 @@ export function useWorldInteraction({
           player.y - item.y
         );
 
-        if (distance > GAME_CONFIG.INTERACTION_DISTANCE) {
+        if (
+          distance > GAME_CONFIG.INTERACTION_DISTANCE
+        ) {
           return false;
         }
 
@@ -99,7 +106,7 @@ export function useWorldInteraction({
         }
 
         if (item.type === "mjolnir") {
-          return !discoveredRelic.includes(item.id);
+          return true;
         }
 
         return false;
@@ -109,72 +116,69 @@ export function useWorldInteraction({
         return;
       }
 
+      // RUNE
       if (nearbyItem.type === "rune") {
-        setDiscoveredRunes((current) => [
-          ...current,
-          nearbyItem.id,
-        ]);
+        addRune(nearbyItem.id);
 
         setDiscoveryMessage(
-          `Discovered ${nearbyItem.name ?? "Unknown Rune"}`
+          `Discovered ${
+            nearbyItem.name ?? "Unknown Rune"
+          }`
         );
       }
 
+      // CHEST
       if (nearbyItem.type === "chest") {
-        setDiscoveredChests((current) => [
-          ...current,
-          nearbyItem.id,
-        ]);
+        addChest(nearbyItem.id);
 
         const lootItem = ITEM_LOOT.find(
           (item) => item.id === nearbyItem.id
         );
 
         if (lootItem) {
-          setDiscoveredRelic((current) => [
-            ...current,
-            lootItem.loot,
-          ]);
-
-          setShowRelicsModal(lootItem)
-
-
+          addRelic(lootItem.loot);
+          setShowRelicsModal(lootItem);
         }
       }
 
+      // SCROLL
       if (nearbyItem.type === "scroll") {
-        setDiscoveredScrolls((current) => [
-          ...current,
-          nearbyItem.id,
-        ]);
+        addScroll(nearbyItem.id);
 
         setDiscoveryMessage("Collected");
       }
 
+      // MJÖLNIR
+      if (nearbyItem.type === "mjolnir") {
+        const hasAllRunes =
+          discoveredRunes.length ===
+          GAME_CONFIG.DISCOVERED_RUNES;
 
-      if (nearbyItem.type === "mjolnir" && discoveredRunes.length === GAME_CONFIG.DISCOVERED_RUNES && discoveredRelic.length == GAME_CONFIG.DISCOVERED_RELICS) {
+        const hasAllRelics =
+          collectedRelics.length ===
+          GAME_CONFIG.DISCOVERED_RELICS;
 
+        if (hasAllRunes && hasAllRelics) {
+          setDiscoveryMessage(
+            "Collected mjölnir"
+          );
 
-        setDiscoveryMessage("Collected mjölnir");
+          setTimeout(() => {
+            setShowEndingModal(true);
+          }, 1500);
 
-        setTimeout(() => {
-          setShowEndingModal(true);
-        }, 1500);
-      }
+          return;
+        }
 
-      if (nearbyItem.type === "mjolnir" && (discoveredRelic.length !== GAME_CONFIG.DISCOVERED_RELICS || discoveredRunes.length !== GAME_CONFIG.DISCOVERED_RUNES)) {
-
-        setPlalyerMessage("Mhh... I’m not ready to lift it yet.");
-
+        setPlalyerMessage(
+          "Mhh... I’m not ready to lift it yet."
+        );
       }
 
       setTimeout(() => {
         setDiscoveryMessage(null);
         setPlalyerMessage(null);
       }, 3000);
-
-
-
     };
 
     window.addEventListener(
@@ -192,8 +196,15 @@ export function useWorldInteraction({
     player,
     discoveredRunes,
     discoveredChests,
-    setDiscoveredRunes,
-    setDiscoveredChests,
+    discoveredScrolls,
+    collectedRelics,
+    addRune,
+    addChest,
+    addScroll,
+    addRelic,
     setDiscoveryMessage,
+    setPlalyerMessage,
+    setShowRelicsModal,
+    setShowEndingModal,
   ]);
 }

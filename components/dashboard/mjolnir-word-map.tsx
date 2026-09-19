@@ -23,7 +23,7 @@ import { Fog } from "./fog";
 import { RelicsModal } from "./RelicsModal";
 import { GAME_CONFIG } from "@/app/config/gameConfig";
 import { EndingModal } from "./EndingModal";
-
+import { useGameStore } from "../../stores/gameStore"
 
 
 type MjolnirWorldMapProps = {
@@ -52,10 +52,9 @@ export default function MjolnirWorldMap({
   });
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
-  const [discoveredRunes, setDiscoveredRunes] = useState<string[]>([]);
-  const [discoveredChests, setDiscoveredChests] = useState<string[]>([]);
-  const [discoveredScrolls, setDiscoveredScrolls] = useState<string[]>([]);
-  const [discoveredRelic,setDiscoveredRelic] = useState<string[]>([])
+
+  const {discoveredRunes,discoveredScrolls,discoveredChests,collectedRelics} = useGameStore();
+
   const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
   const [playerMessage, setPlalyerMessage] = useState<string | null>(null);
   const [showRelicsModal, setShowRelicsModal] = useState<ItemLootType | null>(null);
@@ -67,16 +66,8 @@ export default function MjolnirWorldMap({
 
   useWorldInteraction({
       player,
-      discoveredRunes,
-      discoveredChests,
-      discoveredScrolls,
-      discoveredRelic,
-      setDiscoveredRelic,
-      setDiscoveredRunes,
-      setDiscoveredChests,
       setDiscoveryMessage,
       setPlalyerMessage,
-      setDiscoveredScrolls,
       setShowRelicsModal,
       setShowEndingModal
     });
@@ -130,7 +121,7 @@ export default function MjolnirWorldMap({
               key={item.id}
               item={item}
               player={player}
-              discoveredRelic={discoveredRelic}
+              discoveredRelic={collectedRelics}
               discoveredScrolls={discoveredScrolls}
               discoveredChests={discoveredChests}
               discoveredRunes={discoveredRunes} />
