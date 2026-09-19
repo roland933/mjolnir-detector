@@ -6,7 +6,7 @@ export type Direction =
   | "left"
   | "right";
 
-type PlayerPosition = {
+export type PlayerPosition = {
   x: number;
   y: number;
 };

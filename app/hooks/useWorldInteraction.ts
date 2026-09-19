@@ -24,9 +24,17 @@ type UseWorldInteractionProps = {
   setDiscoveredScrolls: React.Dispatch<
     React.SetStateAction<string[]>
   >;
-  
 
+  discoveredRelic:string[],
+  setDiscoveredRelic: React.Dispatch<
+    React.SetStateAction<string[]>
+  >;
+  
   setDiscoveryMessage: React.Dispatch<
+    React.SetStateAction<string | null>
+  >;
+
+  setPlalyerMessage: React.Dispatch<
     React.SetStateAction<string | null>
   >;
 };
@@ -39,6 +47,9 @@ export function useWorldInteraction({
   setDiscoveredChests,
   discoveredScrolls,
   setDiscoveredScrolls,
+  discoveredRelic,
+  setDiscoveredRelic,
+  setPlalyerMessage,
   setDiscoveryMessage,
 }: UseWorldInteractionProps) {
   useEffect(() => {
@@ -74,6 +85,10 @@ export function useWorldInteraction({
 
          if (item.type === "scroll") {
           return !discoveredScrolls.includes(item.id);
+        }
+
+        if(item.type === "mjolnir") {
+           return !discoveredRelic.includes(item.id);
         }
 
         return false;
@@ -112,9 +127,27 @@ export function useWorldInteraction({
         setDiscoveryMessage("Collected");
       }
 
+       if (nearbyItem.type === "mjolnir" && discoveredRunes.length === 4) {
+        setDiscoveredRelic((current) => [
+          ...current,
+          nearbyItem.id,
+        ]);
+
+        setDiscoveryMessage("Collected mjölnir");
+      }
+      
+       if (nearbyItem.type === "mjolnir" && discoveredRunes.length !== 4) {
+
+        setPlalyerMessage("Mhh... I need to find all the runes");
+      } 
+
       setTimeout(() => {
         setDiscoveryMessage(null);
-      }, 2500);
+        setPlalyerMessage(null);
+      }, 3000);
+
+ 
+
     };
 
     window.addEventListener(

@@ -11,12 +11,14 @@ export function WorldItemMarker({
   discoveredRunes,
   discoveredChests,
   discoveredScrolls,
+  discoveredRelic,
 }: {
   item: WorldItem;
   player: { x: number; y: number };
   discoveredRunes: string[];
   discoveredChests: string[];
   discoveredScrolls: string[];
+  discoveredRelic: string[];
 }) {
   const distance = Math.hypot(
     player.x - item.x,
@@ -31,7 +33,9 @@ export function WorldItemMarker({
     (item.type === "chest" &&
       discoveredChests.includes(item.id)) ||
     (item.type === "scroll" &&
-      discoveredScrolls.includes(item.id));
+      discoveredScrolls.includes(item.id)) || 
+       (item.type === "mjolnir" &&
+      discoveredRelic.includes(item.id));
 
   return (
     <div
@@ -42,8 +46,9 @@ export function WorldItemMarker({
       }}
     >
       <div className="relative flex items-center justify-center">
-
-        <ItemLabel isDiscovered={isDiscovered}
+        
+        <ItemLabel 
+          isDiscovered={isDiscovered}
           isNearby={isNearby}
           itemType={item.type} />
 

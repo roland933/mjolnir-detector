@@ -1,18 +1,35 @@
-export function Player({ player, PLAYER_SIZE, directionRow, walking }) {
+import { PlayerPosition } from "@/app/hooks/usePlayerMovement";
+import { PlayerMessage } from "./PlayerMessage";
+
+type PlayerProps = {
+   player:PlayerPosition,
+   playerSize:number,
+   directionRow:number,
+   walking:boolean,
+   playerMessage:string | null,
+
+}
+
+export function Player({ player, playerSize, directionRow, walking,playerMessage }:PlayerProps) {
   return (
     <div
-      className="mjolnir-player"
+      className="mjolnir-player relative"
       style={{
-        left: Math.round(player.x - PLAYER_SIZE / 2),
-        top: Math.round(player.y - PLAYER_SIZE / 2),
+        left: Math.round(player.x - playerSize / 2),
+        top: Math.round(player.y - playerSize / 2),
       }}
     >
       <div
         className={`mjolnir-wanderer ${walking ? "walking" : ""}`}
         style={{
-          backgroundPositionY: `-${directionRow * PLAYER_SIZE}px`,
+          backgroundPositionY: `-${directionRow * playerSize}px`,
         }}
       />
+
+        <PlayerMessage message={playerMessage} />
+      
     </div>
   );
 }
+
+

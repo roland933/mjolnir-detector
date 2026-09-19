@@ -34,7 +34,6 @@ type MjolnirWorldMapProps = {
 };
 
 export default function MjolnirWorldMap({
-  debug = false,
   showFog = true,
 }: MjolnirWorldMapProps) {
 
@@ -57,7 +56,9 @@ export default function MjolnirWorldMap({
   const [discoveredRunes, setDiscoveredRunes] = useState<string[]>([]);
   const [discoveredChests, setDiscoveredChests] = useState<string[]>([]);
   const [discoveredScrolls, setDiscoveredScrolls] = useState<string[]>([]);
+  const [discoveredRelic,setDiscoveredRelic] = useState<string[]>([])
   const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
+  const [playerMessage, setPlalyerMessage] = useState<string | null>(null);
   const {viewportSize} = useViewPort(viewportRef);
 
   useCollisionMask(MAP_WIDTH,MAP_HEIGHT);
@@ -67,9 +68,12 @@ export default function MjolnirWorldMap({
       discoveredRunes,
       discoveredChests,
       discoveredScrolls,
+      discoveredRelic,
+      setDiscoveredRelic,
       setDiscoveredRunes,
       setDiscoveredChests,
       setDiscoveryMessage,
+      setPlalyerMessage,
       setDiscoveredScrolls
     });
 
@@ -113,6 +117,7 @@ export default function MjolnirWorldMap({
               key={item.id}
               item={item}
               player={player}
+              discoveredRelic={discoveredRelic}
               discoveredScrolls={discoveredScrolls}
               discoveredChests={discoveredChests}
               discoveredRunes={discoveredRunes} />
@@ -120,8 +125,9 @@ export default function MjolnirWorldMap({
 
           {/* PLAYER */}
 
-          <Player player={player} 
-                  PLAYER_SIZE={PLAYER_SIZE} 
+          <Player player={player}
+                  playerMessage={playerMessage} 
+                  playerSize={PLAYER_SIZE} 
                   directionRow={directionRow} 
                   walking={walking}/>
 
