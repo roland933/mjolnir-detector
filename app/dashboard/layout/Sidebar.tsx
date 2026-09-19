@@ -1,27 +1,13 @@
-import { Journal } from "./Journal";
-import { RuneProgress } from "./RuneProgress";
-import { SidebarHeader } from "./SidebarHeader";
-import { SidebarSectionHeader } from "./SidebarSectionHeader";
+import { Bottom } from "./sidebar/Bottom";
+import { Journal } from "./sidebar/Journal";
+import { RuneProgress } from "./sidebar/RuneProgress";
+import { SidebarHeader } from "./sidebar/SidebarHeader";
+import { SidebarSectionHeader } from "./sidebar/SidebarSectionHeader";
+import { SideBarWrapper } from "./sidebar/SidebarWrapper";
 
 export function SideBar() {
   return (
-    <aside className="h-full w-[300px] shrink-0">
-      <div
-        className="
-          relative
-          flex
-          h-full
-          flex-col
-          overflow-hidden
-          border-r
-          border-[#8b6b3f]/25
-          bg-[#0b0d0f]/70
-          text-[#d6d0c4]
-          shadow-[8px_0_30px_rgba(0,0,0,0.35)]
-        "
-      >
-
-        <div className="relative z-10 flex h-full flex-col px-5 py-6">
+    <SideBarWrapper >
 
           <SidebarHeader />
 
@@ -70,25 +56,8 @@ export function SideBar() {
           </section>
 
           
-          <div className="mt-auto pt-6">
-            <div className="h-px bg-[#8b6b3f]/20" />
-
-            <p
-              className="
-                mt-4
-                text-center
-                text-[9px]
-                uppercase
-                tracking-[0.3em]
-                text-[#625b51]
-              "
-            >
-              Explore · Discover · Unlock
-            </p>
-          </div>
-        </div>
-      </div>
-    </aside>
+          <Bottom />
+     </SideBarWrapper>
   );
 }
 
