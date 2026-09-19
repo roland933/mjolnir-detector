@@ -1,4 +1,8 @@
-export function DiscoveredMessage({discoveryMessage}) {
+type Props = {
+  discoveryMessage:string | null,
+}
+
+export function DiscoveredMessage({discoveryMessage}:Props) {
     return (
         <>
                 {discoveryMessage && (

@@ -4,7 +4,7 @@ import {
 } from "react";
 
 import "./MjolnirWorldMap.css";
-import { WORLD_ITEMS } from "@/app/data/world.item";
+import { ItemLootType, LootType, WORLD_ITEMS } from "@/app/data/world.item";
 import { WorldItemMarker } from "./WorldItemMarker";
 import { DiscoveredMessage } from "./discovered-message";
 import { useCamera } from "@/app/hooks/useCamera";
@@ -20,12 +20,11 @@ import { useViewPort } from "@/app/hooks/useViewPort";
 import { useCollisionMask } from "@/app/hooks/useCollisionMask";
 import { Player } from "./player";
 import { Fog } from "./fog";
+import { RelicsModal } from "./RelicsModal";
+import { GAME_CONFIG } from "@/app/config/gameConfig";
+import { EndingModal } from "./EndingModal";
 
-const MAP_WIDTH = 1536;
-const MAP_HEIGHT = 1024;
 
-const PLAYER_SPEED = 130;
-const PLAYER_SIZE = 64;
 
 type MjolnirWorldMapProps = {
   debug?: boolean;
@@ -46,10 +45,10 @@ export default function MjolnirWorldMap({
       x: 450,
       y: 821,
     },
-    mapWidth: MAP_WIDTH,
-    mapHeight: MAP_HEIGHT,
-    playerSize: PLAYER_SIZE,
-    playerSpeed: PLAYER_SPEED,
+    mapWidth: GAME_CONFIG.MAP_WIDTH,
+    mapHeight: GAME_CONFIG.MAP_HEIGHT,
+    playerSize: GAME_CONFIG.PLAYER_SIZE,
+    playerSpeed: GAME_CONFIG.PLAYER_SPEED,
   });
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
@@ -59,9 +58,12 @@ export default function MjolnirWorldMap({
   const [discoveredRelic,setDiscoveredRelic] = useState<string[]>([])
   const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
   const [playerMessage, setPlalyerMessage] = useState<string | null>(null);
+  const [showRelicsModal, setShowRelicsModal] = useState<ItemLootType | null>(null);
+  const [showEndingModal, setShowEndingModal] = useState<boolean>(false);
+
   const {viewportSize} = useViewPort(viewportRef);
 
-  useCollisionMask(MAP_WIDTH,MAP_HEIGHT);
+  useCollisionMask(GAME_CONFIG.MAP_WIDTH,GAME_CONFIG.MAP_HEIGHT);
 
   useWorldInteraction({
       player,
@@ -74,15 +76,26 @@ export default function MjolnirWorldMap({
       setDiscoveredChests,
       setDiscoveryMessage,
       setPlalyerMessage,
-      setDiscoveredScrolls
+      setDiscoveredScrolls,
+      setShowRelicsModal,
+      setShowEndingModal
     });
 
-  const {cameraX,cameraY} = useCamera(MAP_WIDTH,MAP_HEIGHT,viewportSize,player)
+  const {cameraX,cameraY} = useCamera(GAME_CONFIG.MAP_WIDTH,GAME_CONFIG.MAP_HEIGHT,viewportSize,player)
   const directionRow = getDirectionRow(direction);
 
   return (
     <>
       <DiscoveredMessage discoveryMessage={discoveryMessage} />
+      <RelicsModal
+        relic={showRelicsModal}
+        onClose={() => setShowRelicsModal(null)}
+      />
+
+      <EndingModal
+        open={showEndingModal}
+        onClose={() => setShowEndingModal(false)}
+      />
 
       <div
         ref={viewportRef}
@@ -91,8 +104,8 @@ export default function MjolnirWorldMap({
         <div
           className="relative mjolnir-world"
           style={{
-            width: MAP_WIDTH,
-            height: MAP_HEIGHT,
+            width: GAME_CONFIG.MAP_WIDTH,
+            height: GAME_CONFIG.MAP_HEIGHT,
 
             transform: `
             translate(
@@ -127,7 +140,7 @@ export default function MjolnirWorldMap({
 
           <Player player={player}
                   playerMessage={playerMessage} 
-                  playerSize={PLAYER_SIZE} 
+                  playerSize={GAME_CONFIG.PLAYER_SIZE} 
                   directionRow={directionRow} 
                   walking={walking}/>
 

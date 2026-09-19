@@ -2,7 +2,7 @@ type Props = {
     isDiscovered:boolean;
 }
 export function Relic({isDiscovered}:Props) {
-    const imageSrc =  isDiscovered ? "/items/mjolnir.png" : "/items/unkown.png"
+    const imageSrc =   "/items/mjolnir.png"
     return (
                 <img
           src={imageSrc}

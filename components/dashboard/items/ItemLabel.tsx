@@ -51,7 +51,7 @@ function labelText({itemType}:LabelTextProps) {
         case "scroll":
           return "Collect"
         case "mjolnir": 
-            return "Examine"        
+            return "Grab"        
 
     }
 

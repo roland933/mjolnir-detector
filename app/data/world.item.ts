@@ -12,6 +12,36 @@ export type WorldItem = {
   name?:string;
 };
 
+export type LootType =
+  | "Megingjord"
+  | "Jarngreipr"
+  | "ThorsMantle";
+
+export type ItemLootType = {
+  id:string,
+  loot:LootType,
+}
+
+export const ITEM_LOOT:ItemLootType[] = [
+  {
+    id: "chest-1",
+    loot:"Megingjord"
+  },
+
+  {
+    id: "chest-2",
+    loot:"ThorsMantle"
+  },
+
+   {
+    id: "chest-3",
+    loot:"Jarngreipr"
+  }
+
+]
+
+
+
 export const WORLD_ITEMS: WorldItem[] = [
   // Runes
   {
@@ -80,7 +110,7 @@ export const WORLD_ITEMS: WorldItem[] = [
   },
 
   {
-    id: "chest-4",
+    id: "chest-3",
     type: "chest",
      x: 334,
     y: 95,
