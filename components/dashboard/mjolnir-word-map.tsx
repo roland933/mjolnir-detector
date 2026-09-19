@@ -136,8 +136,6 @@ export default function MjolnirWorldMap({
               discoveredRunes={discoveredRunes} />
           ))}
 
-          {/* PLAYER */}
-
           <Player player={player}
                   playerMessage={playerMessage} 
                   playerSize={GAME_CONFIG.PLAYER_SIZE} 
