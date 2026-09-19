@@ -18,6 +18,8 @@ import {
 import { useWorldInteraction } from "../../app/hooks/useWorldInteraction";
 import { useViewPort } from "@/app/hooks/useViewPort";
 import { useCollisionMask } from "@/app/hooks/useCollisionMask";
+import { Player } from "./player";
+import { Fog } from "./fog";
 
 const MAP_WIDTH = 1536;
 const MAP_HEIGHT = 1024;
@@ -78,7 +80,6 @@ export default function MjolnirWorldMap({
     <>
       <DiscoveredMessage discoveryMessage={discoveryMessage} />
 
-
       <div
         ref={viewportRef}
         className="mjolnir-world-map"
@@ -98,15 +99,7 @@ export default function MjolnirWorldMap({
           }}
         >
 
-          {showFog && (
-            <div
-              className="mjolnir-fog"
-              style={{
-                "--fog-x": `${player.x - cameraX}px`,
-                "--fog-y": `${player.y - cameraY}px`,
-              } as React.CSSProperties}
-            />
-          )}
+          <Fog showFog={showFog} player={player} cameraX={cameraX} cameraY={cameraY}/>
 
           <img
             src="/viking-map2.png"
@@ -127,78 +120,14 @@ export default function MjolnirWorldMap({
 
           {/* PLAYER */}
 
-          <div
-            className="mjolnir-player"
-            style={{
-              left:
-                player.x -
-                PLAYER_SIZE / 2,
+          <Player player={player} 
+                  PLAYER_SIZE={PLAYER_SIZE} 
+                  directionRow={directionRow} 
+                  walking={walking}/>
 
-              top:
-                player.y -
-                PLAYER_SIZE / 2,
-            }}
-          >
-            <div
-              className={`mjolnir-wanderer ${walking
-                  ? "walking"
-                  : ""
-                }`}
-              style={{
-                backgroundPositionY:
-                  `-${directionRow *
-                  PLAYER_SIZE
-                  }px`,
-              }}
-            />
-          </div>
+
         </div>
 
-
-
-        {/* DEBUG */}
-
-        {debug && (
-          <div className="mjolnir-debug">
-            <div>
-              Direction:{" "}
-              <strong>
-                {direction}
-              </strong>
-            </div>
-
-            <div>
-              Walking:{" "}
-              <strong>
-                {walking
-                  ? "YES"
-                  : "NO"}
-              </strong>
-            </div>
-
-            <div>
-              Position:{" "}
-              {Math.round(
-                player.x
-              )}{" "}
-              /{" "}
-              {Math.round(
-                player.y
-              )}
-            </div>
-
-            <div>
-              Viewport:{" "}
-              {Math.round(
-                viewportSize.width
-              )}{" "}
-              /{" "}
-              {Math.round(
-                viewportSize.height
-              )}
-            </div>
-          </div>
-        )}
       </div>
     </>
   );
