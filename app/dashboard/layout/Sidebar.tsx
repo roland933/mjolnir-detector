@@ -6,6 +6,7 @@ import { SidebarSectionHeader } from "./sidebar/SidebarSectionHeader";
 import { SideBarWrapper } from "./sidebar/SidebarWrapper";
 import { useGameStore } from "@/stores/gameStore";
 import { GAME_CONFIG } from "@/app/config/gameConfig";
+import { ReactNode } from "react";
 
 export function SideBar() {
 
@@ -49,9 +50,9 @@ export function SideBar() {
 
                 <div className="mt-3 divide-y divide-[#8b6b3f]/10">
                   <DiscoveryRow
-                    icon="ᚱ"
+                    icon={<img src="/icons/rune.png" className="h-6 w-6"/>}
                     label="Runes"
-                   value={`${discoveredRunes.length} / ${GAME_CONFIG.DISCOVERED_RUNES}`}
+                     value={`${discoveredRunes.length} / ${GAME_CONFIG.DISCOVERED_RUNES}`}
                   />
 
                   <DiscoveryRow
@@ -91,7 +92,7 @@ function DiscoveryRow({
   label,
   value,
 }: {
-  icon: string;
+  icon: ReactNode;
   label: string;
   value: string;
 }) {
