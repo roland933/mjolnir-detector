@@ -1,8 +1,8 @@
-export function RuneProgress() {
+export function RuneProgress({discoveredRunes}) {
     return (
         <>
       <div className="mt-5 flex justify-center gap-4">
-              {[0, 1, 2].map((rune) => {
+              {[0, 1, 2,3].map((rune) => {
                 const discovered = rune < 0;
 
                 return (

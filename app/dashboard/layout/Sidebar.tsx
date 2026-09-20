@@ -4,8 +4,27 @@ import { RuneProgress } from "./sidebar/RuneProgress";
 import { SidebarHeader } from "./sidebar/SidebarHeader";
 import { SidebarSectionHeader } from "./sidebar/SidebarSectionHeader";
 import { SideBarWrapper } from "./sidebar/SidebarWrapper";
+import { useGameStore } from "@/stores/gameStore";
+import { GAME_CONFIG } from "@/app/config/gameConfig";
 
 export function SideBar() {
+
+    const discoveredRunes = useGameStore(
+    (state) => state.discoveredRunes
+      );
+
+      const discoveredScrolls = useGameStore(
+        (state) => state.discoveredScrolls
+      );
+
+      const discoveredArtifacts = useGameStore(
+        (state) => state.discoveredArtifacts
+      );
+
+      const collectedRelics = useGameStore(
+        (state) => state.collectedRelics
+      );
+
   return (
     <SideBarWrapper >
 
@@ -21,33 +40,39 @@ export function SideBar() {
               to unlock Relic.
             </p>
 
-             <RuneProgress />
+             <RuneProgress discoveredRunes={discoveredRunes} />
           </section>
 
      
-          <section className="mt-7">
+         <section className="mt-7">
             <SidebarSectionHeader title="Discoveries"/>
-   
-            <div className="mt-3 divide-y divide-[#8b6b3f]/10">
-              <DiscoveryRow
-                icon="ᚱ"
-                label="Runes"
-                value="0 / 3"
-              />
 
-              <DiscoveryRow
-                icon="▤"
-                label="Scrolls"
-                value="0 / 5"
-              />
+                <div className="mt-3 divide-y divide-[#8b6b3f]/10">
+                  <DiscoveryRow
+                    icon="ᚱ"
+                    label="Runes"
+                   value={`${discoveredRunes.length} / ${GAME_CONFIG.DISCOVERED_RUNES}`}
+                  />
 
-              <DiscoveryRow
-                icon="◇"
-                label="Artifacts"
-                value="0 / 4"
-              />
-            </div>
-          </section>
+                  <DiscoveryRow
+                    icon="▤"
+                    label="Scrolls"
+                    value={`${discoveredScrolls.length} / ${GAME_CONFIG.DISCOVERED_SCROLLS}`}
+                  />
+
+                  <DiscoveryRow
+                    icon="◇"
+                    label="Artifacts"
+                    value={`${discoveredArtifacts.length} / ${GAME_CONFIG.DISCOVERED_ARTIFACTS}`}
+                  />
+
+                  <DiscoveryRow
+                    icon="ᛏ"
+                    label="Relics"
+                    value={`${collectedRelics.length} / ${GAME_CONFIG.DISCOVERED_RELICS}`}
+                  />
+                </div>
+      </section>
 
          
           <section className="mt-7">
