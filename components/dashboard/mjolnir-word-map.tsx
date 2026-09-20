@@ -107,7 +107,7 @@ export default function MjolnirWorldMap({
           }}
         >
 
-          <Fog showFog={false} player={player} cameraX={cameraX} cameraY={cameraY}/>
+          <Fog discoveredRunes={discoveredRunes} showFog={true} player={player} cameraX={cameraX} cameraY={cameraY}/>
 
           <img
             src="/viking-map2.png"
@@ -122,9 +122,7 @@ export default function MjolnirWorldMap({
               item={item}
               player={player}
               discoveredRelic={collectedRelics}
-              discoveredScrolls={discoveredScrolls}
-              discoveredChests={discoveredChests}
-              discoveredRunes={discoveredRunes} />
+               />
           ))}
 
           <Player player={player}

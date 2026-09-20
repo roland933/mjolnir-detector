@@ -2,7 +2,8 @@ export type WorldItemType =
   | "rune"
   | "scroll"
   | "chest"
-  | "mjolnir";
+  | "mjolnir"
+  | "relics"
 
 export type WorldItem = {
   id: string;
@@ -101,40 +102,55 @@ export const WORLD_ITEMS: WorldItem[] = [
     id: "scroll-2",
     type: "scroll",
    
-     x: 633,
-    y: 110,
+     x: 833,
+    y: 755,
   },
 
   {
     id: "scroll-4",
     type: "scroll",
-    x: 1325,
+   
+     x: 562,
+    y: 340,
+  },
+
+  {
+    id: "relics-1",
+    type: "relics",
+    name:"Járngreipr",
+     image:{
+      default: "/items/relics/jarngreipr/default.png",
+      active: "/items/relics/jarngreipr/active.png"
+    },
+    x: 875,
+    y: 80,
+  },
+  {
+    id: "relics-2",
+    type: "relics",
+    name:"Megingjörð",
+     image:{
+      default: "/items/relics/megingjoro/default.png",
+      active: "/items/relics/megingjoro/active.png"
+    },
+    x: 1305,
     y: 655,
   },
 
-  // Chests
   {
-    id: "chest-1",
-    type: "chest",
-    x: 890,
-    y: 100,
-  },
-  {
-    id: "chest-2",
-    type: "chest",
-    x: 562,
-    y: 327,
-  },
-
-  {
-    id: "chest-3",
-    type: "chest",
+    id: "relics-3",
+    type: "relics",
+    name:"Thor's mantle",
+     image:{
+      default: "/items/relics/cloak/default.png",
+      active: "/items/relics/cloak/active.png"
+    },
      x: 334,
     y: 95,
    
   },
 
-  // Mjölnir
+  
   {
     id: "mjolnir",
     type: "mjolnir",

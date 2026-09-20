@@ -29,6 +29,7 @@ export function ItemLabel({itemType,isNearby,isDiscovered}:Props) {
             "
           >
             {labelText({itemType})}
+                    
           </div>
         )}
         
@@ -44,8 +45,8 @@ type LabelTextProps = {
 function labelText({itemType}:LabelTextProps) {
 
     switch(itemType) {
-        case "chest":
-          return "Open"
+        case "relics":
+          return "Examine"
         case "rune":
           return "Examine"
         case "scroll":

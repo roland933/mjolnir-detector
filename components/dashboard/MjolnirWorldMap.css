@@ -420,41 +420,43 @@
   font-weight: normal;
 }
 
+@property --fog-radius {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 180px;
+}
 
 .mjolnir-fog {
   position: absolute;
   inset: 0;
-
   z-index: 30;
   pointer-events: none;
-
-  background: rgba(7, 12, 15, 0.96);
-
-mask-image:
-  radial-gradient(
-    circle 220px at var(--fog-x) var(--fog-y),
-    transparent 0%,
-    transparent 28%,
-    rgba(0, 0, 0, 0.15) 38%,
-    rgba(0, 0, 0, 0.40) 48%,
-    rgba(0, 0, 0, 0.65) 58%,
-    rgba(0, 0, 0, 0.82) 68%,
-    rgba(0, 0, 0, 0.94) 78%,
-    rgba(0, 0, 0, 1) 90%
-  );
-  
+  background: rgba(7, 12, 15, 0.94);
+ transition: --fog-radius 1.5s ease;
+  mask-image:
+    radial-gradient(
+      circle var(--fog-radius) at var(--fog-x) var(--fog-y),
+      transparent 0%,
+      transparent 28%,
+      rgba(0, 0, 0, 0.15) 38%,
+      rgba(0, 0, 0, 0.40) 48%,
+      rgba(0, 0, 0, 0.65) 58%,
+      rgba(0, 0, 0, 0.82) 68%,
+      rgba(0, 0, 0, 0.94) 78%,
+      rgba(0, 0, 0, 1) 90%
+    );
 
   -webkit-mask-image:
-   radial-gradient(
-    circle 220px at var(--fog-x) var(--fog-y),
-    transparent 0%,
-    transparent 28%,
-    rgba(0, 0, 0, 0.15) 38%,
-    rgba(0, 0, 0, 0.40) 48%,
-    rgba(0, 0, 0, 0.65) 58%,
-    rgba(0, 0, 0, 0.82) 68%,
-    rgba(0, 0, 0, 0.94) 78%,
-    rgba(0, 0, 0, 1) 90%
+    radial-gradient(
+      circle var(--fog-radius) at var(--fog-x) var(--fog-y),
+      transparent 0%,
+      transparent 28%,
+      rgba(0, 0, 0, 0.15) 38%,
+      rgba(0, 0, 0, 0.40) 48%,
+      rgba(0, 0, 0, 0.65) 58%,
+      rgba(0, 0, 0, 0.82) 68%,
+      rgba(0, 0, 0, 0.94) 78%,
+      rgba(0, 0, 0, 1) 90%
     );
 }
 

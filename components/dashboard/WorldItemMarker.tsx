@@ -1,23 +1,18 @@
 import { WorldItem } from "@/app/data/world.item";
 import { Rune } from "./items/Rune";
-import { Chest } from "./items/Chest";
+import { Relics } from "./items/Relics";
 import { ItemLabel } from "./items/ItemLabel";
 import { Scroll } from "./items/Scroll";
 import { Relic } from "./items/Relic";
+import { useGameStore } from "@/stores/gameStore";
 
 export function WorldItemMarker({
   item,
   player,
-  discoveredRunes,
-  discoveredChests,
-  discoveredScrolls,
   discoveredRelic,
 }: {
   item: WorldItem;
   player: { x: number; y: number };
-  discoveredRunes: string[];
-  discoveredChests: string[];
-  discoveredScrolls: string[];
   discoveredRelic: string[];
 }) {
   const distance = Math.hypot(
@@ -25,13 +20,15 @@ export function WorldItemMarker({
     player.y - item.y
   );
 
+    const {discoveredRunes,discoveredScrolls,collectedRelics} = useGameStore();
+
   const isNearby = distance <= 70;
 
   const isDiscovered =
     (item.type === "rune" &&
       discoveredRunes.includes(item.id)) ||
-    (item.type === "chest" &&
-      discoveredChests.includes(item.id)) ||
+    (item.type === "relics" &&
+      collectedRelics.includes(item.id)) ||
     (item.type === "scroll" &&
       discoveredScrolls.includes(item.id)) || 
        (item.type === "mjolnir" &&
@@ -46,7 +43,7 @@ export function WorldItemMarker({
       }}
     >
       <div className="relative flex items-center justify-center">
-        
+         
         <ItemLabel 
           isDiscovered={isDiscovered}
           isNearby={isNearby}
@@ -57,8 +54,8 @@ export function WorldItemMarker({
           <Rune isDiscovered={isDiscovered} item={item}/>
         )}
 
-        {item.type === "chest" && (
-          <Chest isDiscovered={isDiscovered} />
+        {item.type === "relics" && (
+          <Relics isDiscovered={isDiscovered} item={item}/>
         )}
 
         {item.type === "scroll" && (

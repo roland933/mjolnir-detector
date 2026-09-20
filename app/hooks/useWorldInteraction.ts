@@ -98,8 +98,8 @@ export function useWorldInteraction({
           return !discoveredRunes.includes(item.id);
         }
 
-        if (item.type === "chest") {
-          return !discoveredChests.includes(item.id);
+        if (item.type === "relics") {
+          return !collectedRelics.includes(item.id);
         }
 
         if (item.type === "scroll") {
@@ -129,19 +129,17 @@ export function useWorldInteraction({
         );
       }
 
-      // CHEST
-      if (nearbyItem.type === "chest") {
+      // RELICS
+      if (nearbyItem.type === "relics") {
         playSound("relics")
-        addChest(nearbyItem.id);
+        addRelic(nearbyItem.id);
 
-        const lootItem = ITEM_LOOT.find(
-          (item) => item.id === nearbyItem.id
+         setDiscoveryMessage(
+          `Discovered ${
+            nearbyItem.name ?? "Unknown Relics"
+          }`
         );
-
-        if (lootItem) {
-          addRelic(lootItem.loot);
-          setShowRelicsModal(lootItem);
-        }
+  
       }
 
       // SCROLL
