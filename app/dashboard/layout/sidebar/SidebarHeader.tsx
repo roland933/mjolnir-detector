@@ -5,7 +5,8 @@ export function SidebarHeader() {
             <div className="text-center">
               <h1
                 className="
-                  text-2xl
+              
+                  text-3xl
                   font-semibold
                   tracking-[0.16em]
                   text-[#d8d1c4]

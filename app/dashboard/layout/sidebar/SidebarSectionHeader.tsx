@@ -6,7 +6,7 @@ export function SidebarSectionHeader({title}) {
 
               <span
                 className="
-                  text-[10px]
+                  text-[11px]
                   font-medium
                   uppercase
                   tracking-[0.25em]

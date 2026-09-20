@@ -1,49 +1,61 @@
-export function RuneProgress({discoveredRunes}) {
-    return (
-        <>
-      <div className="mt-5 flex justify-center gap-4">
-              {[0, 1, 2,3].map((rune) => {
-                const discovered = rune < 0;
+import { DISCOVERY_OBJECTS } from "@/app/data/objectives";
 
-                return (
-                  <div
-                    key={rune}
-                    className={`
-                      flex
-                      h-12
-                      w-12
-                      rotate-45
-                      items-center
-                      justify-center
-                      border
-                      ${discovered
-                        ? "border-[#c39a5a] bg-[#c39a5a]/10 shadow-[0_0_12px_rgba(195,154,90,0.18)]"
-                        : "border-[#6f604c]/35 bg-black/20"
-                      }
-                    `}
-                  >
-                    <span
-                      className={`
-                        -rotate-45
-                        text-lg
-                        ${discovered
-                          ? "text-[#c39a5a]"
-                          : "text-[#5c554c]"
-                        }
-                      `}
-                    >
-                      ᚱ
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+export function RuneProgress({ discoveredRunes }) {
+  return (
+    <>
+      <div className="mt-5 flex justify-center gap-3">
+         {DISCOVERY_OBJECTS.runes.map((rune) => {
+  const discovered = discoveredRunes.includes(rune.id);
 
-            <div className="mt-4 text-center">
-              <span className="text-[11px] tracking-[0.3em] text-[#81796d]">
-                0 / 3
-              </span>
-            </div>
-            </>
-    )
+  return (
+    <div
+      key={rune.id}
+      className="flex flex-col items-center"
+    >
+      <div
+        className="
+          flex
+          h-12
+          w-12
+          items-center
+          justify-center
+          border
+          border-[#6f604c]/35
+          bg-black/20
+        "
+      >
+        <img
+          src={discovered ? rune.image.active : rune.image.default}
+          alt=""
+          className="h-full w-full object-contain"
+        />
+      </div>
+
+      <span
+        className={`
+          mt-2
+          text-[9px]
+          uppercase
+          tracking-[0.15em]
+          font-medium
+          text-[#c39a5a]
+          transition-all
+          
+          duration-700
+          ${
+            discovered
+              ? "translate-y-0 opacity-100"
+              : "translate-y-1 opacity-0"
+          }
+        `}
+      >
+        {rune.name}
+      </span>
+    </div>
+  );
+})}
+      </div>
+
+    </>
+  );
 }
