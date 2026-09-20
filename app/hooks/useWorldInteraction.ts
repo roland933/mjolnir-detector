@@ -6,6 +6,7 @@ import {
 } from "@/app/data/world.item";
 import { GAME_CONFIG } from "../config/gameConfig";
 import { useGameStore } from "../../stores/gameStore"
+import { playSound } from "@/lib/audio/sounds";
 
 type PlayerPosition = {
   x: number;
@@ -118,6 +119,7 @@ export function useWorldInteraction({
 
       // RUNE
       if (nearbyItem.type === "rune") {
+        playSound("rune")
         addRune(nearbyItem.id);
 
         setDiscoveryMessage(
@@ -129,6 +131,7 @@ export function useWorldInteraction({
 
       // CHEST
       if (nearbyItem.type === "chest") {
+        playSound("relics")
         addChest(nearbyItem.id);
 
         const lootItem = ITEM_LOOT.find(
@@ -143,6 +146,7 @@ export function useWorldInteraction({
 
       // SCROLL
       if (nearbyItem.type === "scroll") {
+        playSound("pergament")
         addScroll(nearbyItem.id);
 
         setDiscoveryMessage("Collected");

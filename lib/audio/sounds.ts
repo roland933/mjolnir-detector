@@ -1,9 +1,9 @@
 const sounds = {
-  proximity: "/sounds/proximity.mp3",
-  scan: "/sounds/scan.mp3",
-  analyzing: "/sounds/analyzing.wav",
-  mjolnir: "/sounds/mjolnir.wav",
-  discoveredItem: "/sounds/thud.wav",
+  rune: "/sounds/rune.mp3",
+  relics: "/sounds/relics.mp3",
+  pergament: "/sounds/pergament.mp3",
+  gong: "/sounds/gong.mp3",
+  background: "/sounds/background.mp3",
 };
 
 export const playSound = (

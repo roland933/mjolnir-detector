@@ -107,7 +107,7 @@ export default function MjolnirWorldMap({
           }}
         >
 
-          <Fog showFog={showFog} player={player} cameraX={cameraX} cameraY={cameraY}/>
+          <Fog showFog={false} player={player} cameraX={cameraX} cameraY={cameraY}/>
 
           <img
             src="/viking-map2.png"

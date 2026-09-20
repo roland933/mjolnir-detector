@@ -1,10 +1,16 @@
+import { WorldItem } from "@/app/data/world.item";
+
 type Props = {
     isDiscovered:boolean;
+    item:WorldItem;
 }
-export function Rune({isDiscovered}:Props) {
+export function Rune({isDiscovered,item}:Props) {
+
+    const img  = isDiscovered ? item.image?.active : item.image?.default
+   
     return (
                 <img
-          src="/items/rune.png"
+          src={img}
           alt=""
           className={`
             h-16
@@ -20,8 +26,8 @@ export function Rune({isDiscovered}:Props) {
                   drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)]
                 `
                 : `
-                  brightness-[0.45]
-                  saturate-[0.6]
+                  brightness-[0.6]
+                 
                   drop-shadow-[0_4px_6px_rgba(0,0,0,0.95)]
                 `
             }

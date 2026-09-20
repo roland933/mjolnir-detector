@@ -26,6 +26,33 @@ export function SideBar() {
         (state) => state.collectedRelics
       );
 
+      type DiscoveryRowsType = {
+          icon:string,
+          label:string,
+          value:string,
+      }
+
+      const DiscoveryRows:DiscoveryRowsType[] = [
+        {
+          icon:"/icons/rune.png",
+          label: "Runes",
+          value:`${discoveredRunes.length} / ${GAME_CONFIG.DISCOVERED_RUNES}`
+        },
+
+        {
+          icon:"/icons/scroll.png",
+          label: "Scrolls",
+          value:`${discoveredScrolls.length} / ${GAME_CONFIG.DISCOVERED_SCROLLS}`
+        },
+
+
+         {
+          icon:"/icons/relics.png",
+          label: "Relics",
+          value:`${collectedRelics.length} / ${GAME_CONFIG.DISCOVERED_RELICS}`
+        }
+    ]
+
   return (
     <SideBarWrapper >
 
@@ -49,31 +76,16 @@ export function SideBar() {
             <SidebarSectionHeader title="Discoveries"/>
 
                 <div className="mt-3 divide-y divide-[#8b6b3f]/10">
-                  <DiscoveryRow
-                    icon={<img src="/icons/rune.png" className="h-6 w-6"/>}
-                    label="Runes"
-                     value={`${discoveredRunes.length} / ${GAME_CONFIG.DISCOVERED_RUNES}`}
+                 {DiscoveryRows.map((row => 
+                     <DiscoveryRow
+                      icon={<img src={row.icon} className="h-6 w-6"/>}
+                      label={row.label}
+                      value={row.value}
                   />
 
-                  <DiscoveryRow
-                    icon="▤"
-                    label="Scrolls"
-                    value={`${discoveredScrolls.length} / ${GAME_CONFIG.DISCOVERED_SCROLLS}`}
-                  />
-
-                  <DiscoveryRow
-                    icon="◇"
-                    label="Artifacts"
-                    value={`${discoveredArtifacts.length} / ${GAME_CONFIG.DISCOVERED_ARTIFACTS}`}
-                  />
-
-                  <DiscoveryRow
-                    icon="ᛏ"
-                    label="Relics"
-                    value={`${collectedRelics.length} / ${GAME_CONFIG.DISCOVERED_RELICS}`}
-                  />
+                 ))}
                 </div>
-      </section>
+        </section>
 
          
           <section className="mt-7">

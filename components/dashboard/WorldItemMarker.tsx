@@ -54,7 +54,7 @@ export function WorldItemMarker({
 
 
         {item.type === "rune" && (
-          <Rune isDiscovered={isDiscovered} />
+          <Rune isDiscovered={isDiscovered} item={item}/>
         )}
 
         {item.type === "chest" && (
