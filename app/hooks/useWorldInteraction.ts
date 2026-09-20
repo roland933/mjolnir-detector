@@ -166,6 +166,7 @@ export function useWorldInteraction({
           );
 
           setTimeout(() => {
+            playSound("gong")
             setShowEndingModal(true);
           }, 1500);
 
