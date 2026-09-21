@@ -44,6 +44,32 @@ export function usePlayerMovement({
   const lastTime =
     useRef<number | null>(null);
 
+  const collisionCanvas =
+    useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const image = new Image();
+
+    image.src = "/collision-mask.png";
+
+    image.onload = () => {
+      const canvas =
+        document.createElement("canvas");
+
+      canvas.width = image.width;
+      canvas.height = image.height;
+
+      const context =
+        canvas.getContext("2d");
+
+      if (!context) return;
+
+      context.drawImage(image, 0, 0);
+
+      collisionCanvas.current = canvas;
+    };
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (
       event: KeyboardEvent
@@ -90,6 +116,49 @@ export function usePlayerMovement({
       );
     };
   }, []);
+
+  const isBlocked = (
+    x: number,
+    y: number
+  ) => {
+    const canvas =
+      collisionCanvas.current;
+
+    if (!canvas) {
+      return false;
+    }
+
+    const context =
+      canvas.getContext("2d");
+
+    if (!context) {
+      return false;
+    }
+
+    const pixel =
+      context.getImageData(
+        Math.floor(x),
+        Math.floor(y),
+        1,
+        1
+      ).data;
+
+    return pixel[0] > 200;
+  };
+
+  const canMoveTo = (
+    x: number,
+    y: number
+  ) => {
+    const radius = playerSize * 0.25;
+
+    return (
+      !isBlocked(x, y - radius) &&
+      !isBlocked(x, y + radius) &&
+      !isBlocked(x - radius, y) &&
+      !isBlocked(x + radius, y)
+    );
+  };
 
   useEffect(() => {
     const update = (time: number) => {
@@ -169,10 +238,14 @@ export function usePlayerMovement({
             )
           );
 
-          return {
-            x: nextX,
-            y: nextY,
-          };
+          if (canMoveTo(nextX, nextY)) {
+            return {
+              x: nextX,
+              y: nextY,
+            };
+          }
+
+          return current;
         });
       }
 
@@ -205,7 +278,6 @@ export function usePlayerMovement({
     walking,
   };
 }
-
 
 export function getDirectionRow(
   direction: Direction

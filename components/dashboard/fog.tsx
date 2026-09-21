@@ -5,7 +5,7 @@ export function Fog({
   cameraY,
   discoveredRunes,
 }) {
-  const fogRadius = 180 + discoveredRunes.length * 60;
+  const fogRadius = 280 + discoveredRunes.length * 60;
 
   return (
     <>

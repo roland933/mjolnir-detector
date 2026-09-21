@@ -1,4 +1,5 @@
 import {
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -24,6 +25,7 @@ import { RelicsModal } from "./RelicsModal";
 import { GAME_CONFIG } from "@/app/config/gameConfig";
 import { EndingModal } from "./EndingModal";
 import { useGameStore } from "../../stores/gameStore"
+import { playSound } from "@/lib/audio/sounds";
 
 
 type MjolnirWorldMapProps = {
@@ -53,7 +55,7 @@ export default function MjolnirWorldMap({
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
 
-  const {discoveredRunes,discoveredScrolls,discoveredChests,collectedRelics} = useGameStore();
+  const {discoveredRunes,collectedRelics} = useGameStore();
 
   const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
   const [playerMessage, setPlalyerMessage] = useState<string | null>(null);
@@ -61,8 +63,6 @@ export default function MjolnirWorldMap({
   const [showEndingModal, setShowEndingModal] = useState<boolean>(false);
 
   const {viewportSize} = useViewPort(viewportRef);
-
-  useCollisionMask(GAME_CONFIG.MAP_WIDTH,GAME_CONFIG.MAP_HEIGHT);
 
   useWorldInteraction({
       player,
@@ -74,6 +74,10 @@ export default function MjolnirWorldMap({
 
   const {cameraX,cameraY} = useCamera(GAME_CONFIG.MAP_WIDTH,GAME_CONFIG.MAP_HEIGHT,viewportSize,player)
   const directionRow = getDirectionRow(direction);
+
+  useEffect(() => {
+      playSound("background")
+}, []);
 
   return (
     <>

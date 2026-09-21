@@ -63,53 +63,7 @@
   transform: translateZ(0);
 }
 
-.mjolnir-player::before {
-  content: "";
 
-  position: absolute;
-
-  left: 50%;
-  top: 68%;
-
-  width: 72px;
-  height: 38px;
-
-  transform:
-    translate(-50%, -50%);
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      ellipse,
-      rgba(
-        240,
-        230,
-        195,
-        0.48
-      ) 0%,
-
-      rgba(
-        235,
-        225,
-        190,
-        0.24
-      ) 25%,
-
-      rgba(
-        235,
-        225,
-        190,
-        0.08
-      ) 55%,
-
-      transparent 78%
-    );
-
-  filter: blur(2px);
-
-  z-index: -1;
-}
 
 .mjolnir-wanderer {
   position: absolute;
@@ -121,7 +75,7 @@
   height: 64px;
 
   background-image:
-    url("/wanderer.png");
+    url("/wanderer2.png");
 
   background-repeat:
     no-repeat;
@@ -130,6 +84,7 @@
     256px 256px;
 
   background-position-x: 0;
+  overflow:hidden;
 
   user-select: none;
   pointer-events: none;
