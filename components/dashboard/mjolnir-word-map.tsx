@@ -18,7 +18,6 @@ import {
 
 import { useWorldInteraction } from "../../app/hooks/useWorldInteraction";
 import { useViewPort } from "@/app/hooks/useViewPort";
-import { useCollisionMask } from "@/app/hooks/useCollisionMask";
 import { Player } from "./player";
 import { Fog } from "./fog";
 import { RelicsModal } from "./RelicsModal";
@@ -26,7 +25,7 @@ import { GAME_CONFIG } from "@/app/config/gameConfig";
 import { EndingModal } from "./EndingModal";
 import { useGameStore } from "../../stores/gameStore"
 import { playSound } from "@/lib/audio/sounds";
-
+import { InstructionDialog } from "@/components/dashboard/dialog/InstructionDialog";
 
 type MjolnirWorldMapProps = {
   debug?: boolean;
@@ -55,13 +54,13 @@ export default function MjolnirWorldMap({
 
   const viewportRef = useRef<HTMLDivElement | null>(null);
 
-  const {discoveredRunes,collectedRelics} = useGameStore();
+  const {discoveredRunes,collectedRelics,resetGame} = useGameStore();
 
   const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
   const [playerMessage, setPlalyerMessage] = useState<string | null>(null);
   const [showRelicsModal, setShowRelicsModal] = useState<ItemLootType | null>(null);
   const [showEndingModal, setShowEndingModal] = useState<boolean>(false);
-
+  const [showInstructions, setShowInstructions] = useState(true);
   const {viewportSize} = useViewPort(viewportRef);
 
   useWorldInteraction({
@@ -75,9 +74,14 @@ export default function MjolnirWorldMap({
   const {cameraX,cameraY} = useCamera(GAME_CONFIG.MAP_WIDTH,GAME_CONFIG.MAP_HEIGHT,viewportSize,player)
   const directionRow = getDirectionRow(direction);
 
-  useEffect(() => {
-      playSound("background")
-}, []);
+  const onStart = () => {
+      
+       setShowInstructions(false);
+       resetGame();
+       playSound("background");
+  }
+
+
 
   return (
     <>
@@ -86,7 +90,10 @@ export default function MjolnirWorldMap({
         relic={showRelicsModal}
         onClose={() => setShowRelicsModal(null)}
       />
-
+      <InstructionDialog
+        open={showInstructions}
+        onStart={onStart}
+      />
       <EndingModal
         open={showEndingModal}
         onClose={() => setShowEndingModal(false)}

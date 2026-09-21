@@ -12,6 +12,7 @@ type GameState = {
   addArtifact: (id: string) => void;
   addChest: (id: string) => void;
   addRelic: (id: string) => void;
+  resetGame: () => void;
 };
 
 export const useGameStore = create<GameState>((set) => ({
@@ -45,4 +46,13 @@ export const useGameStore = create<GameState>((set) => ({
     set((state) => ({
       collectedRelics: [...state.collectedRelics, id],
     })),
+
+resetGame: () =>
+  set({
+    discoveredRunes: [],
+    discoveredScrolls: [],
+    discoveredArtifacts: [],
+    discoveredChests: [],
+    collectedRelics: [],
+  }),
 }));
