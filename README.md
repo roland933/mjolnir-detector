@@ -1,37 +1,50 @@
-⚡ Thor lost Mjölnir.
+# Forgotten Relic
 
-He contacted me personally.
+After Ragnarök, Mjölnir was lost.
 
-Apparently, Asgard has a very strict “don’t lose the magical hammer” policy.
+Ancient traces now point toward a forgotten cavern.
 
-So I built **Mjölnir Detector** — a fictional application designed to locate the hammer before Thor has to return to Asgard empty-handed.
+**Forgotten Relic** is a small Norse-inspired 2D exploration game built as a personal project.
 
-The app includes:
+The goal is simple: explore a huge underground cavern, discover ancient runes and forgotten relics, and eventually find what was lost.
 
-🗺️ Interactive search map
-⚡ Mjölnir signal detection
-📡 Simulated sensor data
-📊 Real-time detection status
-🚨 Anomaly tracking
-🌩️ Asgardian communication system
+## Features
 
-Built with:
+- 🗺️ Large explorable cavern
+- 🧭 Top-down character movement
+- 🪨 Collision system
+- 🔥 Discoverable ancient runes
+- ⚔️ Thor's lost relics
+- 🌫️ Fog of exploration
+- 🔊 Ambient music and sound effects
+- ⚡ Mjölnir discovery and ending sequence
 
-Next.js · TypeScript · Tailwind CSS · shadcn/ui
+## Built with
 
-The goal wasn't just to build another dashboard.
+Next.js · React · TypeScript · Tailwind CSS · shadcn/ui · Zustand
 
-I wanted to build something technically interesting **and actually fun to look at.**
+## About
 
-And yes...
+I wanted to build something a little different from the usual CRUD projects.
 
-**Mjölnir was found.**
+I enjoy making games as a hobby, so I decided to combine that with what I'm learning and build a small exploration game.
 
-Earth is safe.
+This project also gave me a chance to experiment with game mechanics, movement, collision, animations, audio, and interactive world elements in React.
 
-Thor can return to Asgard.
+## Gameplay
 
-**You're welcome.** ⚡
+Explore the cavern.
 
-#NextJS #TypeScript #React #Frontend #WebDevelopment #Portfolio
+Discover the ancient runes.
 
+Recover Thor's forgotten relics.
+
+Find Mjölnir.
+
+And uncover what was left behind after Ragnarök.
+
+---
+
+**Forgotten Relic** ⚡
+
+A small exploration game built with React and Next.js.
